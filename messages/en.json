@@ -1,5 +1,5 @@
 {
-  "common": { "siteName": "Musiqlt" },
+  "common": { "siteName": "Musiqlt", "learnMore": "LEARN MORE" },
   "home": {
     "tagline": "The sound. The culture. The next wave.",
     "hero": {
@@ -11,7 +11,8 @@
     "mission": {
       "chapter": "MISSION",
       "manifesto": "Building the industry we never saw. For artists of colour, by artists of colour."
-    }
+    },
+    "programs": { "chapter": "PROGRAMS" }
   },
   "nav": {
     "primary": "Primary",

@@ -1,5 +1,5 @@
 {
-  "common": { "siteName": "Musiqlt" },
+  "common": { "siteName": "Musiqlt", "learnMore": "EN SAVOIR PLUS" },
   "home": {
     "tagline": "Le son. La culture. La relève.",
     "hero": {
@@ -11,7 +11,8 @@
     "mission": {
       "chapter": "MISSION",
       "manifesto": "Bâtir l'industrie qu'on n'a pas vue. Pour les artistes de couleur, par les artistes de couleur."
-    }
+    },
+    "programs": { "chapter": "PROGRAMMES" }
   },
   "nav": {
     "primary": "Navigation principale",
