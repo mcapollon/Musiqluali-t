@@ -118,6 +118,18 @@
         "back": "Retour",
         "continue": "Continuer"
       }
+    },
+    "step03": {
+      "title": "Ton parcours, tes ambitions",
+      "blurb": "Raconte ton histoire. On t'écoute.",
+      "fields": {
+        "yearsActive": "Années d'activité",
+        "currentProject": "Projet actuel",
+        "motivation": "Qu'est-ce que tu cherches chez Musiqlt ?",
+        "interests": "INTÉRÊTS",
+        "back": "Retour",
+        "continue": "Continuer"
+      }
     }
   },
   "footer": {

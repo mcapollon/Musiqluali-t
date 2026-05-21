@@ -118,6 +118,18 @@
         "back": "Back",
         "continue": "Continue"
       }
+    },
+    "step03": {
+      "title": "Your journey, your ambitions",
+      "blurb": "Tell your story. We're listening.",
+      "fields": {
+        "yearsActive": "Years active",
+        "currentProject": "Current project",
+        "motivation": "What are you looking for at Musiqlt?",
+        "interests": "INTERESTS",
+        "back": "Back",
+        "continue": "Continue"
+      }
     }
   },
   "footer": {
