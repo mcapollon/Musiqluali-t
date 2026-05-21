@@ -90,7 +90,21 @@
   },
   "wizard": {
     "progressLabel": "Form progress",
-    "step01": { "title": "Create your account", "blurb": "Just a few details to start. Your data stays private." }
+    "step01": {
+      "title": "Create your account",
+      "blurb": "Just a few details to start. Your data stays private.",
+      "fields": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "email_error": "Invalid email",
+        "password": "Password",
+        "password_error": "Minimum 10 characters, at least one digit",
+        "consent": "I accept the Terms of Use and Privacy Policy",
+        "consent_error": "You must accept to continue",
+        "continue": "Continue"
+      }
+    }
   },
   "footer": {
     "blurb": "Artistic development in music for artists of colour, by artists of colour. Montréal.",

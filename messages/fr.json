@@ -90,7 +90,21 @@
   },
   "wizard": {
     "progressLabel": "Progression du formulaire",
-    "step01": { "title": "Crée ton compte", "blurb": "Quelques infos pour démarrer. Tes données restent privées." }
+    "step01": {
+      "title": "Crée ton compte",
+      "blurb": "Quelques infos pour démarrer. Tes données restent privées.",
+      "fields": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "email": "Courriel",
+        "email_error": "Courriel invalide",
+        "password": "Mot de passe",
+        "password_error": "10 caractères minimum, au moins un chiffre",
+        "consent": "J'accepte les CGU et la politique de confidentialité",
+        "consent_error": "Tu dois accepter pour continuer",
+        "continue": "Continuer"
+      }
+    }
   },
   "footer": {
     "blurb": "Développement artistique en musique pour artistes de couleur, par artistes de couleur. Montréal.",
