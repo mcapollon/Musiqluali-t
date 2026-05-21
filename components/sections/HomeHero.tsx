@@ -6,6 +6,7 @@ import { Marquee } from '@/components/editorial/Marquee'
 import { VinylDisc } from '@/components/media/VinylDisc'
 import { EqualizerBars } from '@/components/media/EqualizerBars'
 import { GrainOverlay } from '@/components/media/GrainOverlay'
+import { AmbientHeroPlayer } from '@/components/media/AmbientHeroPlayer'
 import { artists } from '@/lib/mock/artists'
 
 export function HomeHero() {
@@ -35,9 +36,9 @@ export function HomeHero() {
       <div className="relative z-10 section-pad-x flex min-h-[100svh] flex-col justify-between pt-32 pb-12">
         <div className="flex items-start justify-between">
           <p className="text-mono-meta text-bone-mute">{t('tag')}</p>
-          <p className="text-mono-meta text-saffron hidden md:inline-flex">
-            ▸ NOW PLAYING · LA RELÈVE 2026
-          </p>
+          <div className="hidden md:inline-flex">
+            <AmbientHeroPlayer label={t('nowPlaying')} />
+          </div>
         </div>
 
         <div className="max-w-[80%]">
