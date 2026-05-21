@@ -5,6 +5,7 @@ import { ThemeProvider } from 'next-themes'
 import { routing, type AppLocale } from '@/lib/i18n/routing'
 import { LenisProvider } from '@/components/motion/LenisProvider'
 import { Toaster } from '@/components/ui/sonner'
+import { fraunces, inter, jetbrains } from '@/app/fonts'
 import '../globals.css'
 
 export function generateStaticParams() {
@@ -24,7 +25,7 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable}`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <NextIntlClientProvider messages={messages} locale={locale}>
