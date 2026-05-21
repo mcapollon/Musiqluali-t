@@ -13,7 +13,8 @@
       "manifesto": "Building the industry we never saw. For artists of colour, by artists of colour."
     },
     "programs": { "chapter": "PROGRAMS" },
-    "artists": { "chapter": "THE NEXT WAVE" }
+    "artists": { "chapter": "THE NEXT WAVE" },
+    "events": { "chapter": "EVENTS" }
   },
   "nav": {
     "primary": "Primary",

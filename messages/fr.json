@@ -13,7 +13,8 @@
       "manifesto": "Bâtir l'industrie qu'on n'a pas vue. Pour les artistes de couleur, par les artistes de couleur."
     },
     "programs": { "chapter": "PROGRAMMES" },
-    "artists": { "chapter": "LA RELÈVE" }
+    "artists": { "chapter": "LA RELÈVE" },
+    "events": { "chapter": "ÉVÉNEMENTS" }
   },
   "nav": {
     "primary": "Navigation principale",
