@@ -1,17 +1,18 @@
 'use client'
 import { motion } from 'framer-motion'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
-
-const BARS = 48
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export function EqualizerBars({ className }: { className?: string }) {
   const reduced = useReducedMotion()
+  const isMobile = useMediaQuery('(max-width: 768px)')
+  const bars = isMobile ? 24 : 48
   return (
     <div
       className={`flex items-end justify-between gap-[2px] w-full h-full ${className ?? ''}`}
       aria-hidden
     >
-      {Array.from({ length: BARS }).map((_, i) => {
+      {Array.from({ length: bars }).map((_, i) => {
         const seed = (i * 37) % 9
         const tint = i % 3 === 0 ? 'bg-saffron/40' : 'bg-bone/15'
         return (
