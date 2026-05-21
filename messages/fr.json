@@ -57,6 +57,12 @@
     "intro": "120 artistes. Une famille.",
     "filter": { "genre": "GENRE", "all": "TOUS" }
   },
+  "eventsPage": {
+    "chapter": "ÉVÉNEMENTS",
+    "intro": "Showcase. Atelier. Communauté.",
+    "upcoming": "À VENIR",
+    "past": "PASSÉS"
+  },
   "nav": {
     "primary": "Navigation principale",
     "menu": "Menu",
