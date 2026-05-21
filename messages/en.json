@@ -88,6 +88,10 @@
     "contact": "Contact",
     "apply": "Apply"
   },
+  "wizard": {
+    "progressLabel": "Form progress",
+    "step01": { "title": "Create your account", "blurb": "Just a few details to start. Your data stays private." }
+  },
   "footer": {
     "blurb": "Artistic development in music for artists of colour, by artists of colour. Montréal.",
     "sitemap": "Sitemap",
