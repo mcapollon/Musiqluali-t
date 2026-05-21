@@ -10,7 +10,7 @@
     },
     "mission": {
       "chapter": "MISSION",
-      "manifesto": "Building the industry we never saw. For artists of colour, by artists of colour."
+      "manifesto": "Building the ecosystem we never saw. For artists of colour, by artists of colour. Studio. Mentorship. Stage. Community. A non-profit."
     },
     "programs": { "chapter": "PROGRAMS" },
     "artists": { "chapter": "THE NEXT WAVE" },
@@ -24,6 +24,14 @@
       "blurb": "Apply to the program. Three admission rounds each year.",
       "primaryCta": "Apply",
       "secondaryCta": "Discover our programs"
+    },
+    "donate": {
+      "chapter": "DONATE",
+      "headline": "Non-profit organization.",
+      "body": "Musiqlt is a registered non-profit. Your donations fund artist bursaries, studio time, and our free community programs.",
+      "eyebrow": "GIVE NOW",
+      "cta": "Donate a custom amount",
+      "receipt": "Tax receipt issued for donations of $20 or more."
     },
     "newsletter": {
       "eyebrow": "NEWSLETTER",
@@ -87,7 +95,8 @@
     "events": "Events",
     "about": "About",
     "contact": "Contact",
-    "apply": "Apply"
+    "apply": "Apply",
+    "donate": "DONATE"
   },
   "wizard": {
     "progressLabel": "Form progress",

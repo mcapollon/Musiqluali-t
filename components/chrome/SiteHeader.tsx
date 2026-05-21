@@ -45,6 +45,9 @@ export function SiteHeader() {
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
             <LocaleSwitch />
+            <a href="#donate" className="text-mono-meta text-bone-mute hover:text-saffron whitespace-nowrap">
+              {t('donate')}
+            </a>
             <Link href="/apply">
               <Button size="sm">{t('apply')}</Button>
             </Link>

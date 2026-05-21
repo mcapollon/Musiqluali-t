@@ -10,7 +10,7 @@
     },
     "mission": {
       "chapter": "MISSION",
-      "manifesto": "Bâtir l'industrie qu'on n'a pas vue. Pour les artistes de couleur, par les artistes de couleur."
+      "manifesto": "Bâtir l'écosystème qu'on n'a pas vu. Pour les artistes de couleur, par les artistes de couleur. Studio. Mentorat. Scène. Communauté. Organisme sans but lucratif."
     },
     "programs": { "chapter": "PROGRAMMES" },
     "artists": { "chapter": "LA RELÈVE" },
@@ -24,6 +24,14 @@
       "blurb": "Postule au programme. Trois tours d'admission par année.",
       "primaryCta": "Postuler",
       "secondaryCta": "Découvrir nos programmes"
+    },
+    "donate": {
+      "chapter": "DON",
+      "headline": "Organisme sans but lucratif.",
+      "body": "Musiqlt est un OSBL. Tes dons financent directement les bourses, le studio, et nos programmes communautaires gratuits.",
+      "eyebrow": "DONNE MAINTENANT",
+      "cta": "Donner un montant personnalisé",
+      "receipt": "Reçu fiscal pour tout don de 20$ et plus."
     },
     "newsletter": {
       "eyebrow": "INFOLETTRE",
@@ -87,7 +95,8 @@
     "events": "Événements",
     "about": "À propos",
     "contact": "Contact",
-    "apply": "Postuler"
+    "apply": "Postuler",
+    "donate": "DON"
   },
   "wizard": {
     "progressLabel": "Progression du formulaire",

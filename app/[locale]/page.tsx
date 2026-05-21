@@ -1,6 +1,6 @@
 import {
   HomeHero, HomeMission, HomeProgramsPreview, HomeArtists,
-  HomeEvents, HomeQuote, HomeApplyCTA, HomeNewsletter,
+  HomeEvents, HomeQuote, HomeApplyCTA, HomeDonate, HomeNewsletter,
 } from '@/components/sections'
 
 export default function Home() {
@@ -13,6 +13,7 @@ export default function Home() {
       <HomeEvents />
       <HomeQuote />
       <HomeApplyCTA />
+      <HomeDonate />
       <HomeNewsletter />
     </>
   )

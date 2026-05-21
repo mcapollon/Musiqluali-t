@@ -57,6 +57,9 @@ export function MobileNavOverlay({ open, onClose }: { open: boolean; onClose: ()
             <div className="flex items-center gap-2">
               <ThemeToggle />
               <LocaleSwitch />
+              <a href="#donate" onClick={onClose} className="text-mono-meta text-bone-mute hover:text-saffron whitespace-nowrap">
+                {t('donate')}
+              </a>
             </div>
             <Link href="/apply" onClick={onClose}>
               <Button size="md">{t('apply')}</Button>
