@@ -10,12 +10,21 @@ type Actions = {
   close: () => void
 }
 
-export const useAudioStore = create<PlayerState & Actions>((set, get) => ({
+type AmbientState = {
+  ambientAnalyser: AnalyserNode | null
+  ambientPlaying: boolean
+  setAmbientAnalyser: (a: AnalyserNode | null) => void
+  setAmbientPlaying: (p: boolean) => void
+}
+
+export const useAudioStore = create<PlayerState & Actions & AmbientState>((set, get) => ({
   current: null,
   isPlaying: false,
   queue: [],
   progress: 0,
   visible: false,
+  ambientAnalyser: null,
+  ambientPlaying: false,
   play: (track, queue) =>
     set({
       current: track,
@@ -41,4 +50,6 @@ export const useAudioStore = create<PlayerState & Actions>((set, get) => ({
   },
   setProgress: (p) => set({ progress: p }),
   close: () => set({ visible: false, isPlaying: false }),
+  setAmbientAnalyser: (a) => set({ ambientAnalyser: a }),
+  setAmbientPlaying: (p) => set({ ambientPlaying: p }),
 }))

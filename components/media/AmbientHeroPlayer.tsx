@@ -13,7 +13,11 @@ export function AmbientHeroPlayer({ label }: { label: string }) {
   const artistTrackVisible = useAudioStore((s) => s.visible && s.isPlaying)
 
   useEffect(() => {
-    return () => engineRef.current?.destroy()
+    return () => {
+      engineRef.current?.destroy()
+      useAudioStore.getState().setAmbientAnalyser(null)
+      useAudioStore.getState().setAmbientPlaying(false)
+    }
   }, [])
 
   // Duck when artist track plays
@@ -33,9 +37,12 @@ export function AmbientHeroPlayer({ label }: { label: string }) {
     if (playing) {
       engineRef.current.stop()
       setPlaying(false)
+      useAudioStore.getState().setAmbientPlaying(false)
     } else {
       engineRef.current.start()
       setPlaying(true)
+      useAudioStore.getState().setAmbientAnalyser(engineRef.current.getAnalyser())
+      useAudioStore.getState().setAmbientPlaying(true)
     }
   }
 
