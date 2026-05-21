@@ -18,27 +18,32 @@ export function DisplayHeading({ text, size = 'l', className, as: As = 'h2' }: P
     return <As className={cn(sizeCls[size], className)}>{text}</As>
   }
   const MotionTag = motion[As] as typeof motion.h2
+  const words = text.split(' ')
   return (
     <MotionTag
-      className={cn(sizeCls[size], className)}
+      className={cn(sizeCls[size], 'flex flex-wrap gap-x-[0.25em]', className)}
       initial="hidden"
       animate="show"
-      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.05 } } }}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.03 } } }}
       aria-label={text}
     >
-      {text.split('').map((char, i) => (
-        <motion.span
-          key={`${char}-${i}`}
-          aria-hidden
-          className="inline-block"
-          variants={{
-            hidden: { opacity: 0, y: 12, filter: 'blur(4px)' },
-            show: { opacity: 1, y: 0, filter: 'blur(0px)' },
-          }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {char === ' ' ? ' ' : char}
-        </motion.span>
+      {words.map((word, wi) => (
+        <span key={wi} className="inline-flex whitespace-nowrap">
+          {word.split('').map((char, ci) => (
+            <motion.span
+              key={`${wi}-${ci}`}
+              aria-hidden
+              className="inline-block"
+              variants={{
+                hidden: { opacity: 0, y: 12, filter: 'blur(4px)' },
+                show: { opacity: 1, y: 0, filter: 'blur(0px)' },
+              }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {char}
+            </motion.span>
+          ))}
+        </span>
       ))}
     </MotionTag>
   )
