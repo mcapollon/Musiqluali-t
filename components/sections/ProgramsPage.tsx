@@ -15,8 +15,29 @@ export function ProgramsPage() {
         <ChapterMark number="00" title={t('chapter')} />
         <DisplayHeading text={t('intro')} size="xl" as="h1" />
       </section>
+      <nav
+        className="section-pad-x sticky top-20 z-30 bg-[color:var(--color-ink)]/85 backdrop-blur py-4 border-b border-[color:var(--color-rule)]"
+        aria-label={t('quickNav')}
+      >
+        <ul className="flex gap-6 overflow-x-auto">
+          {programs.map((p) => (
+            <li key={p.slug}>
+              <a
+                href={`#${p.slug}`}
+                className="text-mono-meta text-bone-mute hover:text-saffron whitespace-nowrap"
+              >
+                {p[locale].title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
       {programs.map((p, i) => (
-        <section key={p.slug} id={p.slug} className="section-pad-x section-pad-y border-t border-[color:var(--color-rule)]">
+        <section
+          key={p.slug}
+          id={p.slug}
+          className="section-pad-x section-pad-y border-t border-[color:var(--color-rule)] scroll-mt-32"
+        >
           <ChapterMark number={String(i + 1).padStart(2, '0')} title={p[locale].title.toUpperCase()} />
           <div className="mt-12 grid md:grid-cols-2 gap-12 items-center">
             <div className={`relative aspect-[4/5] rounded-lg overflow-hidden ${i % 2 ? 'md:order-2' : ''}`}>
