@@ -130,6 +130,17 @@
         "back": "Retour",
         "continue": "Continuer"
       }
+    },
+    "step04": {
+      "title": "Liens et médias",
+      "blurb": "Montre-nous ton travail. Photos et audio bienvenus.",
+      "fields": {
+        "photoLabel": "Photo de presse (max 5MB)",
+        "audioLabel": "Démos audio (max 2)",
+        "audioCount": "{n, plural, =1 {1 fichier} other {# fichiers}} prêt(s)",
+        "back": "Retour",
+        "continue": "Continuer"
+      }
     }
   },
   "footer": {

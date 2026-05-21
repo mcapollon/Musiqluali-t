@@ -130,6 +130,17 @@
         "back": "Back",
         "continue": "Continue"
       }
+    },
+    "step04": {
+      "title": "Links and media",
+      "blurb": "Show us your work. Photos and audio welcome.",
+      "fields": {
+        "photoLabel": "Press photo (max 5MB)",
+        "audioLabel": "Audio demos (max 2)",
+        "audioCount": "{n, plural, =1 {1 file} other {# files}} ready",
+        "back": "Back",
+        "continue": "Continue"
+      }
     }
   },
   "footer": {
