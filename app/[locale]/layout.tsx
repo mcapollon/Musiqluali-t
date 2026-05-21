@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages, setRequestLocale } from 'next-intl/server'
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
 import { ThemeProvider } from 'next-themes'
 import { routing, type AppLocale } from '@/lib/i18n/routing'
 import { LenisProvider } from '@/components/motion/LenisProvider'
@@ -14,6 +15,24 @@ import '../globals.css'
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'seo' })
+  return {
+    metadataBase: new URL('https://musiqlt.example'),
+    title: { default: t('siteTitle'), template: `%s · ${t('siteName')}` },
+    description: t('description'),
+    openGraph: { type: 'website', locale, siteName: t('siteName'), images: ['/og.png'] },
+    alternates: {
+      languages: {
+        fr: '/fr',
+        en: '/en',
+      },
+      canonical: '/' + locale,
+    },
+  }
 }
 
 export default async function LocaleLayout({

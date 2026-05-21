@@ -190,5 +190,10 @@
     "body": "This page doesn't exist. Head home or apply directly.",
     "home": "Home",
     "apply": "Apply"
+  },
+  "seo": {
+    "siteName": "Musiqlt",
+    "siteTitle": "Musiqlt · Artistic development for artists of colour",
+    "description": "Musiqlt supports artists of colour from Montréal. Studio, mentorship, development programs, community."
   }
 }

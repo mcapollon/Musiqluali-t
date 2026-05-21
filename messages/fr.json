@@ -190,5 +190,10 @@
     "body": "Cette page n'existe pas. Reviens à l'accueil ou postule directement.",
     "home": "Accueil",
     "apply": "Postuler"
+  },
+  "seo": {
+    "siteName": "Musiqlt",
+    "siteTitle": "Musiqlt · Développement artistique pour artistes de couleur",
+    "description": "Musiqlt accompagne les artistes de couleur depuis Montréal. Studio, mentorat, programmes de développement, communauté."
   }
 }
