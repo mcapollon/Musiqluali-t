@@ -52,6 +52,11 @@
     "audience": "WHO IT'S FOR",
     "cta": "Apply to this program"
   },
+  "artistsPage": {
+    "chapter": "ARTISTS",
+    "intro": "120 artists. One family.",
+    "filter": { "genre": "GENRE", "all": "ALL" }
+  },
   "nav": {
     "primary": "Primary",
     "menu": "Menu",

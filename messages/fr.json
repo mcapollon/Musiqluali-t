@@ -52,6 +52,11 @@
     "audience": "POUR QUI",
     "cta": "Postuler à ce programme"
   },
+  "artistsPage": {
+    "chapter": "ARTISTES",
+    "intro": "120 artistes. Une famille.",
+    "filter": { "genre": "GENRE", "all": "TOUS" }
+  },
   "nav": {
     "primary": "Navigation principale",
     "menu": "Menu",
