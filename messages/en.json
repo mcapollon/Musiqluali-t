@@ -45,6 +45,13 @@
     "team": { "chapter": "THE TEAM" },
     "milestones": { "chapter": "MILESTONES" }
   },
+  "programs": {
+    "chapter": "PROGRAMS",
+    "intro": "Four programs. One mission.",
+    "outcomes": "OUTCOMES",
+    "audience": "WHO IT'S FOR",
+    "cta": "Apply to this program"
+  },
   "nav": {
     "primary": "Primary",
     "menu": "Menu",

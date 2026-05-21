@@ -45,6 +45,13 @@
     "team": { "chapter": "L'ÉQUIPE" },
     "milestones": { "chapter": "JALONS" }
   },
+  "programs": {
+    "chapter": "PROGRAMMES",
+    "intro": "Quatre programmes. Une mission.",
+    "outcomes": "RÉSULTATS ATTENDUS",
+    "audience": "POUR QUI",
+    "cta": "Postuler à ce programme"
+  },
   "nav": {
     "primary": "Navigation principale",
     "menu": "Menu",
