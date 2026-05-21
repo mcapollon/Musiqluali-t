@@ -61,7 +61,9 @@ export function SiteFooter() {
             <a href="#" aria-label="YouTube"><Youtube className="size-5" /></a>
           </div>
           <form className="mt-6 flex gap-2" onSubmit={(e) => e.preventDefault()}>
+            <label htmlFor="footer-newsletter-email" className="sr-only">{t('newsletterPlaceholder')}</label>
             <input
+              id="footer-newsletter-email"
               type="email"
               placeholder={t('newsletterPlaceholder')}
               className="flex-1 bg-transparent border-b border-[color:var(--color-rule)] py-2 focus:outline-none focus:border-saffron"

@@ -15,7 +15,8 @@ export function HomeNewsletter() {
           className="flex gap-2 w-full md:max-w-md"
           onSubmit={(e) => { e.preventDefault(); toast.success(t('toast')) }}
         >
-          <input type="email" required placeholder={t('placeholder')} className="flex-1 bg-transparent border-b border-[color:var(--color-rule)] py-3 focus:outline-none focus:border-saffron" />
+          <label htmlFor="home-newsletter-email" className="sr-only">{t('placeholder')}</label>
+          <input id="home-newsletter-email" type="email" required placeholder={t('placeholder')} className="flex-1 bg-transparent border-b border-[color:var(--color-rule)] py-3 focus:outline-none focus:border-saffron" />
           <button type="submit" className="text-mono-meta text-saffron">{t('subscribe')}</button>
         </form>
       </div>

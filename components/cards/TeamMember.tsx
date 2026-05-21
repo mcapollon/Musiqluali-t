@@ -10,7 +10,12 @@ export function TeamMember({ member }: { member: TeamItem }) {
   const locale = useLocale() as 'fr' | 'en'
   return (
     <div className="space-y-4">
-      <button onClick={() => setOpen((v) => !v)} className="block w-full text-left">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="block w-full text-left"
+      >
         <div className="relative aspect-[3/4] overflow-hidden rounded-md">
           <Image src={member.photo} alt={member.name} fill sizes="33vw" className="object-cover" />
         </div>
