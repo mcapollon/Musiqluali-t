@@ -3,11 +3,13 @@ import { ChapterMark } from '@/components/editorial/ChapterMark'
 import { EventRow } from '@/components/cards/EventRow'
 import { events } from '@/lib/mock/events'
 
+// show only upcoming; computed at module load (server-rendered)
+const NOW = Date.now()
+const UPCOMING = events.filter((e) => new Date(e.dateISO).getTime() >= NOW).slice(0, 3)
+
 export function HomeEvents() {
   const t = useTranslations('home.events')
-  // show only upcoming
-  const now = Date.now()
-  const upcoming = events.filter((e) => new Date(e.dateISO).getTime() >= now).slice(0, 3)
+  const upcoming = UPCOMING
   return (
     <section className="section-pad-x section-pad-y space-y-12">
       <ChapterMark number="04" title={t('chapter')} />
