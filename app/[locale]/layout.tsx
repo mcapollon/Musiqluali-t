@@ -1,7 +1,10 @@
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
+import { ThemeProvider } from 'next-themes'
 import { routing, type AppLocale } from '@/lib/i18n/routing'
+import { LenisProvider } from '@/components/motion/LenisProvider'
+import { Toaster } from '@/components/ui/sonner'
 import '../globals.css'
 
 export function generateStaticParams() {
@@ -23,9 +26,14 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
-        <NextIntlClientProvider messages={messages} locale={locale}>
-          {children}
-        </NextIntlClientProvider>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <NextIntlClientProvider messages={messages} locale={locale}>
+            <LenisProvider>
+              {children}
+              <Toaster position="bottom-right" />
+            </LenisProvider>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
