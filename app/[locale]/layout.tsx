@@ -8,6 +8,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { SkipToContent } from '@/components/chrome/SkipToContent'
 import { SiteHeader } from '@/components/chrome/SiteHeader'
 import { SiteFooter } from '@/components/chrome/SiteFooter'
+import { StickyMiniPlayer } from '@/components/media/StickyMiniPlayer'
 import { fraunces, inter, jetbrains } from '@/app/fonts'
 import '../globals.css'
 
@@ -37,6 +38,7 @@ export default async function LocaleLayout({
               <SiteHeader />
               <main id="main" className="pt-20">{children}</main>
               <SiteFooter />
+              <StickyMiniPlayer />
               <Toaster position="bottom-right" />
             </LenisProvider>
           </NextIntlClientProvider>
