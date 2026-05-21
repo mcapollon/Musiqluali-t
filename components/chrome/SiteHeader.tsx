@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/lib/i18n/navigation'
 import { LocaleSwitch } from './LocaleSwitch'
+import { ThemeToggle } from './ThemeToggle'
 import { Button } from '@/components/primitives/Button'
 import { MobileNavOverlay } from './MobileNavOverlay'
 import { useScrollPos } from '@/hooks/useScrollPos'
@@ -42,6 +43,7 @@ export function SiteHeader() {
             ))}
           </nav>
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
             <LocaleSwitch />
             <Link href="/apply">
               <Button size="sm">{t('apply')}</Button>

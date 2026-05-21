@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import { Link } from '@/lib/i18n/navigation'
 import { LocaleSwitch } from './LocaleSwitch'
+import { ThemeToggle } from './ThemeToggle'
 import { Button } from '@/components/primitives/Button'
 import { useTranslations } from 'next-intl'
 import { useEffect } from 'react'
@@ -53,7 +54,10 @@ export function MobileNavOverlay({ open, onClose }: { open: boolean; onClose: ()
             ))}
           </nav>
           <div className="section-pad-x absolute inset-x-0 bottom-8 flex items-center justify-between">
-            <LocaleSwitch />
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <LocaleSwitch />
+            </div>
             <Link href="/apply" onClick={onClose}>
               <Button size="md">{t('apply')}</Button>
             </Link>
