@@ -141,7 +141,39 @@
         "back": "Back",
         "continue": "Continue"
       }
+    },
+    "step05": {
+      "title": "Review & submit",
+      "blurb": "Re-read. Adjust. Send.",
+      "summary": {
+        "account": "ACCOUNT",
+        "identity": "IDENTITY",
+        "journey": "JOURNEY",
+        "links": "LINKS"
+      },
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "stageName": "Stage name",
+        "city": "City",
+        "genres": "Genres",
+        "yearsActive": "Years",
+        "currentProject": "Current project",
+        "interests": "Interests"
+      },
+      "finalConsent": "I certify that the above information is accurate.",
+      "back": "Back",
+      "submit": "Submit application",
+      "submitting": "Submitting…"
     }
+  },
+  "confirmation": {
+    "steps": {
+      "review": { "title": "REVIEW", "body": "We read your application within 5 business days." },
+      "interview": { "title": "INTERVIEW", "body": "If we connect, we schedule a 30-min meeting." },
+      "onboarding": { "title": "ONBOARDING", "body": "Program kickoff at the next intake." }
+    },
+    "home": "Back to home"
   },
   "footer": {
     "blurb": "Artistic development in music for artists of colour, by artists of colour. Montréal.",

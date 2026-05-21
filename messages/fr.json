@@ -141,7 +141,39 @@
         "back": "Retour",
         "continue": "Continuer"
       }
+    },
+    "step05": {
+      "title": "Revue et envoi",
+      "blurb": "Relis. Ajuste. Envoie.",
+      "summary": {
+        "account": "COMPTE",
+        "identity": "IDENTITÉ",
+        "journey": "PARCOURS",
+        "links": "LIENS"
+      },
+      "fields": {
+        "name": "Nom",
+        "email": "Courriel",
+        "stageName": "Nom de scène",
+        "city": "Ville",
+        "genres": "Genres",
+        "yearsActive": "Années",
+        "currentProject": "Projet actuel",
+        "interests": "Intérêts"
+      },
+      "finalConsent": "Je certifie que les informations ci-dessus sont exactes.",
+      "back": "Retour",
+      "submit": "Envoyer ma candidature",
+      "submitting": "Envoi…"
     }
+  },
+  "confirmation": {
+    "steps": {
+      "review": { "title": "REVUE", "body": "On lit ta candidature dans les 5 jours ouvrables." },
+      "interview": { "title": "ENTREVUE", "body": "Si on accroche, on planifie une rencontre 30 min." },
+      "onboarding": { "title": "ONBOARDING", "body": "Démarrage du programme dès la rentrée." }
+    },
+    "home": "Retour à l'accueil"
   },
   "footer": {
     "blurb": "Développement artistique en musique pour artistes de couleur, par artistes de couleur. Montréal.",
