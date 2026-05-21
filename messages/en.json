@@ -184,5 +184,11 @@
     "subscribe": "SUBSCRIBE",
     "legal": { "privacy": "Privacy", "terms": "Terms" },
     "nav": { "programs": "Programs", "artists": "Artists", "events": "Events", "about": "About", "contact": "Contact", "apply": "Apply" }
+  },
+  "notFound": {
+    "eyebrow": "LOST?",
+    "body": "This page doesn't exist. Head home or apply directly.",
+    "home": "Home",
+    "apply": "Apply"
   }
 }

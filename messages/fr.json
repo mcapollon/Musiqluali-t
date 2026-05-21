@@ -184,5 +184,11 @@
     "subscribe": "S'INSCRIRE",
     "legal": { "privacy": "Confidentialité", "terms": "CGU" },
     "nav": { "programs": "Programmes", "artists": "Artistes", "events": "Événements", "about": "À propos", "contact": "Contact", "apply": "Postuler" }
+  },
+  "notFound": {
+    "eyebrow": "PERDU·E ?",
+    "body": "Cette page n'existe pas. Reviens à l'accueil ou postule directement.",
+    "home": "Accueil",
+    "apply": "Postuler"
   }
 }
