@@ -1,6 +1,6 @@
-// Source: https://archive.org/download/charleston1925/charleston1925_vbr.mp3
-// Title: Charleston (Fox Trot) — archive.org item "charleston1925" (1925 recording)
-// License: Public Domain (http://creativecommons.org/licenses/publicdomain/)
+// Hero audio: "Jazz" (lofi / modern jazz) by AtlasAudio
+// Source: https://pixabay.com/music/lofi-jazz-490623/ (cdn: https://cdn.pixabay.com/download/audio/2026/02/25/audio_9c6b93c2e0.mp3)
+// License: Pixabay Content License (royalty-free, no attribution required)
 
 type Engine = {
   start: () => void
