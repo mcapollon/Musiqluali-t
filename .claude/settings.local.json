@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "FileSystem(*)",
+      "PowerShell(*)",
+      "Terminal(*)",
+      "WindowsRegistry(*)",
+      "WindowsServices(*)",
+      "Bash(pnpm *)",
+      "Bash(git *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(curl *)",
+      "Bash(pnpm *)",
+      "Bash(git --version)"
+    ],
+    "additionalDirectories": [
+      "\\tmp"
+    ]
+  }
+}
