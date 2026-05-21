@@ -1,4 +1,14 @@
 {
   "common": { "siteName": "Musiqlt" },
-  "home": { "tagline": "Le son. La culture. La relève." }
+  "home": { "tagline": "Le son. La culture. La relève." },
+  "nav": {
+    "primary": "Navigation principale",
+    "menu": "Menu",
+    "programs": "Programmes",
+    "artists": "Artistes",
+    "events": "Événements",
+    "about": "À propos",
+    "contact": "Contact",
+    "apply": "Postuler"
+  }
 }

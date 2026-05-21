@@ -5,6 +5,8 @@ import { ThemeProvider } from 'next-themes'
 import { routing, type AppLocale } from '@/lib/i18n/routing'
 import { LenisProvider } from '@/components/motion/LenisProvider'
 import { Toaster } from '@/components/ui/sonner'
+import { SkipToContent } from '@/components/chrome/SkipToContent'
+import { SiteHeader } from '@/components/chrome/SiteHeader'
 import { fraunces, inter, jetbrains } from '@/app/fonts'
 import '../globals.css'
 
@@ -30,7 +32,9 @@ export default async function LocaleLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <NextIntlClientProvider messages={messages} locale={locale}>
             <LenisProvider>
-              {children}
+              <SkipToContent label={locale === 'fr' ? 'Aller au contenu' : 'Skip to content'} />
+              <SiteHeader />
+              <main id="main" className="pt-20">{children}</main>
               <Toaster position="bottom-right" />
             </LenisProvider>
           </NextIntlClientProvider>

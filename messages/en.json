@@ -1,4 +1,14 @@
 {
   "common": { "siteName": "Musiqlt" },
-  "home": { "tagline": "The sound. The culture. The next wave." }
+  "home": { "tagline": "The sound. The culture. The next wave." },
+  "nav": {
+    "primary": "Primary",
+    "menu": "Menu",
+    "programs": "Programs",
+    "artists": "Artists",
+    "events": "Events",
+    "about": "About",
+    "contact": "Contact",
+    "apply": "Apply"
+  }
 }
