@@ -10,5 +10,15 @@
     "about": "About",
     "contact": "Contact",
     "apply": "Apply"
+  },
+  "footer": {
+    "blurb": "Artistic development in music for artists of colour, by artists of colour. Montréal.",
+    "sitemap": "Sitemap",
+    "contactLabel": "Contact",
+    "social": "Social",
+    "newsletterPlaceholder": "Your email",
+    "subscribe": "SUBSCRIBE",
+    "legal": { "privacy": "Privacy", "terms": "Terms" },
+    "nav": { "programs": "Programs", "artists": "Artists", "events": "Events", "about": "About", "contact": "Contact", "apply": "Apply" }
   }
 }

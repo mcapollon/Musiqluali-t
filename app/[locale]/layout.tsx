@@ -7,6 +7,7 @@ import { LenisProvider } from '@/components/motion/LenisProvider'
 import { Toaster } from '@/components/ui/sonner'
 import { SkipToContent } from '@/components/chrome/SkipToContent'
 import { SiteHeader } from '@/components/chrome/SiteHeader'
+import { SiteFooter } from '@/components/chrome/SiteFooter'
 import { fraunces, inter, jetbrains } from '@/app/fonts'
 import '../globals.css'
 
@@ -35,6 +36,7 @@ export default async function LocaleLayout({
               <SkipToContent label={locale === 'fr' ? 'Aller au contenu' : 'Skip to content'} />
               <SiteHeader />
               <main id="main" className="pt-20">{children}</main>
+              <SiteFooter />
               <Toaster position="bottom-right" />
             </LenisProvider>
           </NextIntlClientProvider>

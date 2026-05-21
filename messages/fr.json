@@ -10,5 +10,15 @@
     "about": "À propos",
     "contact": "Contact",
     "apply": "Postuler"
+  },
+  "footer": {
+    "blurb": "Développement artistique en musique pour artistes de couleur, par artistes de couleur. Montréal.",
+    "sitemap": "Plan du site",
+    "contactLabel": "Contact",
+    "social": "Réseaux sociaux",
+    "newsletterPlaceholder": "Ton courriel",
+    "subscribe": "S'INSCRIRE",
+    "legal": { "privacy": "Confidentialité", "terms": "CGU" },
+    "nav": { "programs": "Programmes", "artists": "Artistes", "events": "Événements", "about": "À propos", "contact": "Contact", "apply": "Postuler" }
   }
 }
