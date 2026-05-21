@@ -63,6 +63,21 @@
     "upcoming": "UPCOMING",
     "past": "PAST"
   },
+  "contact": {
+    "chapter": "CONTACT",
+    "intro": "We want to hear from you.",
+    "body": "Question, collaboration, partnership. Write to us, we reply within 48h.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "subjects": { "general": "General", "apply": "Apply", "press": "Press", "partner": "Partnership" },
+      "message": "Message",
+      "submit": "Send",
+      "successToast": "Message sent. (demo)",
+      "errors": { "name": "Name required (min. 2 chars)", "email": "Invalid email", "message": "Message too short (min. 10 chars)" }
+    }
+  },
   "nav": {
     "primary": "Primary",
     "menu": "Menu",

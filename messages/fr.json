@@ -63,6 +63,21 @@
     "upcoming": "À VENIR",
     "past": "PASSÉS"
   },
+  "contact": {
+    "chapter": "CONTACT",
+    "intro": "On veut t'entendre.",
+    "body": "Question, collaboration, partenariat. Écris-nous, on revient vers toi en 48h.",
+    "form": {
+      "name": "Nom",
+      "email": "Courriel",
+      "subject": "Sujet",
+      "subjects": { "general": "Général", "apply": "Postuler", "press": "Presse", "partner": "Partenariat" },
+      "message": "Message",
+      "submit": "Envoyer",
+      "successToast": "Message envoyé. (démo)",
+      "errors": { "name": "Nom requis (min. 2 caractères)", "email": "Courriel invalide", "message": "Message trop court (min. 10 caractères)" }
+    }
+  },
   "nav": {
     "primary": "Navigation principale",
     "menu": "Menu",
