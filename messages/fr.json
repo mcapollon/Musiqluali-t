@@ -14,7 +14,24 @@
     },
     "programs": { "chapter": "PROGRAMMES" },
     "artists": { "chapter": "LA RELÈVE" },
-    "events": { "chapter": "ÉVÉNEMENTS" }
+    "events": { "chapter": "ÉVÉNEMENTS" },
+    "quote": {
+      "quote": "On ne demande pas l'autorisation. On bâtit la table, on installe les chaises, on invite tout le monde.",
+      "attribution": "Imani Joseph, fondatrice"
+    },
+    "applyCta": {
+      "headline": "Tu fais de la musique. On bâtit ta carrière.",
+      "blurb": "Postule au programme. Trois tours d'admission par année.",
+      "primaryCta": "Postuler",
+      "secondaryCta": "Découvrir nos programmes"
+    },
+    "newsletter": {
+      "eyebrow": "INFOLETTRE",
+      "headline": "Reste dans la boucle.",
+      "placeholder": "Ton courriel",
+      "subscribe": "S'INSCRIRE",
+      "toast": "Inscription enregistrée. (démo)"
+    }
   },
   "nav": {
     "primary": "Navigation principale",

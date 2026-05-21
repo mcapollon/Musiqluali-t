@@ -14,7 +14,24 @@
     },
     "programs": { "chapter": "PROGRAMS" },
     "artists": { "chapter": "THE NEXT WAVE" },
-    "events": { "chapter": "EVENTS" }
+    "events": { "chapter": "EVENTS" },
+    "quote": {
+      "quote": "We don't ask for permission. We build the table, we set the chairs, we invite everyone.",
+      "attribution": "Imani Joseph, founder"
+    },
+    "applyCta": {
+      "headline": "You make music. We build your career.",
+      "blurb": "Apply to the program. Three admission rounds each year.",
+      "primaryCta": "Apply",
+      "secondaryCta": "Discover our programs"
+    },
+    "newsletter": {
+      "eyebrow": "NEWSLETTER",
+      "headline": "Stay in the loop.",
+      "placeholder": "Your email",
+      "subscribe": "SUBSCRIBE",
+      "toast": "Subscription saved. (demo)"
+    }
   },
   "nav": {
     "primary": "Primary",
