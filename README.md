@@ -56,6 +56,8 @@ Open http://localhost:3000 — auto-redirects to `/fr`.
 
 All artist names, bios, photos, and audio clips are placeholders. Photos sourced from Unsplash (royalty-free), audio files are empty placeholders (replace before any real demo where audio playback is needed). Replace before production launch.
 
+- Hero audio: *Charleston (Fox Trot)*, 1925, sourced from archive.org (item `charleston1925`). License: Public Domain.
+
 ## Deploy
 
 Vercel-ready. Connect the repo:
