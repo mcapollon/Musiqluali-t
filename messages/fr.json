@@ -1,6 +1,14 @@
 {
   "common": { "siteName": "Musiqlt" },
-  "home": { "tagline": "Le son. La culture. La relève." },
+  "home": {
+    "tagline": "Le son. La culture. La relève.",
+    "hero": {
+      "tag": "MTL · EST. 2017 · ARTIST DEVELOPMENT",
+      "headlineFr": "Le son. La culture. La relève.",
+      "headlineEn": "The sound. The culture. The next wave.",
+      "marqueeLabel": "Artistes Musiqlt"
+    }
+  },
   "nav": {
     "primary": "Navigation principale",
     "menu": "Menu",
