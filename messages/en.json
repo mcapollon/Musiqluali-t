@@ -104,6 +104,20 @@
         "consent_error": "You must accept to continue",
         "continue": "Continue"
       }
+    },
+    "step02": {
+      "title": "Your artist identity",
+      "blurb": "Set the foundation. We want to understand who you are.",
+      "fields": {
+        "stageName": "Stage name",
+        "pronouns": "Pronouns",
+        "pronouns_placeholder": "e.g. she, he, they",
+        "city": "City",
+        "languages": "PRIMARY LANGUAGE(S)",
+        "genres": "GENRE(S)",
+        "back": "Back",
+        "continue": "Continue"
+      }
     }
   },
   "footer": {

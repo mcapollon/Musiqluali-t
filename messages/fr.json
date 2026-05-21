@@ -104,6 +104,20 @@
         "consent_error": "Tu dois accepter pour continuer",
         "continue": "Continuer"
       }
+    },
+    "step02": {
+      "title": "Ton identité artistique",
+      "blurb": "Pose les bases. On veut comprendre qui tu es.",
+      "fields": {
+        "stageName": "Nom de scène",
+        "pronouns": "Pronoms",
+        "pronouns_placeholder": "ex. elle, il, iel",
+        "city": "Ville",
+        "languages": "LANGUE(S) PRINCIPALE(S)",
+        "genres": "GENRE(S)",
+        "back": "Retour",
+        "continue": "Continuer"
+      }
     }
   },
   "footer": {
