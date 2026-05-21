@@ -33,6 +33,18 @@
       "toast": "Subscription saved. (demo)"
     }
   },
+  "about": {
+    "chapter": "ABOUT",
+    "intro": "Building the industry we never saw.",
+    "founderAlt": "Imani Joseph, founder",
+    "story": {
+      "chapter": "OUR STORY",
+      "body1": "In 2017, Imani Joseph left a comfortable major-label job. She opened a small studio in the Mile-End with a fixed idea: give artists of colour what she'd never received — the time, the listening, the respect, and a plan.",
+      "body2": "Eight years later, Musiqlt is an ecosystem: studio, mentorship, development programs, community nights. More than 120 artists have come through our doors."
+    },
+    "team": { "chapter": "THE TEAM" },
+    "milestones": { "chapter": "MILESTONES" }
+  },
   "nav": {
     "primary": "Primary",
     "menu": "Menu",

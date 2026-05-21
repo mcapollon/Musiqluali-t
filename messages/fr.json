@@ -33,6 +33,18 @@
       "toast": "Inscription enregistrée. (démo)"
     }
   },
+  "about": {
+    "chapter": "À PROPOS",
+    "intro": "Bâtir l'industrie qu'on n'a pas vue.",
+    "founderAlt": "Imani Joseph, fondatrice",
+    "story": {
+      "chapter": "NOTRE HISTOIRE",
+      "body1": "En 2017, Imani Joseph quitte un emploi confortable dans une major. Elle ouvre un petit studio dans le Mile-End, avec une idée fixe: offrir aux artistes de couleur ce qu'elle n'avait jamais reçu — le temps, l'écoute, le respect, et un plan.",
+      "body2": "Huit ans plus tard, Musiqlt est devenu un écosystème: studio, mentorat, programmes de développement, soirées communautaires. Plus de 120 artistes sont passés par nos portes."
+    },
+    "team": { "chapter": "L'ÉQUIPE" },
+    "milestones": { "chapter": "JALONS" }
+  },
   "nav": {
     "primary": "Navigation principale",
     "menu": "Menu",
