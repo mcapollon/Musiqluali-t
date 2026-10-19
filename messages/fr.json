@@ -96,7 +96,8 @@
     "chapter": "ÉVÉNEMENTS",
     "intro": "Showcase. Atelier. Communauté.",
     "upcoming": "À VENIR",
-    "past": "PASSÉS"
+    "past": "PASSÉS",
+    "noneUpcoming": "Aucune date annoncée pour l'instant. Inscris-toi à l'infolettre pour être avisé·e."
   },
   "contact": {
     "chapter": "CONTACT",
@@ -126,6 +127,9 @@
   },
   "wizard": {
     "progressLabel": "Progression du formulaire",
+    "stepOf": "Étape {n} sur {total}",
+    "goToStep": "Aller à l'étape {n}",
+    "edit": "Modifier : {section}",
     "step01": {
       "title": "Crée ton compte",
       "blurb": "Quelques infos pour démarrer. Tes données restent privées.",
@@ -226,6 +230,19 @@
     "body": "Cette page n'existe pas. Reviens à l'accueil ou postule directement.",
     "home": "Accueil",
     "apply": "Postuler"
+  },
+  "a11y": {
+    "close": "Fermer",
+    "audioPlayer": "Lecteur audio",
+    "previous": "Piste précédente",
+    "next": "Piste suivante",
+    "play": "Lecture",
+    "pause": "Pause",
+    "closePlayer": "Fermer le lecteur",
+    "ambientPlay": "Lancer la musique d'ambiance",
+    "ambientPause": "Arrêter la musique d'ambiance",
+    "mute": "Couper le son",
+    "unmute": "Rétablir le son"
   },
   "seo": {
     "siteName": "MusiqualiT",

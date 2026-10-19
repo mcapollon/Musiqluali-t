@@ -96,7 +96,8 @@
     "chapter": "EVENTS",
     "intro": "Showcase. Workshop. Community.",
     "upcoming": "UPCOMING",
-    "past": "PAST"
+    "past": "PAST",
+    "noneUpcoming": "No dates announced yet. Join the newsletter to hear first."
   },
   "contact": {
     "chapter": "CONTACT",
@@ -126,6 +127,9 @@
   },
   "wizard": {
     "progressLabel": "Form progress",
+    "stepOf": "Step {n} of {total}",
+    "goToStep": "Go to step {n}",
+    "edit": "Edit {section}",
     "step01": {
       "title": "Create your account",
       "blurb": "Just a few details to start. Your data stays private.",
@@ -226,6 +230,19 @@
     "body": "This page doesn't exist. Head home or apply directly.",
     "home": "Home",
     "apply": "Apply"
+  },
+  "a11y": {
+    "close": "Close",
+    "audioPlayer": "Audio player",
+    "previous": "Previous track",
+    "next": "Next track",
+    "play": "Play",
+    "pause": "Pause",
+    "closePlayer": "Close player",
+    "ambientPlay": "Play background music",
+    "ambientPause": "Pause background music",
+    "mute": "Mute",
+    "unmute": "Unmute"
   },
   "seo": {
     "siteName": "MusiqualiT",
