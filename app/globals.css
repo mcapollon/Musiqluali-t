@@ -188,8 +188,8 @@
   animation-delay: calc(var(--reveal-delay, 0.1s) + var(--i, 0) * 70ms);
 }
 .reveal-wait .word-rise { animation-play-state: paused; }
-/* Hold the reveal until the logo opening hands off (≈1.45 s after first paint). */
-html[data-intro='play'] { --reveal-delay: 1.45s; }
+/* Hold the reveal until the logo opening hands off (FLY_AT in LogoIntro.tsx, ≈2.05 s). */
+html[data-intro='play'] { --reveal-delay: 2.05s; }
 @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08) translate3d(-1%, -1%, 0); } }
 /* Entrances: wizard steps, player, bios (rise) and overlays (fade). */
 @keyframes rise-in { from { opacity: 0; transform: translateY(14px); } }
@@ -207,9 +207,9 @@ html[data-intro='play'] { --reveal-delay: 1.45s; }
  * shown and the header wordmark held back for the hand-off.
  */
 .logo-intro { display: none; }
-/* Failsafes: if JS never runs, the room lights up on its own after 4 s. */
-html[data-intro='play'] .logo-intro { display: grid; animation: intro-failsafe 0.4s ease 4s forwards; }
-html[data-intro='play'] [data-wordmark-target] { opacity: 0; animation: intro-reveal 0.4s ease 4s forwards; }
+/* Failsafes: if JS never runs, the room lights up on its own after 5 s. */
+html[data-intro='play'] .logo-intro { display: grid; animation: intro-failsafe 0.4s ease 5s forwards; }
+html[data-intro='play'] [data-wordmark-target] { opacity: 0; animation: intro-reveal 0.4s ease 5s forwards; }
 /* Fade-up starts at first paint, not at hydration. */
 html[data-intro='play'] .logo-intro-mark { animation: intro-in 1s var(--ease-gala) both; }
 @keyframes intro-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }

@@ -6,6 +6,12 @@ import { INTRO_STORAGE_KEY } from './logoIntroScript'
 const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)'
 const SWEEP_EASE = 'cubic-bezier(0.45, 0, 0.2, 1)'
 
+// Timeline (ms from navigation start). Keep FLY_AT in sync with --reveal-delay in globals.css.
+const SWEEP_AT = 350
+const SWEEP_MS = 1300
+const FLY_AT = 2050 // logo holds on its own for a beat before the hand-off
+const FLY_MS = 1100
+
 /** Native Web Animations API: no library, transform/opacity only, holds its end state. */
 function play(el: HTMLElement, keyframes: Keyframe[], opts: KeyframeAnimationOptions) {
   return el.animate(keyframes, { fill: 'forwards', ...opts })
@@ -14,10 +20,10 @@ const WORDMARK_SIZE = 'text-[clamp(3.25rem,13vw,11rem)] pb-[0.15em]'
 
 /**
  * The opening: the wordmark fades up on black, a band of light crosses it,
- * then it travels into the header as the room lights come up. ≤ 2.4 s,
+ * holds a beat, then glides into the header as the room lights come up. ≈ 3.2 s,
  * skippable by any click, key, wheel or touch, once per session, never with
  * reduced motion (gated by INTRO_SCRIPT before first paint). CSS failsafes in
- * globals.css clear it after 4 s if this script never runs.
+ * globals.css clear it after 5 s if this script never runs.
  */
 export function LogoIntro() {
   const overlayRef = useRef<HTMLDivElement>(null)
@@ -68,13 +74,13 @@ export function LogoIntro() {
     // 1. Fade up on black: pure CSS (.logo-intro-mark), already running since first paint.
     const elapsed = Math.min(performance.now(), 1400)
     // 2. A band of light crosses the letters (window moves right, its contents counter-move: transform only).
-    if (elapsed < 900) {
-      const sweep = { duration: 1150, delay: Math.max(0, 350 - elapsed), easing: SWEEP_EASE }
+    if (elapsed < 1200) {
+      const sweep = { duration: SWEEP_MS, delay: Math.max(0, SWEEP_AT - elapsed), easing: SWEEP_EASE }
       controls.push(play(band, [{ transform: 'translateX(-100%)' }, { transform: 'translateX(286%)' }], sweep))
       controls.push(play(bandInner, [{ transform: 'translateX(35%)' }, { transform: 'translateX(-100%)' }], sweep))
     }
     // 3. Hand-off: the mark flies into the header while the room lights come up.
-    const flyAt = Math.max(0, 1450 - elapsed)
+    const flyAt = Math.max(0, FLY_AT - elapsed)
     timers.push(
       window.setTimeout(() => {
         const target = document.querySelector<HTMLElement>('[data-wordmark-target]')
@@ -82,14 +88,14 @@ export function LogoIntro() {
         if (target && from.width > 0) {
           const to = target.getBoundingClientRect()
           const moveTo = `translate(${to.left - from.left}px, ${to.top - from.top}px) scale(${to.width / from.width})`
-          controls.push(play(mark, [{ transform: 'none' }, { transform: moveTo }], { duration: 850, easing: EASE }))
+          controls.push(play(mark, [{ transform: 'none' }, { transform: moveTo }], { duration: FLY_MS, easing: EASE }))
         } else {
           controls.push(play(mark, [{ opacity: 1 }, { opacity: 0 }], { duration: 600 }))
         }
-        controls.push(play(bg, [{ opacity: 1 }, { opacity: 0 }], { duration: 850, easing: 'ease-out' }))
+        controls.push(play(bg, [{ opacity: 1 }, { opacity: 0 }], { duration: FLY_MS, easing: 'ease-out' }))
       }, flyAt),
     )
-    timers.push(window.setTimeout(finish, flyAt + 900))
+    timers.push(window.setTimeout(finish, flyAt + FLY_MS + 50))
 
     return () => {
       controls.forEach((c) => c.cancel())
