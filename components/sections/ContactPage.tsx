@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl'
-import { ChapterMark } from '@/components/editorial/ChapterMark'
+import { PageEyebrow } from '@/components/editorial/PageEyebrow'
 import { DisplayHeading } from '@/components/editorial/DisplayHeading'
 import { ContactForm } from '@/components/forms/ContactForm'
 
@@ -8,8 +8,8 @@ export function ContactPage() {
   return (
     <section className="section-pad-x grid gap-16 pt-14 pb-[clamp(4.5rem,11vw,10rem)] md:grid-cols-[1fr_minmax(0,34rem)] md:gap-24 md:pt-24">
       <div className="space-y-10">
-        <ChapterMark number="00" title={t('chapter')} as="div" />
-        <DisplayHeading text={t('intro')} size="xl" as="h1" />
+        <PageEyebrow label={t('chapter')} />
+        <DisplayHeading text={t('intro')} size="xl" as="h1" reveal="load" />
         <p className="text-lede max-w-md text-bone-mute">{t('body')}</p>
         <div className="space-y-2 border-t border-rule pt-6">
           <p className="text-mono-meta text-gold">Montréal, QC</p>

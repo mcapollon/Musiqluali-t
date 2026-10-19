@@ -194,8 +194,10 @@ html[data-intro='play'] { --reveal-delay: 1.45s; }
 /* Entrances: wizard steps, player, bios (rise) and overlays (fade). */
 @keyframes rise-in { from { opacity: 0; transform: translateY(14px); } }
 @keyframes fade-in { from { opacity: 0; } }
+@keyframes rule-draw { from { transform: scaleX(0); } }
 .animate-rise { animation: rise-in 0.8s var(--ease-gala) both; }
 .animate-fade { animation: fade-in 0.5s ease both; }
+.animate-rule { transform-origin: left; animation: rule-draw 1.1s var(--ease-gala) 0.2s both; }
 /* Audio waveform bars (scaled, not resized). */
 @keyframes wave { from { transform: scaleY(0.2); } to { transform: scaleY(0.9); } }
 
