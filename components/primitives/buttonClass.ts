@@ -1,0 +1,34 @@
+import { cn } from '@/lib/utils/cn'
+
+export type ButtonVariant = 'primary' | 'ghost' | 'quiet'
+export type ButtonSize = 'sm' | 'md' | 'lg'
+
+const variantClass: Record<ButtonVariant, string> = {
+  primary: 'bg-gold text-ink hover:bg-gold-bright',
+  ghost: 'bg-transparent text-bone border border-rule-strong hover:border-gold hover:text-gold-bright',
+  quiet: 'bg-transparent text-bone-mute hover:text-bone underline-offset-[6px] decoration-gold hover:underline',
+}
+
+const sizeClass: Record<ButtonSize, string> = {
+  sm: 'h-10 px-5 text-[0.6875rem]',
+  md: 'h-12 px-7 text-xs',
+  lg: 'h-14 px-9 text-sm',
+}
+
+/**
+ * Button look as a class string. Use it on a <Link>/<a> so a navigation
+ * control is one element (a link), never a <button> nested inside an <a>.
+ * Lives outside Button.tsx so server components can call it.
+ */
+export function buttonClass({
+  variant = 'primary',
+  size = 'md',
+  className,
+}: { variant?: ButtonVariant; size?: ButtonSize; className?: string | undefined } = {}) {
+  return cn(
+    'inline-flex items-center justify-center gap-3 rounded-none font-sans font-medium uppercase tracking-[0.18em] whitespace-nowrap transition-colors duration-500',
+    variantClass[variant],
+    sizeClass[size],
+    className,
+  )
+}

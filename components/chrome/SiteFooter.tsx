@@ -2,6 +2,8 @@
 
 import { useTranslations } from 'next-intl'
 import { Link } from '@/lib/i18n/navigation'
+import { GalaMark } from '@/components/editorial/GalaMark'
+import { Wordmark } from './Wordmark'
 
 function Instagram(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -34,10 +36,11 @@ export function SiteFooter() {
   const t = useTranslations('footer')
   const year = new Date().getFullYear()
   return (
-    <footer className="section-pad-x section-pad-y border-t border-[color:var(--color-rule)] mt-24">
+    <footer className="section-pad-x section-pad-y border-t border-rule">
+      <GalaMark className="mb-16" />
       <div className="grid gap-12 md:grid-cols-3">
         <div>
-          <span className="font-display text-3xl">MUSIQL<span className="text-gold">·</span>T</span>
+          <Wordmark className="text-4xl" />
           <p className="mt-4 text-bone-mute">{t('blurb')}</p>
         </div>
         <div>
@@ -53,7 +56,8 @@ export function SiteFooter() {
         </div>
         <div>
           <p className="text-mono-meta text-bone-mute mb-4">{t('contactLabel')}</p>
-          <p>Studio Musiqlt · Montréal QC</p>
+          <p>Montréal, QC</p>
+          {/* TODO: real contact email and social handles (placeholders below). */}
           <p><a href="mailto:bonjour@musiqlt.example" className="hover:text-gold">bonjour@musiqlt.example</a></p>
           <div className="mt-4 flex gap-4" aria-label={t('social')}>
             <a href="https://instagram.com/musiqlt" aria-label="Instagram"><Instagram className="size-5" /></a>
@@ -66,14 +70,14 @@ export function SiteFooter() {
               id="footer-newsletter-email"
               type="email"
               placeholder={t('newsletterPlaceholder')}
-              className="flex-1 bg-transparent border-b border-[color:var(--color-rule)] py-2 focus:outline-none focus:border-gold"
+              className="flex-1 bg-transparent border-b border-rule-strong py-2 placeholder:text-bone-mute focus:outline-none focus:border-gold"
             />
             <button type="submit" className="text-mono-meta text-gold">{t('subscribe')}</button>
           </form>
         </div>
       </div>
       <div className="mt-16 flex flex-wrap items-center justify-between gap-4 text-mono-meta text-bone-mute">
-        <span>© {year} Musiqlt</span>
+        <span>© {year} MusiqualiT</span>
         <div className="flex gap-6">
           <a href="#">{t('legal.privacy')}</a>
           <a href="#">{t('legal.terms')}</a>

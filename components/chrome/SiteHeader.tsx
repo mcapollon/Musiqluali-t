@@ -4,7 +4,8 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/lib/i18n/navigation'
 import { LocaleSwitch } from './LocaleSwitch'
 import { ThemeToggle } from './ThemeToggle'
-import { Button } from '@/components/primitives/Button'
+import { Wordmark } from './Wordmark'
+import { buttonClass } from '@/components/primitives/buttonClass'
 import { MobileNavOverlay } from './MobileNavOverlay'
 import { useScrollPos } from '@/hooks/useScrollPos'
 import { cn } from '@/lib/utils/cn'
@@ -27,37 +28,35 @@ export function SiteHeader() {
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 backdrop-blur transition-all duration-200',
-          past ? 'bg-[color:var(--color-ink)]/85 py-3' : 'py-5',
+          'fixed inset-x-0 top-0 z-50 transition-[background-color,padding,border-color] duration-700 ease-gala border-b',
+          past ? 'bg-ink/90 backdrop-blur py-3 border-rule' : 'py-5 border-transparent',
         )}
       >
-        <div className="section-pad-x flex items-center justify-between">
-          <Link href="/" className={cn('font-display tracking-tight transition-transform', past ? 'text-2xl' : 'text-3xl')}>
-            MUSIQL<span className="text-gold">·</span>T
+        <div className="section-pad-x flex items-center justify-between gap-6">
+          <Link href="/" className="inline-block shrink-0">
+            {/* data-wordmark-target: where the logo opening lands; hidden only while it plays. */}
+            <span data-wordmark-target className="inline-block">
+              <Wordmark className="block text-2xl md:text-[1.75rem]" />
+            </span>
           </Link>
-          <nav aria-label={t('primary')} className="hidden md:flex items-center gap-8">
+          <nav aria-label={t('primary')} className="hidden lg:flex items-center gap-8">
             {NAV_ROUTES.map((r) => (
-              <Link key={r.key} href={r.href} className="text-mono-meta text-bone-mute hover:text-bone">
+              <Link key={r.key} href={r.href} className="text-mono-meta text-bone-mute transition-colors hover:text-gold-bright">
                 {t(r.key)}
               </Link>
             ))}
           </nav>
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-4">
             <ThemeToggle />
             <LocaleSwitch />
-            <a href="#donate" className="text-mono-meta text-bone-mute hover:text-gold whitespace-nowrap">
+            <a href="#donate" className="text-mono-meta text-bone-mute hover:text-gold-bright whitespace-nowrap">
               {t('donate')}
             </a>
-            <Link href="/apply">
-              <Button size="sm">{t('apply')}</Button>
+            <Link href="/apply" className={buttonClass({ size: 'sm' })}>
+              {t('apply')}
             </Link>
           </div>
-          <button
-            type="button"
-            aria-label={t('menu')}
-            className="md:hidden p-2"
-            onClick={() => setOpen(true)}
-          >
+          <button type="button" aria-label={t('menu')} className="lg:hidden p-2 -mr-2" onClick={() => setOpen(true)}>
             <Menu className="size-6" />
           </button>
         </div>

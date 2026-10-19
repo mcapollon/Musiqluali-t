@@ -4,7 +4,8 @@ import { X } from 'lucide-react'
 import { Link } from '@/lib/i18n/navigation'
 import { LocaleSwitch } from './LocaleSwitch'
 import { ThemeToggle } from './ThemeToggle'
-import { Button } from '@/components/primitives/Button'
+import { buttonClass } from '@/components/primitives/buttonClass'
+import { Wordmark } from './Wordmark'
 import { useTranslations } from 'next-intl'
 import { useEffect } from 'react'
 
@@ -39,16 +40,16 @@ export function MobileNavOverlay({ open, onClose }: { open: boolean; onClose: ()
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[60] bg-ink"
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed inset-0 z-60 bg-ink"
         >
           <div className="section-pad-x flex h-16 items-center justify-between">
-            <span className="font-display text-2xl">MUSIQL<span className="text-gold">·</span>T</span>
+            <Wordmark className="text-2xl" />
             <button aria-label="Close" onClick={onClose} className="p-2"><X className="size-6" /></button>
           </div>
           <nav className="section-pad-x mt-8 flex flex-col gap-6">
             {NAV.map((r) => (
-              <Link key={r.key} href={r.href} onClick={onClose} className="text-display-m">
+              <Link key={r.key} href={r.href} onClick={onClose} className="text-display-l transition-colors hover:text-gold-bright">
                 {t(r.key)}
               </Link>
             ))}
@@ -61,8 +62,8 @@ export function MobileNavOverlay({ open, onClose }: { open: boolean; onClose: ()
                 {t('donate')}
               </a>
             </div>
-            <Link href="/apply" onClick={onClose}>
-              <Button size="md">{t('apply')}</Button>
+            <Link href="/apply" onClick={onClose} className={buttonClass({ size: 'md' })}>
+              {t('apply')}
             </Link>
           </div>
         </motion.div>
