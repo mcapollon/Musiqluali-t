@@ -32,14 +32,14 @@ export function Step01Account() {
   return (
     <motion.form
       key="step01"
-      initial={{ x: -16, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ y: 12, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       onSubmit={handleSubmit((d) => {
         patch(d)
         setStep(2)
       })}
-      className="space-y-6 max-w-xl"
+      className="max-w-xl space-y-8"
       noValidate
     >
       <div className="grid grid-cols-2 gap-4">

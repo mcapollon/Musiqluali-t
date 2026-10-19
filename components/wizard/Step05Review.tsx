@@ -28,10 +28,10 @@ export function Step05Review() {
   return (
     <motion.div
       key="step05"
-      initial={{ x: -16, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="space-y-6 max-w-xl"
+      initial={{ y: 12, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="max-w-xl space-y-8"
     >
       <ReviewSummaryCard
         title={t('summary.account')}
@@ -75,7 +75,7 @@ export function Step05Review() {
         <Checkbox checked={agree} onCheckedChange={(v) => setAgree(!!v)} />
         <span className="text-sm text-bone-mute">{t('finalConsent')}</span>
       </label>
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3 pt-4">
         <Button type="button" variant="ghost" onClick={() => setStep(4)}>
           ← {t('back')}
         </Button>

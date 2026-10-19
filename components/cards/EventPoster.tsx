@@ -11,7 +11,14 @@ import { flagship } from '@/lib/mock/home'
  * front of the type. With no published date, the flagship series is shown
  * as "date to be announced" rather than an invented one.
  */
-export function EventPoster({ event }: { event?: EventItem | undefined }) {
+export function EventPoster({
+  event,
+  headingAs: Heading = 'h3',
+}: {
+  event?: EventItem | undefined
+  /** h2 when the poster sits directly under a page h1. */
+  headingAs?: 'h2' | 'h3'
+}) {
   const t = useTranslations('home.events')
   const locale = useLocale() as 'fr' | 'en'
   const f = useFormatter()
@@ -35,7 +42,7 @@ export function EventPoster({ event }: { event?: EventItem | undefined }) {
         <p className="text-mono-meta text-gold-bright">{t('nextShow')}</p>
 
         <div>
-          <h3 className={event ? 'text-poster-l max-w-5xl' : 'text-poster-xl'}>{copy?.title ?? flagship.name}</h3>
+          <Heading className={event ? 'text-poster-l max-w-5xl' : 'text-poster-xl'}>{copy?.title ?? flagship.name}</Heading>
           {date ? (
             <p className="text-poster-l mt-4 text-gold">
               <time dateTime={event!.dateISO}>{f.dateTime(date, { day: '2-digit', month: 'long' })}</time>

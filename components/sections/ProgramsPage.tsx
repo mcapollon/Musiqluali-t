@@ -2,58 +2,60 @@ import Image from 'next/image'
 import { useLocale, useTranslations } from 'next-intl'
 import { Link } from '@/lib/i18n/navigation'
 import { ChapterMark } from '@/components/editorial/ChapterMark'
-import { DisplayHeading } from '@/components/editorial/DisplayHeading'
-import { Button } from '@/components/primitives/Button'
+import { PageIntro } from '@/components/editorial/PageIntro'
+import { buttonClass } from '@/components/primitives/buttonClass'
 import { programs } from '@/lib/mock/programs'
+import { cn } from '@/lib/utils/cn'
 
 export function ProgramsPage() {
   const t = useTranslations('programs')
   const locale = useLocale() as 'fr' | 'en'
   return (
     <>
-      <section className="section-pad-x section-pad-y pt-32">
-        <ChapterMark number="00" title={t('chapter')} />
-        <DisplayHeading text={t('intro')} size="xl" as="h1" />
-      </section>
+      <PageIntro chapter={t('chapter')} title={t('intro')} />
       <nav
-        className="section-pad-x sticky top-20 z-30 bg-[color:var(--color-ink)]/85 backdrop-blur py-4 border-b border-[color:var(--color-rule)]"
+        className="section-pad-x sticky top-16 z-30 border-y border-rule bg-ink/90 py-4 backdrop-blur"
         aria-label={t('quickNav')}
       >
-        <ul className="flex gap-6 overflow-x-auto">
-          {programs.map((p) => (
+        <ul className="flex gap-8 overflow-x-auto">
+          {programs.map((p, i) => (
             <li key={p.slug}>
-              <a
-                href={`#${p.slug}`}
-                className="text-mono-meta text-bone-mute hover:text-gold whitespace-nowrap"
-              >
-                {p[locale].title}
+              <a href={`#${p.slug}`} className="text-mono-meta whitespace-nowrap text-bone-mute transition-colors hover:text-gold-bright">
+                <span className="text-gold">{String(i + 1).padStart(2, '0')}</span> {p[locale].title}
               </a>
             </li>
           ))}
         </ul>
       </nav>
       {programs.map((p, i) => (
-        <section
-          key={p.slug}
-          id={p.slug}
-          className="section-pad-x section-pad-y border-t border-[color:var(--color-rule)] scroll-mt-32"
-        >
-          <ChapterMark number={String(i + 1).padStart(2, '0')} title={p[locale].title.toUpperCase()} />
-          <div className="mt-12 grid md:grid-cols-2 gap-12 items-center">
-            <div className={`relative aspect-[4/5] rounded-lg overflow-hidden ${i % 2 ? 'md:order-2' : ''}`}>
-              <Image src={p.cover} alt={p[locale].title} fill sizes="50vw" className="object-cover" />
+        <section key={p.slug} id={p.slug} className="section-pad-x section-pad-y scroll-mt-36 border-b border-rule">
+          <ChapterMark number={String(i + 1).padStart(2, '0')} title={p[locale].title} as="div" />
+          <div className="mt-12 grid items-center gap-12 md:mt-16 md:grid-cols-2 md:gap-20">
+            <div className={cn('grade-portrait relative aspect-[4/5]', i % 2 && 'md:order-2')}>
+              {/* PLACEHOLDER image (Unsplash) until real program photos are supplied. */}
+              <Image src={p.cover} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             </div>
-            <div className="space-y-6">
-              <h2 className="text-display-m font-display">{p[locale].title}</h2>
-              <p className="text-bone">{p[locale].blurb}</p>
+            <div className="space-y-8">
+              <h2 className="text-display-l">{p[locale].title}</h2>
+              <p className="text-lede">{p[locale].blurb}</p>
               <div>
-                <p className="text-mono-meta text-bone-mute mb-3">{t('outcomes')}</p>
-                <ul className="space-y-2 list-none">
-                  {p[locale].outcomes.map((o) => <li key={o} className="border-l-2 border-gold pl-3">{o}</li>)}
+                <p className="text-mono-meta mb-4 text-gold">{t('outcomes')}</p>
+                <ul className="space-y-3">
+                  {p[locale].outcomes.map((o) => (
+                    <li key={o} className="flex items-baseline gap-4 border-t border-rule pt-3">
+                      <span aria-hidden className="size-1.5 shrink-0 -translate-y-0.5 rotate-45 bg-gold" />
+                      {o}
+                    </li>
+                  ))}
                 </ul>
               </div>
-              <p className="text-mono-meta text-bone-mute">{t('audience')}: <span className="text-bone">{p[locale].audience}</span></p>
-              <Link href="/apply"><Button variant="primary">{t('cta')}</Button></Link>
+              <p className="text-bone-mute">
+                <span className="text-mono-meta mr-2 text-gold">{t('audience')}</span>
+                {p[locale].audience}
+              </p>
+              <Link href="/apply" className={buttonClass({ size: 'lg' })}>
+                {t('cta')}
+              </Link>
             </div>
           </div>
         </section>
