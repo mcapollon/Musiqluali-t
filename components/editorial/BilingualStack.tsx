@@ -2,21 +2,24 @@
 import { useLocale } from 'next-intl'
 import { DisplayHeading } from './DisplayHeading'
 
-type Props = { fr: string; en: string }
+type Props = { fr: string; en: string; emFr?: string; emEn?: string; play?: boolean }
 
-export function BilingualStack({ fr, en }: Props) {
+export function BilingualStack({ fr, en, emFr, emEn, play }: Props) {
   const locale = useLocale()
-  const primary = locale === 'fr' ? fr : en
-  const alt = locale === 'fr' ? en : fr
+  const isFr = locale === 'fr'
   return (
     <div className="relative">
-      <DisplayHeading text={primary} size="xl" as="h1" className="relative z-10" />
-      <p
-        aria-hidden
-        className="text-display-m opacity-30 mt-2 italic"
-        lang={locale === 'fr' ? 'en' : 'fr'}
-      >
-        {alt}
+      <DisplayHeading
+        text={isFr ? fr : en}
+        emphasis={isFr ? emFr : emEn}
+        size="xl"
+        as="h1"
+        delay={0.1}
+        play={play}
+        className="relative z-10 text-white"
+      />
+      <p aria-hidden className="font-display text-xl md:text-3xl italic text-white/70 mt-4" lang={isFr ? 'en' : 'fr'}>
+        {isFr ? en : fr}
       </p>
     </div>
   )

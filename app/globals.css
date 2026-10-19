@@ -131,7 +131,8 @@
    * media gets the treatment without editing files.
    * Stage: grayscale → multiply with gold. Whites turn gold, blacks stay black.
    */
-  .grade-stage { position: relative; isolation: isolate; overflow: hidden; background: var(--color-black); }
+  /* Position (relative/absolute/sticky) comes from the call site. */
+  .grade-stage { isolation: isolate; overflow: hidden; background: var(--color-black); }
   .grade-stage :is(img, video) { filter: grayscale(1) contrast(1.2) brightness(1.05); }
   .grade-stage::after {
     content: '';
@@ -152,13 +153,31 @@
   }
 
   /* Portrait: high-contrast B&W. Hover/focus lifts the light, never the colour. */
-  .grade-portrait { position: relative; overflow: hidden; background: var(--color-black); }
+  .grade-portrait { overflow: hidden; background: var(--color-black); }
   .grade-portrait :is(img, video) {
     filter: grayscale(1) contrast(1.18) brightness(0.9);
     transition: filter var(--duration-gala) var(--ease-gala), transform 1.4s var(--ease-gala);
   }
   .grade-portrait:is(:hover, :focus-within) :is(img, video) { filter: grayscale(1) contrast(1.22) brightness(1.04); }
 }
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08) translate3d(-1%, -1%, 0); } }
+
+/*
+ * Logo opening. An inline script sets html[data-intro="play"] before first
+ * paint (first visit this session, motion allowed); only then is the overlay
+ * shown and the header wordmark held back for the hand-off.
+ */
+.logo-intro { display: none; }
+/* Failsafes: if JS never runs, the room lights up on its own after 4 s. */
+html[data-intro='play'] .logo-intro { display: grid; animation: intro-failsafe 0.4s ease 4s forwards; }
+html[data-intro='play'] [data-wordmark-target] { opacity: 0; animation: intro-reveal 0.4s ease 4s forwards; }
+/* Fade-up starts at first paint, not at hydration. */
+html[data-intro='play'] .logo-intro-mark { animation: intro-in 1s var(--ease-gala) both; }
+@keyframes intro-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes intro-failsafe { to { opacity: 0; visibility: hidden; } }
+@keyframes intro-reveal { to { opacity: 1; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
