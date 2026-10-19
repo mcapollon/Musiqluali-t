@@ -1,10 +1,15 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import { animate } from 'framer-motion'
 import { Wordmark } from './Wordmark'
 import { INTRO_STORAGE_KEY } from './logoIntroScript'
 
-const EASE = [0.16, 1, 0.3, 1] as const
+const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)'
+const SWEEP_EASE = 'cubic-bezier(0.45, 0, 0.2, 1)'
+
+/** Native Web Animations API: no library, transform/opacity only, holds its end state. */
+function play(el: HTMLElement, keyframes: Keyframe[], opts: KeyframeAnimationOptions) {
+  return el.animate(keyframes, { fill: 'forwards', ...opts })
+}
 const WORDMARK_SIZE = 'text-[clamp(3.25rem,13vw,11rem)] pb-[0.15em]'
 
 /**
@@ -30,7 +35,7 @@ export function LogoIntro() {
     const bandInner = bandInnerRef.current
     if (root.dataset.intro !== 'play' || !overlay || !bg || !mark || !band || !bandInner) return
 
-    const controls: { stop: () => void }[] = []
+    const controls: Animation[] = []
     const timers: number[] = []
     let done = false
     const events = ['keydown', 'wheel', 'touchstart', 'pointerdown'] as const
@@ -38,7 +43,7 @@ export function LogoIntro() {
     const finish = () => {
       if (done) return
       done = true
-      controls.forEach((c) => c.stop())
+      controls.forEach((c) => c.pause())
       timers.forEach((t) => window.clearTimeout(t))
       events.forEach((e) => window.removeEventListener(e, skip))
       try {
@@ -51,9 +56,9 @@ export function LogoIntro() {
 
     function skip() {
       if (done) return
-      controls.forEach((c) => c.stop())
+      controls.forEach((c) => c.pause())
       timers.forEach((t) => window.clearTimeout(t))
-      controls.push(animate(overlay!, { opacity: 0 }, { duration: 0.3 }))
+      controls.push(play(overlay!, [{ opacity: 1 }, { opacity: 0 }], { duration: 300 }))
       timers.push(window.setTimeout(finish, 300))
     }
     events.forEach((e) => window.addEventListener(e, skip, { passive: true }))
@@ -64,9 +69,9 @@ export function LogoIntro() {
     const elapsed = Math.min(performance.now(), 1400)
     // 2. A band of light crosses the letters (window moves right, its contents counter-move: transform only).
     if (elapsed < 900) {
-      const sweep = { duration: 1.15, delay: Math.max(0, 350 - elapsed) / 1000, ease: [0.45, 0, 0.2, 1] as const }
-      controls.push(animate(band, { x: ['-100%', '286%'] }, sweep))
-      controls.push(animate(bandInner, { x: ['35%', '-100%'] }, sweep))
+      const sweep = { duration: 1150, delay: Math.max(0, 350 - elapsed), easing: SWEEP_EASE }
+      controls.push(play(band, [{ transform: 'translateX(-100%)' }, { transform: 'translateX(286%)' }], sweep))
+      controls.push(play(bandInner, [{ transform: 'translateX(35%)' }, { transform: 'translateX(-100%)' }], sweep))
     }
     // 3. Hand-off: the mark flies into the header while the room lights come up.
     const flyAt = Math.max(0, 1450 - elapsed)
@@ -76,23 +81,18 @@ export function LogoIntro() {
         const from = mark.getBoundingClientRect()
         if (target && from.width > 0) {
           const to = target.getBoundingClientRect()
-          controls.push(
-            animate(
-              mark,
-              { x: to.left - from.left, y: to.top - from.top, scale: to.width / from.width },
-              { duration: 0.85, ease: EASE },
-            ),
-          )
+          const moveTo = `translate(${to.left - from.left}px, ${to.top - from.top}px) scale(${to.width / from.width})`
+          controls.push(play(mark, [{ transform: 'none' }, { transform: moveTo }], { duration: 850, easing: EASE }))
         } else {
-          controls.push(animate(mark, { opacity: 0 }, { duration: 0.6 }))
+          controls.push(play(mark, [{ opacity: 1 }, { opacity: 0 }], { duration: 600 }))
         }
-        controls.push(animate(bg, { opacity: 0 }, { duration: 0.85, ease: 'easeOut' }))
+        controls.push(play(bg, [{ opacity: 1 }, { opacity: 0 }], { duration: 850, easing: 'ease-out' }))
       }, flyAt),
     )
     timers.push(window.setTimeout(finish, flyAt + 900))
 
     return () => {
-      controls.forEach((c) => c.stop())
+      controls.forEach((c) => c.cancel())
       timers.forEach((t) => window.clearTimeout(t))
       events.forEach((e) => window.removeEventListener(e, skip))
     }

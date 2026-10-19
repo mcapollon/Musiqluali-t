@@ -9,7 +9,6 @@ import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/primitives/Button'
 import { PasswordStrengthMeter } from '@/components/forms/PasswordStrengthMeter'
-import { motion } from 'framer-motion'
 import type { z } from 'zod'
 
 type Form = z.infer<typeof step1>
@@ -30,16 +29,12 @@ export function Step01Account() {
   const pwd = watch('password') ?? ''
 
   return (
-    <motion.form
-      key="step01"
-      initial={{ y: 12, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+    <form
       onSubmit={handleSubmit((d) => {
         patch(d)
         setStep(2)
       })}
-      className="max-w-xl space-y-8"
+      className="animate-rise max-w-xl space-y-8"
       noValidate
     >
       <div className="grid grid-cols-2 gap-4">
@@ -75,6 +70,6 @@ export function Step01Account() {
       </label>
       {errors.consent && <p role="alert" className="text-err text-sm">{t('consent_error')}</p>}
       <Button type="submit" variant="primary" size="lg">{t('continue')}</Button>
-    </motion.form>
+    </form>
   )
 }

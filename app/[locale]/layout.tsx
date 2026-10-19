@@ -5,7 +5,7 @@ import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server
 import { ThemeProvider } from 'next-themes'
 import { routing, type AppLocale } from '@/lib/i18n/routing'
 import { LenisProvider } from '@/components/motion/LenisProvider'
-import { Toaster } from '@/components/ui/sonner'
+import { LazyToaster } from '@/components/ui/LazyToaster'
 import { SkipToContent } from '@/components/chrome/SkipToContent'
 import { SiteHeader } from '@/components/chrome/SiteHeader'
 import { SiteFooter } from '@/components/chrome/SiteFooter'
@@ -59,7 +59,7 @@ export default async function LocaleLayout({
               <main id="main" className="pt-20">{children}</main>
               <SiteFooter />
               <StickyMiniPlayer />
-              <Toaster position="bottom-right" />
+              <LazyToaster position="bottom-right" />
             </LenisProvider>
           </NextIntlClientProvider>
         </ThemeProvider>

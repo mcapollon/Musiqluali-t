@@ -1,9 +1,13 @@
 'use client'
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Play } from 'lucide-react'
-import { ArtistModal } from './ArtistModal'
+// The dialog library loads only when someone opens an artist.
+const ArtistModal = dynamic(() => import('./ArtistModal').then((m) => m.ArtistModal), {
+  ssr: false,
+})
 import { useAudioStore } from '@/lib/audio/store'
 import type { Artist } from '@/lib/mock/artists'
 import { cn } from '@/lib/utils/cn'
@@ -17,9 +21,16 @@ export function ArtistIndex({ artists }: { artists: Artist[] }) {
   const t = useTranslations('home.artists')
   const play = useAudioStore((s) => s.play)
   const [activeId, setActiveId] = useState<string | null>(null)
+  // Portraits mount the first time their name is hovered/focused, so the page
+  // does not ship every image up front; once mounted they stay for the crossfade.
+  const [seen, setSeen] = useState<ReadonlySet<string>>(() => new Set())
   const [openId, setOpenId] = useState<string | null>(null)
   // Fall back to the first visible artist (e.g. after a filter hides the active one).
   const active = artists.find((a) => a.id === activeId) ?? artists[0]
+  const activate = (id: string) => {
+    setActiveId(id)
+    setSeen((s) => (s.has(id) ? s : new Set(s).add(id)))
+  }
   const open = artists.find((a) => a.id === openId) ?? null
 
   return (
@@ -32,8 +43,8 @@ export function ArtistIndex({ artists }: { artists: Artist[] }) {
               <button
                 type="button"
                 onClick={() => setOpenId(a.id)}
-                onMouseEnter={() => setActiveId(a.id)}
-                onFocus={() => setActiveId(a.id)}
+                onMouseEnter={() => activate(a.id)}
+                onFocus={() => activate(a.id)}
                 className="group flex min-w-0 flex-1 items-center gap-4 text-left"
               >
                 <span className="grade-portrait relative size-14 shrink-0 md:hidden">
@@ -75,22 +86,24 @@ export function ArtistIndex({ artists }: { artists: Artist[] }) {
       {/* Desktop portrait panel: one image lit at a time. Decorative; names carry the meaning. */}
       <div aria-hidden className="relative hidden md:block">
         <div className="grade-portrait sticky top-28 aspect-[3/4] w-full">
-          {artists.map((a) => (
-            <Image
-              key={a.id}
-              src={a.photo}
-              alt=""
-              fill
-              sizes="26vw"
-              className={cn(
-                'object-cover transition-[opacity,transform] duration-[1100ms] ease-gala',
-                a.id === active?.id ? 'scale-100 opacity-100' : 'scale-[1.04] opacity-0',
-              )}
-            />
-          ))}
+          {artists
+            .filter((a) => a.id === active?.id || seen.has(a.id))
+            .map((a) => (
+              <Image
+                key={a.id}
+                src={a.photo}
+                alt=""
+                fill
+                sizes="26vw"
+                className={cn(
+                  'object-cover transition-[opacity,transform] duration-[1100ms] ease-gala',
+                  a.id === active?.id ? 'scale-100 opacity-100' : 'scale-[1.04] opacity-0',
+                )}
+              />
+            ))}
         </div>
       </div>
-      <ArtistModal artist={open} open={!!open} onOpenChange={(v) => !v && setOpenId(null)} />
+      {open && <ArtistModal artist={open} open onOpenChange={(v) => !v && setOpenId(null)} />}
     </div>
   )
 }

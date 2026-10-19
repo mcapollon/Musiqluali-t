@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from '@/lib/i18n/navigation'
-import { motion } from 'framer-motion'
 import { useWizardStore } from './useWizard'
 import { ReviewSummaryCard } from './ReviewSummaryCard'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -26,12 +25,8 @@ export function Step05Review() {
   }
 
   return (
-    <motion.div
-      key="step05"
-      initial={{ y: 12, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="max-w-xl space-y-8"
+    <div
+      className="animate-rise max-w-xl space-y-8"
     >
       <ReviewSummaryCard
         title={t('summary.account')}
@@ -89,6 +84,6 @@ export function Step05Review() {
           {submitting ? t('submitting') : t('submit')}
         </Button>
       </div>
-    </motion.div>
+    </div>
   )
 }

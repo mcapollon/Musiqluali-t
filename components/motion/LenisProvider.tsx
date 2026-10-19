@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import Lenis from 'lenis'
-import { MotionConfig } from 'framer-motion'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 
@@ -26,6 +25,6 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     }
   }, [isTouch, reduced])
 
-  // reducedMotion="user": Framer drops transform/layout animation when the OS asks for reduced motion.
-  return <MotionConfig reducedMotion="user">{children}</MotionConfig>
+  // Reduced motion: Lenis stays off (above); CSS motion is neutralised in globals.css.
+  return <>{children}</>
 }

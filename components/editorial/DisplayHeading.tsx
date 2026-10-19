@@ -1,7 +1,6 @@
 'use client'
 import { Fragment } from 'react'
-import { motion } from 'framer-motion'
-import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useInViewOnce } from '@/hooks/useInViewOnce'
 import { cn } from '@/lib/utils/cn'
 
 type Props = {
@@ -14,10 +13,10 @@ type Props = {
   /** Seconds before the reveal starts. */
   delay?: number
   /**
-   * 'scroll' (default): Framer reveal when scrolled into view.
-   * 'load': pure-CSS reveal from first paint, for above-the-fold headlines. It
-   * needs no hydration (fast LCP, works without JS) and waits for the logo
-   * opening via html[data-intro] (see globals.css).
+   * 'scroll' (default): words rise when the heading scrolls into view.
+   * 'load': words rise from first paint, for above-the-fold headlines. Needs
+   * no hydration (fast LCP, works without JS) and waits for the logo opening
+   * via html[data-intro] (see globals.css).
    */
   reveal?: 'scroll' | 'load'
 }
@@ -34,60 +33,26 @@ function splitEmphasis(text: string, emphasis?: string | undefined) {
   ].filter((s) => s.str.trim().length > 0)
 }
 
-/** Display headline. Words rise out of a mask, line after line, like a curtain lifting. */
-export function DisplayHeading({ text, emphasis, size = 'l', className, as: As = 'h2', delay = 0, reveal = 'scroll' }: Props) {
-  const reduced = useReducedMotion()
-  const segments = splitEmphasis(text, emphasis)
-
-  if (reduced) {
-    return (
-      <As className={cn(sizeCls[size], className)}>
-        {segments.map((s, i) => (s.em ? <em key={i}>{s.str}</em> : <Fragment key={i}>{s.str}</Fragment>))}
-      </As>
-    )
-  }
-
+/**
+ * Display headline. Words rise out of a mask, line after line, like a curtain
+ * lifting. Pure CSS (.word-rise); reduced motion shows the final state at once.
+ */
+export function DisplayHeading({ text, emphasis, size = 'l', className, as: As = 'h2', delay, reveal = 'scroll' }: Props) {
+  const [ref, inView] = useInViewOnce<HTMLHeadingElement & HTMLParagraphElement>(0.4)
   // Tokens keep the source's own spacing, so "couleur" + "." stay joined across the emphasis boundary.
-  const tokens = segments.flatMap((s) =>
+  const tokens = splitEmphasis(text, emphasis).flatMap((s) =>
     s.str
       .split(/(\s+)/)
       .filter(Boolean)
       .map((w) => ({ w, em: s.em, space: /^\s+$/.test(w) })),
   )
-  const wordCls = (em: boolean) =>
-    cn('inline-block overflow-hidden pb-[0.14em] mb-[-0.14em] align-bottom', em && 'pr-[0.06em]')
-
-  if (reveal === 'load') {
-    let n = 0
-    return (
-      <As className={cn(sizeCls[size], className)}>
-        <span className="sr-only">{text}</span>
-        <span aria-hidden>
-          {tokens.map(({ w, em, space }, i) =>
-            space ? (
-              <Fragment key={i}> </Fragment>
-            ) : (
-              <span key={i} className={wordCls(em)}>
-                <span className="word-rise" style={{ '--i': n++ } as React.CSSProperties}>
-                  {em ? <em>{w}</em> : w}
-                </span>
-              </span>
-            ),
-          )}
-        </span>
-      </As>
-    )
-  }
-
-  const MotionTag = motion[As] as typeof motion.h2
+  let n = 0
 
   return (
-    <MotionTag
-      className={cn(sizeCls[size], className)}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.4 }}
-      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: delay } } }}
+    <As
+      ref={ref}
+      className={cn(sizeCls[size], reveal === 'scroll' && !inView && 'reveal-wait', className)}
+      style={delay !== undefined ? ({ '--reveal-delay': `${delay}s` } as React.CSSProperties) : undefined}
     >
       <span className="sr-only">{text}</span>
       <span aria-hidden>
@@ -95,18 +60,14 @@ export function DisplayHeading({ text, emphasis, size = 'l', className, as: As =
           space ? (
             <Fragment key={i}> </Fragment>
           ) : (
-            <span key={i} className={wordCls(em)}>
-              <motion.span
-                className="inline-block"
-                variants={{ hidden: { y: '110%' }, show: { y: '0%' } }}
-                transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-              >
+            <span key={i} className={cn('inline-block overflow-hidden pb-[0.14em] mb-[-0.14em] align-bottom', em && 'pr-[0.06em]')}>
+              <span className="word-rise" style={{ '--i': n++ } as React.CSSProperties}>
                 {em ? <em>{w}</em> : w}
-              </motion.span>
+              </span>
             </span>
           ),
         )}
       </span>
-    </MotionTag>
+    </As>
   )
 }

@@ -1,29 +1,15 @@
-'use client'
 import { forwardRef } from 'react'
-import { motion, type HTMLMotionProps } from 'framer-motion'
 import { buttonClass, type ButtonSize, type ButtonVariant } from './buttonClass'
 
-type Props = Omit<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  'onAnimationStart' | 'onAnimationEnd' | 'onAnimationIteration' | 'onDrag' | 'onDragStart' | 'onDragEnd'
-> & {
+type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant
   size?: ButtonSize
 }
 
+/** Form/action button. For navigation, put buttonClass() on a Link instead. */
 export const Button = forwardRef<HTMLButtonElement, Props>(function Button(
-  { className, variant = 'primary', size = 'md', children, ...rest },
+  { className, variant = 'primary', size = 'md', type = 'button', ...rest },
   ref,
 ) {
-  return (
-    <motion.button
-      ref={ref}
-      whileTap={{ scale: 0.97 }}
-      transition={{ duration: 0.06, ease: [0.22, 1, 0.36, 1] }}
-      className={buttonClass({ variant, size, className })}
-      {...(rest as HTMLMotionProps<'button'>)}
-    >
-      {children}
-    </motion.button>
-  )
+  return <button ref={ref} type={type} className={buttonClass({ variant, size, className })} {...rest} />
 })

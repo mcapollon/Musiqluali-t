@@ -1,12 +1,11 @@
 'use client'
-import { motion, useInView } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { useRef } from 'react'
+import { useInViewOnce } from '@/hooks/useInViewOnce'
+import { cn } from '@/lib/utils/cn'
 
 export function ChapterMark({ number, title, as: As = 'h2' }: { number: string; title: string; as?: 'h2' | 'div' }) {
   const t = useTranslations('common')
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, amount: 0.5 })
+  const [ref, inView] = useInViewOnce<HTMLDivElement>(0.5)
   return (
     <div ref={ref} className="flex items-baseline gap-4 md:gap-6">
       <As className="flex items-baseline gap-3 whitespace-nowrap font-normal">
@@ -15,13 +14,13 @@ export function ChapterMark({ number, title, as: As = 'h2' }: { number: string; 
         <span aria-hidden className="text-gold">—</span>
         <span className="text-mono-meta text-bone">{title}</span>
       </As>
-      <motion.span
+      {/* Gold rule draws itself in when the chapter arrives. */}
+      <span
         aria-hidden
-        className="h-px self-center bg-rule origin-left"
-        initial={{ scaleX: 0 }}
-        animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
-        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-        style={{ flex: 1 }}
+        className={cn(
+          'h-px flex-1 self-center origin-left bg-rule transition-transform duration-[1100ms] ease-gala',
+          inView ? 'scale-x-100' : 'scale-x-0',
+        )}
       />
     </div>
   )

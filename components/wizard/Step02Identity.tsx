@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/primitives/Button'
 import { MultiChipSelect } from '@/components/forms/MultiChipSelect'
-import { motion } from 'framer-motion'
 import type { z } from 'zod'
 
 const GENRES = ['Hip-Hop', 'R&B', 'Afrobeats', 'Soul', 'Jazz', 'Électro', 'Pop', 'Autre']
@@ -37,16 +36,12 @@ export function Step02Identity() {
   })
 
   return (
-    <motion.form
-      key="step02"
-      initial={{ y: 12, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+    <form
       onSubmit={handleSubmit((d) => {
         patch(d)
         setStep(3)
       })}
-      className="max-w-xl space-y-8"
+      className="animate-rise max-w-xl space-y-8"
       noValidate
     >
       <div>
@@ -98,6 +93,6 @@ export function Step02Identity() {
           {t('continue')}
         </Button>
       </div>
-    </motion.form>
+    </form>
   )
 }

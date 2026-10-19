@@ -9,7 +9,6 @@ import { LinkInput } from '@/components/forms/LinkInput'
 import { DropZone } from '@/components/forms/DropZone'
 import { Button } from '@/components/primitives/Button'
 import { Music, Link as LinkIcon } from 'lucide-react'
-import { motion } from 'framer-motion'
 import type { z } from 'zod'
 
 type Form = z.infer<typeof step4>
@@ -37,16 +36,12 @@ export function Step04Links() {
   const [audioCount, setAudioCount] = useState<number>(data.audioCount ?? 0)
 
   return (
-    <motion.form
-      key="step04"
-      initial={{ y: 12, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+    <form
       onSubmit={handleSubmit((d) => {
         patch({ ...d, audioCount })
         setStep(5)
       })}
-      className="max-w-xl space-y-8"
+      className="animate-rise max-w-xl space-y-8"
       noValidate
     >
       <LinkInput
@@ -111,6 +106,6 @@ export function Step04Links() {
           {t('continue')}
         </Button>
       </div>
-    </motion.form>
+    </form>
   )
 }

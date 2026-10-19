@@ -1,31 +1,19 @@
-'use client'
-import { motion } from 'framer-motion'
-import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { cn } from '@/lib/utils/cn'
 
-type Props = { bars?: number; active?: boolean; className?: string; label?: string }
+type Props = { bars?: number; active?: boolean; className?: string }
 
-export function Waveform({ bars = 24, active = false, className, label = 'Audio waveform' }: Props) {
-  const reduced = useReducedMotion()
+/** Decorative bars beside a playing track (the track title carries the meaning). */
+export function Waveform({ bars = 24, active = false, className }: Props) {
   return (
-    <div role="img" aria-label={label} className={`flex items-end gap-[2px] h-6 ${className ?? ''}`}>
+    <div aria-hidden className={cn('flex h-6 items-end gap-[2px]', className)}>
       {Array.from({ length: bars }).map((_, i) => (
-        <motion.span
+        <span
           key={i}
-          className="w-[2px] bg-gold rounded-sm"
-          initial={{ height: '20%' }}
-          animate={
-            reduced
-              ? { height: active ? '60%' : '20%' }
-              : active
-              ? { height: ['20%', '90%', '40%', '70%', '30%'] }
-              : { height: '20%' }
-          }
-          transition={
-            reduced
-              ? { duration: 0.2 }
-              : active
-              ? { duration: 0.9 + (i % 5) * 0.1, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut', delay: i * 0.02 }
-              : { duration: 0.3 }
+          className="h-full w-[2px] origin-bottom bg-gold"
+          style={
+            active
+              ? { animation: `wave ${0.9 + (i % 5) * 0.1}s ease-in-out ${i * 0.02}s infinite alternate` }
+              : { transform: 'scaleY(0.2)' }
           }
         />
       ))}

@@ -1,6 +1,5 @@
 'use client'
 import { useTranslations } from 'next-intl'
-import { toast } from 'sonner'
 
 export function HomeNewsletter() {
   const t = useTranslations('home.newsletter')
@@ -15,7 +14,8 @@ export function HomeNewsletter() {
           className="flex w-full items-end gap-4 md:max-w-md"
           onSubmit={(e) => {
             e.preventDefault()
-            toast.success(t('toast'))
+            const message = t('toast')
+            void import('sonner').then(({ toast }) => toast.success(message))
           }}
         >
           <label htmlFor="home-newsletter-email" className="sr-only">

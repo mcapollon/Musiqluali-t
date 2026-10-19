@@ -1,7 +1,6 @@
 'use client'
 import Image from 'next/image'
 import { useId, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { useLocale } from 'next-intl'
 import type { TeamItem } from '@/lib/mock/team'
 
@@ -25,20 +24,11 @@ export function TeamMember({ member }: { member: TeamItem }) {
         <p className="text-display-m mt-5 transition-colors duration-500 group-hover:text-gold-bright">{member.name}</p>
         <p className="text-mono-micro mt-2 text-gold">{locale === 'fr' ? member.roleFr : member.roleEn}</p>
       </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.p
-            id={bioId}
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="text-bone-mute"
-          >
-            {locale === 'fr' ? member.bioFr : member.bioEn}
-          </motion.p>
-        )}
-      </AnimatePresence>
+      {open && (
+        <p id={bioId} className="animate-rise text-bone-mute">
+          {locale === 'fr' ? member.bioFr : member.bioEn}
+        </p>
+      )}
     </div>
   )
 }

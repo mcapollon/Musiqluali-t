@@ -176,16 +176,28 @@
 
 @keyframes marquee { to { transform: translateX(-50%); } }
 
-/* CSS word reveal for above-the-fold headlines (DisplayHeading reveal="load"). */
+/*
+ * Motion vocabulary, all CSS (transform/opacity only; no animation library).
+ * Word reveal for headlines (DisplayHeading). `.reveal-wait` holds it paused
+ * until the heading scrolls into view; above-the-fold headlines run at once.
+ */
 @keyframes word-rise { from { transform: translateY(110%); } to { transform: none; } }
 .word-rise {
   display: inline-block;
   animation: word-rise 1.1s var(--ease-gala) both;
   animation-delay: calc(var(--reveal-delay, 0.1s) + var(--i, 0) * 70ms);
 }
+.reveal-wait .word-rise { animation-play-state: paused; }
 /* Hold the reveal until the logo opening hands off (≈1.45 s after first paint). */
 html[data-intro='play'] { --reveal-delay: 1.45s; }
 @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08) translate3d(-1%, -1%, 0); } }
+/* Entrances: wizard steps, player, bios (rise) and overlays (fade). */
+@keyframes rise-in { from { opacity: 0; transform: translateY(14px); } }
+@keyframes fade-in { from { opacity: 0; } }
+.animate-rise { animation: rise-in 0.8s var(--ease-gala) both; }
+.animate-fade { animation: fade-in 0.5s ease both; }
+/* Audio waveform bars (scaled, not resized). */
+@keyframes wave { from { transform: scaleY(0.2); } to { transform: scaleY(0.9); } }
 
 /*
  * Logo opening. An inline script sets html[data-intro="play"] before first
@@ -205,8 +217,12 @@ html[data-intro='play'] .logo-intro-mark { animation: intro-in 1s var(--ease-gal
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
     scroll-behavior: auto !important;
   }
+  /* Instant states: nothing waits for a scroll position. */
+  .reveal-wait .word-rise { animation-play-state: running; }
 }

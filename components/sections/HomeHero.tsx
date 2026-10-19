@@ -74,7 +74,7 @@ export function HomeHero() {
           <p className="text-mono-meta text-gold-bright">{t('tag')}</p>
           <div className="flex items-center gap-3">
             <AmbientHeroPlayer label={t('nowPlaying')} />
-            {!reduced && <EqualizerBars compact className="h-3! w-5!" />}
+            {!reduced && <EqualizerBars />}
           </div>
         </div>
 

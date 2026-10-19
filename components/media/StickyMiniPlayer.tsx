@@ -1,5 +1,4 @@
 'use client'
-import { AnimatePresence, motion } from 'framer-motion'
 import { Play, Pause, SkipBack, SkipForward, X } from 'lucide-react'
 import { useAudioStore } from '@/lib/audio/store'
 import { Waveform } from './Waveform'
@@ -32,16 +31,12 @@ export function StickyMiniPlayer() {
   }, [setProgress])
 
   return (
-    <AnimatePresence>
+    <>
       {visible && current && (
-        <motion.aside
+        <aside
           role="region"
           aria-label={t('audioPlayer')}
-          initial={{ y: 80, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 80, opacity: 0 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="frame-invitation fixed inset-x-4 bottom-4 z-40 mx-auto max-w-3xl bg-ink-2/95 p-4 backdrop-blur"
+          className="animate-rise frame-invitation fixed inset-x-4 bottom-4 z-40 mx-auto max-w-3xl bg-ink-2/95 p-4 backdrop-blur"
         >
           <div className="flex items-center gap-4">
             <div className="flex gap-1">
@@ -65,8 +60,8 @@ export function StickyMiniPlayer() {
             </button>
             <audio ref={audioRef} src={current.src} preload="auto" />
           </div>
-        </motion.aside>
+        </aside>
       )}
-    </AnimatePresence>
+    </>
   )
 }

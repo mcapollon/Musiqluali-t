@@ -10,7 +10,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/primitives/Button'
 import { MultiChipSelect } from '@/components/forms/MultiChipSelect'
-import { motion } from 'framer-motion'
 import type { z } from 'zod'
 
 const INTERESTS = ['Studio', 'Mentorat', 'Scène', 'Distribution', 'Sync', 'Communauté']
@@ -39,16 +38,12 @@ export function Step03Journey() {
   const years = watch('yearsActive') ?? 0
 
   return (
-    <motion.form
-      key="step03"
-      initial={{ y: 12, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+    <form
       onSubmit={handleSubmit((d) => {
         patch(d)
         setStep(4)
       })}
-      className="max-w-xl space-y-8"
+      className="animate-rise max-w-xl space-y-8"
       noValidate
     >
       <div>
@@ -108,6 +103,6 @@ export function Step03Journey() {
           {t('continue')}
         </Button>
       </div>
-    </motion.form>
+    </form>
   )
 }
