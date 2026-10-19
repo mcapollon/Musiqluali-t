@@ -13,15 +13,13 @@ describe('contrastRatio', () => {
 })
 
 describe('Gala Noir palette meets WCAG AA', () => {
-  for (const theme of ['dark', 'light'] as const) {
-    const colors = resolveTheme(css, theme)
-    for (const p of CONTRAST_PAIRS.filter((x) => x.themes.includes(theme))) {
-      it(`${theme}: ${p.fg} on ${p.bg} ≥ ${p.min} (${p.use})`, () => {
-        const fg = colors[p.fg]
-        const bg = colors[p.bg]
-        expect(fg && bg, `missing token ${p.fg} or ${p.bg}`).toBeTruthy()
-        expect(contrastRatio(fg!, bg!)).toBeGreaterThanOrEqual(p.min)
-      })
-    }
+  const colors = resolveTheme(css)
+  for (const p of CONTRAST_PAIRS) {
+    it(`${p.fg} on ${p.bg} ≥ ${p.min} (${p.use})`, () => {
+      const fg = colors[p.fg]
+      const bg = colors[p.bg]
+      expect(fg && bg, `missing token ${p.fg} or ${p.bg}`).toBeTruthy()
+      expect(contrastRatio(fg!, bg!)).toBeGreaterThanOrEqual(p.min)
+    })
   }
 })

@@ -12,7 +12,7 @@ import { Tag } from '@/components/primitives/Tag'
 import { ChapterMark } from '@/components/editorial/ChapterMark'
 import { GalaMark } from '@/components/editorial/GalaMark'
 import { Wordmark } from '@/components/chrome/Wordmark'
-import { CONTRAST_PAIRS, contrastRatio, resolveTheme, type ThemeName } from '@/lib/design/contrast'
+import { CONTRAST_PAIRS, contrastRatio, resolveTheme } from '@/lib/design/contrast'
 
 export const metadata: Metadata = { title: 'Gala Noir — système', robots: { index: false, follow: false } }
 
@@ -21,7 +21,7 @@ const PLACEHOLDER_PORTRAIT = 'https://images.unsplash.com/photo-1531123897727-8f
 const PLACEHOLDER_STAGE = 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=1600&auto=format&fit=crop&q=80'
 const PLACEHOLDER_STAGE_2 = 'https://images.unsplash.com/photo-1415886541506-6efc5e4b1786?w=1600&auto=format&fit=crop&q=80'
 
-const PRIMITIVES = ['black', 'black-2', 'white', 'grey', 'gold', 'gold-bright', 'gold-deep', 'gold-ink'] as const
+const PRIMITIVES = ['black', 'black-2', 'white', 'grey', 'gold', 'gold-bright', 'gold-deep'] as const
 const ROLES = [
   ['ink', 'Page'],
   ['ink-2', 'Surface surélevée'],
@@ -42,12 +42,12 @@ function Section({ n, title, children }: { n: string; title: string; children: R
   )
 }
 
-function ContrastTable({ theme, colors }: { theme: ThemeName; colors: Record<string, [number, number, number]> }) {
-  const rows = CONTRAST_PAIRS.filter((p) => p.themes.includes(theme))
+function ContrastTable({ colors }: { colors: Record<string, [number, number, number]> }) {
+  const rows = CONTRAST_PAIRS
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-[34rem] text-sm">
-        <caption className="text-mono-meta text-gold mb-4 text-left">Thème {theme === 'dark' ? 'sombre (défaut)' : 'clair'}</caption>
+        <caption className="text-mono-meta text-gold mb-4 text-left">Thème unique : sombre</caption>
         <thead>
           <tr className="text-mono-micro text-bone-mute text-left">
             <th className="py-2 pr-4 font-normal">Usage</th>
@@ -84,8 +84,7 @@ function ContrastTable({ theme, colors }: { theme: ThemeName; colors: Record<str
 
 export default function StylePage() {
   const css = readFileSync(join(process.cwd(), 'app/globals.css'), 'utf8')
-  const dark = resolveTheme(css, 'dark')
-  const light = resolveTheme(css, 'light')
+  const dark = resolveTheme(css)
 
   return (
     <div className="pb-24">
@@ -302,11 +301,10 @@ export default function StylePage() {
       <Section n="07" title="Contraste WCAG AA">
         <p className="text-bone-mute mb-10 max-w-2xl">
           Calculé à partir de app/globals.css à chaque build; les mêmes paires sont vérifiées par les tests
-          (lib/design/__tests__/contrast.test.ts). Or sur blanc : 2,1:1, refusé, d’où l’or foncé du thème clair.
+          (lib/design/__tests__/contrast.test.ts). Or sur blanc : 2,1:1, refusé — une raison de plus pour un seul éclairage, sombre.
         </p>
-        <div className="grid gap-14 xl:grid-cols-2">
-          <ContrastTable theme="dark" colors={dark} />
-          <ContrastTable theme="light" colors={light} />
+        <div className="max-w-4xl">
+          <ContrastTable colors={dark} />
         </div>
       </Section>
     </div>

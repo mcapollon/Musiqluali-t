@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/lib/i18n/navigation'
 import { LocaleSwitch } from './LocaleSwitch'
-import { ThemeToggle } from './ThemeToggle'
 import { Wordmark } from './Wordmark'
 import { buttonClass } from '@/components/primitives/buttonClass'
 import { MobileNavOverlay } from './MobileNavOverlay'
@@ -47,7 +46,6 @@ export function SiteHeader() {
             ))}
           </nav>
           <div className="hidden lg:flex items-center gap-4">
-            <ThemeToggle />
             <LocaleSwitch />
             <a href="#donate" className="text-mono-meta text-bone-mute hover:text-gold-bright whitespace-nowrap">
               {t('donate')}

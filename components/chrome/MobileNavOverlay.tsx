@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import { Link } from '@/lib/i18n/navigation'
 import { LocaleSwitch } from './LocaleSwitch'
-import { ThemeToggle } from './ThemeToggle'
 import { buttonClass } from '@/components/primitives/buttonClass'
 import { Wordmark } from './Wordmark'
 import { useTranslations } from 'next-intl'
@@ -19,6 +18,7 @@ const NAV = [
 
 export function MobileNavOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const t = useTranslations('nav')
+  const ta = useTranslations('a11y')
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
@@ -45,7 +45,7 @@ export function MobileNavOverlay({ open, onClose }: { open: boolean; onClose: ()
         >
           <div className="section-pad-x flex h-16 items-center justify-between">
             <Wordmark className="text-2xl" />
-            <button aria-label="Close" onClick={onClose} className="p-2"><X className="size-6" /></button>
+            <button type="button" aria-label={ta('close')} onClick={onClose} className="p-2"><X className="size-6" /></button>
           </div>
           <nav className="section-pad-x mt-8 flex flex-col gap-6">
             {NAV.map((r) => (
@@ -56,7 +56,6 @@ export function MobileNavOverlay({ open, onClose }: { open: boolean; onClose: ()
           </nav>
           <div className="section-pad-x absolute inset-x-0 bottom-8 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <ThemeToggle />
               <LocaleSwitch />
               <a href="#donate" onClick={onClose} className="text-mono-meta text-bone-mute hover:text-gold whitespace-nowrap">
                 {t('donate')}

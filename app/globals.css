@@ -8,7 +8,8 @@
  *   1. Brand primitives (black / white / grey / gold). Fixed values. Use them
  *      where a colour must not follow the theme (e.g. overlays on footage).
  *   2. Semantic roles (ink = page, bone = text, rule = hairline). Components
- *      use these; the light theme flips them.
+ *      use these, so a future re-theme only touches this file. Dark only:
+ *      "a gala has one lighting" (light theme removed with the founder's OK).
  *
  * Contrast for every text/background pair is asserted in
  * lib/design/__tests__/contrast.test.ts, which parses this file.
@@ -24,11 +25,10 @@
   --color-gold: #C9A54C;
   --color-gold-bright: #E2C27A;
   --color-gold-deep: #9C7A2C;
-  --color-gold-ink: #7A5C1E;
   --color-err: #E8806A;
   --color-ok: #7FBF98;
 
-  /* Semantic roles (dark is the default and only "gala" lighting) */
+  /* Semantic roles */
   --color-ink: var(--color-black);
   --color-ink-2: var(--color-black-2);
   --color-bone: var(--color-white);
@@ -38,15 +38,42 @@
   /* Control boundaries (inputs, ghost buttons): ≥3:1 against the page. */
   --color-rule-strong: rgb(201 165 76 / 0.6);
 
+  /*
+   * Bridge for the vendored shadcn/base-ui components in components/ui,
+   * which expect these names. They alias the roles above, so they stay
+   * inside the black/white/gold palette.
+   */
+  --color-background: var(--color-ink);
+  --color-foreground: var(--color-bone);
+  --color-muted: var(--color-ink-2);
+  --color-muted-foreground: var(--color-bone-mute);
+  --color-popover: var(--color-ink-2);
+  --color-popover-foreground: var(--color-bone);
+  --color-card: var(--color-ink-2);
+  --color-card-foreground: var(--color-bone);
+  --color-primary: var(--color-gold);
+  --color-primary-foreground: var(--color-ink);
+  --color-secondary: var(--color-ink-2);
+  --color-secondary-foreground: var(--color-bone);
+  --color-accent: rgb(201 165 76 / 0.16);
+  --color-accent-foreground: var(--color-bone);
+  --color-destructive: var(--color-err);
+  --color-border: var(--color-rule);
+  --color-input: var(--color-rule-strong);
+  --color-ring: var(--color-gold-bright);
+
   --font-display: var(--font-bodoni), 'Bodoni 72', Didot, Georgia, serif;
   --font-poster: var(--font-anton), 'Arial Narrow', Impact, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
   --radius-pill: 9999px;
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
+  /* Gala: crisp edges. Cards, inputs and menus are near-square; only pills stay round. */
+  --radius-sm: 0px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
+  --radius-2xl: 2px;
 
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-gala: cubic-bezier(0.16, 1, 0.3, 1);
@@ -55,20 +82,6 @@
 
 :root {
   color-scheme: dark;
-}
-
-/* Light theme: same palette, inverted. Gold darkens to stay AA on white. */
-.light {
-  --color-ink: #F5F3EE;
-  --color-ink-2: #EBE8E1;
-  --color-bone: #0A0A0A;
-  --color-bone-mute: #5E5B55;
-  --color-gold: #7A5C1E;
-  --color-gold-bright: #5E4614;
-  --color-gold-deep: #5E4614;
-  --color-rule: rgb(122 92 30 / 0.3);
-  --color-rule-strong: rgb(122 92 30 / 0.75);
-  color-scheme: light;
 }
 
 @layer base {
@@ -162,6 +175,16 @@
 }
 
 @keyframes marquee { to { transform: translateX(-50%); } }
+
+/* CSS word reveal for above-the-fold headlines (DisplayHeading reveal="load"). */
+@keyframes word-rise { from { transform: translateY(110%); } to { transform: none; } }
+.word-rise {
+  display: inline-block;
+  animation: word-rise 1.1s var(--ease-gala) both;
+  animation-delay: calc(var(--reveal-delay, 0.1s) + var(--i, 0) * 70ms);
+}
+/* Hold the reveal until the logo opening hands off (≈1.45 s after first paint). */
+html[data-intro='play'] { --reveal-delay: 1.45s; }
 @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08) translate3d(-1%, -1%, 0); } }
 
 /*

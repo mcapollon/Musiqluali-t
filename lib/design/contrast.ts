@@ -2,7 +2,6 @@
 // the CSS stays the single source of truth for colour.
 
 export type RGB = [number, number, number]
-export type ThemeName = 'dark' | 'light'
 
 const channel = (c: number) => {
   const s = c / 255
@@ -40,10 +39,9 @@ function readBlock(css: string, selector: RegExp): Record<string, RawColor | str
   return out
 }
 
-/** Resolve every --color-* token for a theme to an opaque RGB (alpha composited over `ink`). */
-export function resolveTheme(css: string, theme: ThemeName): Record<string, RGB> {
-  const base = readBlock(css, /@theme[^{]*\{([\s\S]*?)\n\}/)
-  const raw = theme === 'light' ? { ...base, ...readBlock(css, /\n\.light\s*\{([\s\S]*?)\n\}/) } : base
+/** Resolve every --color-* token to an opaque RGB (alpha composited over `ink`). */
+export function resolveTheme(css: string): Record<string, RGB> {
+  const raw = readBlock(css, /@theme[^{]*\{([\s\S]*?)\n\}/)
 
   const resolve = (name: string, seen = new Set<string>()): RawColor => {
     const v = raw[name]
@@ -62,18 +60,21 @@ export function resolveTheme(css: string, theme: ThemeName): Record<string, RGB>
 }
 
 /** AA minimums: 4.5 for body text, 3 for large text (≥24px or ≥18.66px bold) and UI boundaries. */
-export const CONTRAST_PAIRS: { fg: string; bg: string; min: 4.5 | 3; use: string; themes: ThemeName[] }[] = [
-  { fg: 'bone', bg: 'ink', min: 4.5, use: 'Body text on page', themes: ['dark', 'light'] },
-  { fg: 'bone', bg: 'ink-2', min: 4.5, use: 'Body text on raised surface', themes: ['dark', 'light'] },
-  { fg: 'bone-mute', bg: 'ink', min: 4.5, use: 'Secondary text on page', themes: ['dark', 'light'] },
-  { fg: 'bone-mute', bg: 'ink-2', min: 4.5, use: 'Secondary text on raised surface', themes: ['dark', 'light'] },
-  { fg: 'gold', bg: 'ink', min: 4.5, use: 'Gold labels, dates, numerals', themes: ['dark', 'light'] },
-  { fg: 'gold', bg: 'ink-2', min: 4.5, use: 'Gold labels on raised surface', themes: ['dark', 'light'] },
-  { fg: 'gold-bright', bg: 'ink', min: 4.5, use: 'Gold hover / focus ring', themes: ['dark', 'light'] },
-  { fg: 'ink', bg: 'gold', min: 4.5, use: 'Primary button label', themes: ['dark', 'light'] },
-  { fg: 'ink', bg: 'gold-bright', min: 4.5, use: 'Primary button label (hover)', themes: ['dark', 'light'] },
-  { fg: 'rule-strong', bg: 'ink', min: 3, use: 'Input / ghost button border', themes: ['dark', 'light'] },
-  { fg: 'err', bg: 'ink', min: 4.5, use: 'Error message', themes: ['dark'] },
-  { fg: 'ok', bg: 'ink', min: 4.5, use: 'Success message', themes: ['dark'] },
-  { fg: 'white', bg: 'black', min: 4.5, use: 'Text over graded footage', themes: ['dark'] },
+export const CONTRAST_PAIRS: { fg: string; bg: string; min: 4.5 | 3; use: string }[] = [
+  { fg: 'bone', bg: 'ink', min: 4.5, use: 'Body text on page' },
+  { fg: 'bone', bg: 'ink-2', min: 4.5, use: 'Body text on raised surface' },
+  { fg: 'bone-mute', bg: 'ink', min: 4.5, use: 'Secondary text on page' },
+  { fg: 'bone-mute', bg: 'ink-2', min: 4.5, use: 'Secondary text on raised surface' },
+  { fg: 'gold', bg: 'ink', min: 4.5, use: 'Gold labels, dates, numerals' },
+  { fg: 'gold', bg: 'ink-2', min: 4.5, use: 'Gold labels on raised surface' },
+  { fg: 'gold-bright', bg: 'ink', min: 4.5, use: 'Gold hover / focus ring' },
+  { fg: 'ink', bg: 'gold', min: 4.5, use: 'Primary button label' },
+  { fg: 'ink', bg: 'gold-bright', min: 4.5, use: 'Primary button label (hover)' },
+  { fg: 'rule-strong', bg: 'ink', min: 3, use: 'Input / ghost button border' },
+  { fg: 'input', bg: 'popover', min: 3, use: 'Form control border on surface (ui/*)' },
+  { fg: 'muted-foreground', bg: 'popover', min: 4.5, use: 'Menu / placeholder text (ui/*)' },
+  { fg: 'accent-foreground', bg: 'accent', min: 4.5, use: 'Highlighted menu item (ui/*)' },
+  { fg: 'err', bg: 'ink', min: 4.5, use: 'Error message' },
+  { fg: 'ok', bg: 'ink', min: 4.5, use: 'Success message' },
+  { fg: 'white', bg: 'black', min: 4.5, use: 'Text over graded footage' },
 ]

@@ -50,7 +50,8 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning className={`${bodoni.variable} ${anton.variable} ${inter.variable} ${jetbrains.variable}`}>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        {/* Dark only ("a gala has one lighting"). Provider kept so a theme can return without restructuring. */}
+        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
           <NextIntlClientProvider messages={messages} locale={locale}>
             <LenisProvider>
               <SkipToContent label={locale === 'fr' ? 'Aller au contenu' : 'Skip to content'} />
