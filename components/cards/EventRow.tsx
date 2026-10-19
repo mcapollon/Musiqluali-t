@@ -1,22 +1,40 @@
-import { useLocale, useFormatter } from 'next-intl'
+import { useLocale, useFormatter, useTranslations } from 'next-intl'
 import type { EventItem } from '@/lib/mock/events'
+import { cn } from '@/lib/utils/cn'
 
-export function EventRow({ event }: { event: EventItem }) {
+/** One line in the programme. `archival` = past show: quieter, no ticket link. */
+export function EventRow({ event, archival = false }: { event: EventItem; archival?: boolean }) {
+  const t = useTranslations('home.events')
   const locale = useLocale() as 'fr' | 'en'
   const f = useFormatter()
   const date = new Date(event.dateISO)
-  const day = f.dateTime(date, { day: '2-digit' })
-  const month = f.dateTime(date, { month: '2-digit' })
   const copy = locale === 'fr' ? event.fr : event.en
 
   return (
-    <article className="group grid grid-cols-12 items-baseline gap-4 border-t border-[color:var(--color-rule)] py-8 hover:[--accent:1] transition-colors">
-      <span className="col-span-3 font-mono text-5xl md:text-7xl text-bone group-hover:text-gold transition-colors">{day} · {month}</span>
-      <div className="col-span-7">
-        <h3 className="text-display-m font-display">{copy.title}</h3>
-        <p className="text-bone-mute">{event.venue} — {copy.description}</p>
+    <article className="group grid grid-cols-[5.5rem_1fr] items-baseline gap-x-6 gap-y-3 border-t border-rule py-8 md:grid-cols-[9rem_1fr_auto] md:gap-x-10">
+      <time
+        dateTime={event.dateISO}
+        className={cn('font-poster text-4xl uppercase leading-none md:text-6xl', archival ? 'text-bone-mute' : 'text-gold')}
+      >
+        {f.dateTime(date, { day: '2-digit' })}
+        <span className="block font-mono text-xs tracking-[0.16em] mt-2 text-bone-mute">
+          {f.dateTime(date, archival ? { month: 'short', year: 'numeric' } : { month: 'short' })}
+        </span>
+      </time>
+      <div>
+        <h3 className={cn('font-display', archival ? 'text-2xl text-bone-mute' : 'text-display-m')}>{copy.title}</h3>
+        <p className="mt-2 text-bone-mute">
+          {event.venue} — {copy.description}
+        </p>
       </div>
-      <a href={event.ticketsHref} className="col-span-2 text-mono-meta text-gold justify-self-end">→ {locale === 'fr' ? 'BILLETS' : 'TICKETS'}</a>
+      {!archival && (
+        <a
+          href={event.ticketsHref}
+          className="col-start-2 text-mono-meta text-gold transition-colors hover:text-gold-bright md:col-start-auto md:justify-self-end"
+        >
+          {t('tickets')} <span aria-hidden>→</span>
+        </a>
+      )}
     </article>
   )
 }

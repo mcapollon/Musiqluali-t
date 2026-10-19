@@ -23,9 +23,9 @@ export function ArtistModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl bg-[color:var(--color-ink-2)] border-[color:var(--color-rule)] p-0 overflow-hidden">
+      <DialogContent className="frame-invitation max-w-3xl rounded-none bg-ink-2 p-0 overflow-hidden">
         <div className="grid md:grid-cols-2">
-          <div className="relative aspect-[3/4] md:aspect-auto">
+          <div className="grade-portrait relative aspect-[3/4] md:aspect-auto">
             <Image
               src={artist.photo}
               alt={artist.name}
@@ -34,11 +34,11 @@ export function ArtistModal({
               sizes="50vw"
             />
           </div>
-          <div className="p-8 space-y-4">
-            <DialogTitle className="text-display-m font-display">
+          <div className="p-8 space-y-5 md:p-10">
+            <DialogTitle className="text-display-l font-display">
               {artist.name}
             </DialogTitle>
-            <p className="text-mono-meta text-bone-mute">
+            <p className="text-mono-meta text-gold">
               {artist.genre} · {artist.city}
               {artist.pronouns ? ` · ${artist.pronouns}` : ''}
             </p>
@@ -58,7 +58,7 @@ export function ArtistModal({
                 }
                 className="flex items-center gap-3 mt-4"
               >
-                <span className="grid size-12 place-items-center rounded-full bg-gold text-ink">
+                <span className="grid size-12 place-items-center bg-gold text-ink">
                   {isCurrent && isPlaying ? (
                     <Pause className="size-5" />
                   ) : (

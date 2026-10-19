@@ -5,7 +5,14 @@ export type EventItem = {
   fr: { title: string; description: string }
   en: { title: string; description: string }
   ticketsHref: string
+  /** Poster-scale image for the "next show" treatment (graded gold in CSS). */
+  poster?: string
+  /** Optional transparent PNG of the performer, layered in front of the poster type. */
+  cutout?: string
 }
+
+// NOTE: the events below are invented demo content (MUSIQUALIT_VISION.md §5.1).
+// Replace with real shows before launch; do not present them as a track record.
 
 export const events: EventItem[] = [
   {

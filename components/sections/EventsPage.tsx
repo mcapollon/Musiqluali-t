@@ -34,9 +34,9 @@ export function EventsPage() {
             ))}
           </TabsContent>
           <TabsContent value="past">
-            <div className="opacity-60">
+            <div>
               {PAST.map((e) => (
-                <EventRow key={e.id} event={e} />
+                <EventRow key={e.id} event={e} archival />
               ))}
             </div>
           </TabsContent>
