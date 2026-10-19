@@ -1,31 +1,11 @@
 'use client'
-import { useEffect, useRef, useSyncExternalStore } from 'react'
+import { useEffect, useRef } from 'react'
 import { animate } from 'framer-motion'
 import { Wordmark } from './Wordmark'
 import { INTRO_STORAGE_KEY } from './logoIntroScript'
 
 const EASE = [0.16, 1, 0.3, 1] as const
-const DONE_EVENT = 'mq-intro-done'
-// Flips when the room lights come up (hand-off starts), before the overlay is fully gone.
-let lightsUp = false
-const lightUp = () => {
-  if (lightsUp) return
-  lightsUp = true
-  window.dispatchEvent(new Event(DONE_EVENT))
-}
 const WORDMARK_SIZE = 'text-[clamp(3.25rem,13vw,11rem)] pb-[0.15em]'
-
-/** True while the logo opening still hides the page (hold the hero reveal until it ends). */
-export function useIntroPlaying() {
-  return useSyncExternalStore(
-    (cb) => {
-      window.addEventListener(DONE_EVENT, cb)
-      return () => window.removeEventListener(DONE_EVENT, cb)
-    },
-    () => document.documentElement.dataset.intro === 'play' && !lightsUp,
-    () => false,
-  )
-}
 
 /**
  * The opening: the wordmark fades up on black, a band of light crosses it,
@@ -67,14 +47,12 @@ export function LogoIntro() {
         // Private mode / blocked storage: the intro may replay; harmless.
       }
       root.dataset.intro = 'done'
-      lightUp()
     }
 
     function skip() {
       if (done) return
       controls.forEach((c) => c.stop())
       timers.forEach((t) => window.clearTimeout(t))
-      lightUp()
       controls.push(animate(overlay!, { opacity: 0 }, { duration: 0.3 }))
       timers.push(window.setTimeout(finish, 300))
     }
@@ -94,7 +72,6 @@ export function LogoIntro() {
     const flyAt = Math.max(0, 1450 - elapsed)
     timers.push(
       window.setTimeout(() => {
-        lightUp()
         const target = document.querySelector<HTMLElement>('[data-wordmark-target]')
         const from = mark.getBoundingClientRect()
         if (target && from.width > 0) {

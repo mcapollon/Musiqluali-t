@@ -32,13 +32,13 @@ export function DropZone({ accept, label, multiple, maxBytes, onPick, previewSrc
         setDrag(false)
         handle(e.dataTransfer.files)
       }}
-      className={`flex flex-col items-center justify-center gap-3 w-full rounded-lg border-2 border-dashed p-8 text-center ${drag ? 'border-gold bg-gold/10' : 'border-[color:var(--color-rule)]'}`}
+      className={`flex w-full flex-col items-center justify-center gap-3 border border-dashed p-10 text-center transition-colors duration-500 ${drag ? 'border-gold bg-gold/10' : 'border-rule-strong hover:border-gold'}`}
     >
       {previewSrc ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={previewSrc} alt="" className="size-24 rounded-full object-cover" />
+        <img src={previewSrc} alt="" className="size-24 object-cover grayscale" />
       ) : (
-        <Upload className="size-6 text-bone-mute" />
+        <Upload className="size-6 text-gold" />
       )}
       <p className="text-bone-mute">{label}</p>
       <input

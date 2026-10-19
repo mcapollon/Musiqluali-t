@@ -35,7 +35,7 @@ export function ContactForm() {
         toast.success(t('successToast'))
         reset()
       })}
-      className="space-y-6"
+      className="space-y-7"
       noValidate
     >
       <div className="space-y-2">
@@ -61,7 +61,7 @@ export function ContactForm() {
         <select
           id="subject"
           {...register('subject')}
-          className="bg-[color:var(--color-ink-2)] border border-[color:var(--color-rule)] rounded px-3 h-11"
+          className="h-12 w-full border border-input bg-ink-2 px-4 text-base focus:border-gold"
         >
           <option value="general">{t('subjects.general')}</option>
           <option value="apply">{t('subjects.apply')}</option>

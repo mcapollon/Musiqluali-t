@@ -4,8 +4,8 @@ export function Pill({ className, active, ...rest }: Props) {
   return (
     <span
       className={cn(
-        'inline-flex h-7 items-center rounded-full border px-3 text-xs uppercase tracking-wider',
-        active ? 'border-gold text-gold' : 'border-[color:var(--color-rule)] text-bone-mute',
+        'inline-flex h-9 items-center border px-4 font-mono text-[0.6875rem] uppercase tracking-[0.16em] transition-colors duration-500',
+        active ? 'border-gold bg-gold text-ink' : 'border-rule-strong text-bone-mute hover:border-gold hover:text-bone',
         className,
       )}
       {...rest}

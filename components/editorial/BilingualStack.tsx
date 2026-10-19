@@ -2,9 +2,10 @@
 import { useLocale } from 'next-intl'
 import { DisplayHeading } from './DisplayHeading'
 
-type Props = { fr: string; en: string; emFr?: string; emEn?: string; play?: boolean }
+/** tone: 'stage' = always over dark footage (fixed white); 'page' = follows the theme. */
+type Props = { fr: string; en: string; emFr?: string; emEn?: string; tone?: 'stage' | 'page' }
 
-export function BilingualStack({ fr, en, emFr, emEn, play }: Props) {
+export function BilingualStack({ fr, en, emFr, emEn, tone = 'page' }: Props) {
   const locale = useLocale()
   const isFr = locale === 'fr'
   return (
@@ -14,11 +15,10 @@ export function BilingualStack({ fr, en, emFr, emEn, play }: Props) {
         emphasis={isFr ? emFr : emEn}
         size="xl"
         as="h1"
-        delay={0.1}
-        play={play}
-        className="relative z-10 text-white"
+        reveal="load"
+        className={tone === 'stage' ? 'relative z-10 text-white' : 'relative z-10 text-bone'}
       />
-      <p aria-hidden className="font-display text-xl md:text-3xl italic text-white/70 mt-4" lang={isFr ? 'en' : 'fr'}>
+      <p aria-hidden className={`mt-4 font-display text-xl italic md:text-3xl ${tone === 'stage' ? 'text-white/70' : 'text-bone-mute'}`} lang={isFr ? 'en' : 'fr'}>
         {isFr ? en : fr}
       </p>
     </div>

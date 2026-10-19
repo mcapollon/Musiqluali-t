@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { useAudioStore } from '@/lib/audio/store'
@@ -7,6 +8,7 @@ import { createAmbientHero } from '@/lib/audio/ambientHero'
 
 export function AmbientHeroPlayer({ label }: { label: string }) {
   const reduced = useReducedMotion()
+  const t = useTranslations('a11y')
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(false)
   const engineRef = useRef<ReturnType<typeof createAmbientHero> | null>(null)
@@ -57,7 +59,7 @@ export function AmbientHeroPlayer({ label }: { label: string }) {
       <button
         type="button"
         onClick={togglePlay}
-        aria-label={playing ? 'Pause hero ambient' : 'Play hero ambient'}
+        aria-label={playing ? t('ambientPause') : t('ambientPlay')}
         aria-pressed={playing}
         className="inline-flex items-center gap-2 text-left text-gold-bright hover:text-white transition-colors"
       >
@@ -68,7 +70,7 @@ export function AmbientHeroPlayer({ label }: { label: string }) {
         <button
           type="button"
           onClick={toggleMute}
-          aria-label={muted ? 'Unmute hero ambient' : 'Mute hero ambient'}
+          aria-label={muted ? t('unmute') : t('mute')}
           aria-pressed={muted}
           className="text-white/70 hover:text-gold-bright transition-colors"
         >

@@ -1,7 +1,7 @@
 'use client'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import Image from 'next/image'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import type { Artist } from '@/lib/mock/artists'
 import { Waveform } from '@/components/media/Waveform'
 import { useAudioStore } from '@/lib/audio/store'
@@ -17,13 +17,14 @@ export function ArtistModal({
   onOpenChange: (v: boolean) => void
 }) {
   const locale = useLocale() as 'fr' | 'en'
+  const ta = useTranslations('a11y')
   const { play, current, isPlaying, toggle } = useAudioStore()
   if (!artist) return null
   const isCurrent = current?.artistId === artist.id
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="frame-invitation max-w-3xl rounded-none bg-ink-2 p-0 overflow-hidden">
+      <DialogContent closeLabel={ta('close')} className="frame-invitation max-w-3xl rounded-none bg-ink-2 p-0 overflow-hidden">
         <div className="grid md:grid-cols-2">
           <div className="grade-portrait relative aspect-[3/4] md:aspect-auto">
             <Image

@@ -27,7 +27,7 @@ export function HomeNewsletter() {
             required
             autoComplete="email"
             placeholder={t('placeholder')}
-            className="flex-1 border-b border-rule-strong bg-transparent py-3 text-lg placeholder:text-bone-mute focus:border-gold focus:outline-none"
+            className="flex-1 border-b border-rule-strong bg-transparent py-3 text-lg placeholder:text-bone-mute focus:border-gold"
           />
           <button type="submit" className="text-mono-meta pb-3 text-gold transition-colors hover:text-gold-bright">
             {t('subscribe')}

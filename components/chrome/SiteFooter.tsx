@@ -70,7 +70,7 @@ export function SiteFooter() {
               id="footer-newsletter-email"
               type="email"
               placeholder={t('newsletterPlaceholder')}
-              className="flex-1 bg-transparent border-b border-rule-strong py-2 placeholder:text-bone-mute focus:outline-none focus:border-gold"
+              className="flex-1 bg-transparent border-b border-rule-strong py-2 placeholder:text-bone-mute focus:border-gold"
             />
             <button type="submit" className="text-mono-meta text-gold">{t('subscribe')}</button>
           </form>

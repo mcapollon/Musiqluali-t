@@ -11,11 +11,17 @@ type Props<T extends string> = {
 
 export function FilterBar<T extends string>({ label, values, selected, onSelect, allLabel }: Props<T>) {
   return (
-    <div className="flex flex-wrap items-center gap-3" aria-label={label}>
-      <span className="text-mono-meta text-bone-mute">{label}</span>
-      <button type="button" onClick={() => onSelect('all')}><Pill active={selected === 'all'}>{allLabel}</Pill></button>
+    <div role="group" className="flex flex-wrap items-center gap-3" aria-label={label}>
+      <span aria-hidden className="text-mono-meta mr-2 text-gold">
+        {label}
+      </span>
+      <button type="button" aria-pressed={selected === 'all'} onClick={() => onSelect('all')}>
+        <Pill active={selected === 'all'}>{allLabel}</Pill>
+      </button>
       {values.map((v) => (
-        <button type="button" key={v} onClick={() => onSelect(v)}><Pill active={selected === v}>{v}</Pill></button>
+        <button type="button" key={v} aria-pressed={selected === v} onClick={() => onSelect(v)}>
+          <Pill active={selected === v}>{v}</Pill>
+        </button>
       ))}
     </div>
   )

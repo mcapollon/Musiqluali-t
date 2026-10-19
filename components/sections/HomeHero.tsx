@@ -10,7 +10,6 @@ import { EqualizerBars } from '@/components/media/EqualizerBars'
 import { GrainOverlay } from '@/components/media/GrainOverlay'
 import { AmbientHeroPlayer } from '@/components/media/AmbientHeroPlayer'
 import { buttonClass } from '@/components/primitives/buttonClass'
-import { useIntroPlaying } from '@/components/chrome/LogoIntro'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { heroMedia } from '@/lib/mock/home'
@@ -20,7 +19,6 @@ export function HomeHero() {
   const t = useTranslations('home.hero')
   const reduced = useReducedMotion()
   const wide = useMediaQuery('(min-width: 768px)')
-  const introPlaying = useIntroPlaying()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [paused, setPaused] = useState(false)
 
@@ -47,7 +45,8 @@ export function HomeHero() {
           src={heroMedia.poster}
           alt=""
           fill
-          priority
+          loading="eager"
+          fetchPriority="high"
           sizes="100vw"
           className={showVideo ? 'object-cover' : 'object-cover motion-safe:animate-[kenburns_24s_ease-in-out_infinite_alternate]'}
         />
@@ -85,7 +84,7 @@ export function HomeHero() {
             en={t('headlineEn')}
             emFr={t('headlineEmFr')}
             emEn={t('headlineEmEn')}
-            play={!introPlaying}
+            tone="stage"
           />
           <p className="text-lede mt-8 max-w-xl text-white/80">{t('subhead')}</p>
           <div className="mt-10 flex flex-wrap gap-3">
