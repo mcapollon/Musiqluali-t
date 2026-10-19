@@ -5,10 +5,14 @@ import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useAudioStore } from '@/lib/audio/store'
 
-export function EqualizerBars({ className }: { className?: string }) {
+/**
+ * Audio-reactive bars driven by the hero ambient track.
+ * `compact`: a 5-bar inline indicator that only moves while audio plays (no idle loop).
+ */
+export function EqualizerBars({ className, compact = false }: { className?: string; compact?: boolean }) {
   const reduced = useReducedMotion()
   const isMobile = useMediaQuery('(max-width: 768px)')
-  const bars = isMobile ? 24 : 48
+  const bars = compact ? 5 : isMobile ? 24 : 48
   const analyser = useAudioStore((s) => s.ambientAnalyser)
   const playing = useAudioStore((s) => s.ambientPlaying)
   const [heightsState, setHeightsState] = useState<{ bars: number; values: number[] }>(() => ({
@@ -58,7 +62,7 @@ export function EqualizerBars({ className }: { className?: string }) {
     >
       {Array.from({ length: bars }).map((_, i) => {
         const seed = (i * 37) % 9
-        const tint = i % 3 === 0 ? 'bg-gold/40' : 'bg-bone/15'
+        const tint = compact ? 'bg-gold' : i % 3 === 0 ? 'bg-gold/40' : 'bg-bone/15'
         if (live) {
           return (
             <span
@@ -67,6 +71,9 @@ export function EqualizerBars({ className }: { className?: string }) {
               style={{ height: `${heights[i] ?? 12}%` }}
             />
           )
+        }
+        if (compact) {
+          return <span key={i} className={`flex-1 ${tint}`} style={{ height: `${20 + seed * 6}%` }} />
         }
         return (
           <motion.span
