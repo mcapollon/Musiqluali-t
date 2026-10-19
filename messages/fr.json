@@ -1,22 +1,45 @@
 {
-  "common": { "siteName": "Musiqlt", "learnMore": "EN SAVOIR PLUS" },
+  "common": { "siteName": "MusiqualiT", "learnMore": "EN SAVOIR PLUS", "chapter": "Chapitre" },
   "home": {
     "tagline": "Le son. La culture. La relève.",
     "hero": {
-      "tag": "MTL · EST. 2017 · ARTIST DEVELOPMENT",
+      "tag": "MONTRÉAL · FONDATION À BUT NON LUCRATIF",
       "headlineFr": "Le son. La culture. La relève.",
       "headlineEn": "The sound. The culture. The next wave.",
+      "headlineEmFr": "La relève.",
+      "headlineEmEn": "The next wave.",
       "subhead": "Studio. Mentorat. Scène. Communauté. Un écosystème pour les artistes de couleur, par les artistes de couleur.",
-      "marqueeLabel": "Artistes Musiqlt",
-      "nowPlaying": "NOW PLAYING · LA RELÈVE 2026"
+      "marqueeLabel": "Artistes MusiqualiT",
+      "nowPlaying": "NOW PLAYING · LA RELÈVE 2026",
+      "ctaApply": "Postuler",
+      "ctaNextShow": "Prochain spectacle",
+      "videoPause": "Mettre la vidéo en pause",
+      "videoPlay": "Lire la vidéo",
+      "videoPlaceholder": "Vidéo provisoire"
     },
     "mission": {
       "chapter": "MISSION",
-      "manifesto": "Bâtir l'écosystème qu'on n'a pas vu. Pour les artistes de couleur, par les artistes de couleur. Studio. Mentorat. Scène. Communauté. Organisme sans but lucratif."
+      "manifesto": "Bâtir l'écosystème qu'on n'a pas vu. Pour les artistes de couleur, par les artistes de couleur. Studio. Mentorat. Scène. Communauté. Organisme sans but lucratif.",
+      "manifestoEm": "par les artistes de couleur",
+      "pillarsLabel": "Notre mission, en quatre temps",
+      "pillars": {
+        "exposure": { "title": "Exposition", "body": "Mettre les artistes de Montréal devant le public, leurs pairs et l'industrie." },
+        "education": { "title": "Éducation", "body": "Comprendre son parcours : le métier, l'industrie, la prochaine étape." },
+        "opportunities": { "title": "Occasions", "body": "Ouvrir la porte aux scènes, aux collaborations et aux partenaires." },
+        "mentorship": { "title": "Mentorat", "body": "Concret, sur le terrain : le spectacle lui-même est notre école." }
+      }
     },
     "programs": { "chapter": "PROGRAMMES" },
-    "artists": { "chapter": "LA RELÈVE" },
-    "events": { "chapter": "ÉVÉNEMENTS" },
+    "artists": { "chapter": "LA RELÈVE", "listen": "Écouter", "viewAll": "Tous les artistes" },
+    "events": {
+      "chapter": "ÉVÉNEMENTS",
+      "nextShow": "Prochain spectacle",
+      "tbaDate": "Date à annoncer",
+      "tbaBody": "La prochaine soirée Night n Key se prépare. Inscris-toi à l'infolettre pour l'apprendre en premier.",
+      "notify": "M'aviser",
+      "seeAll": "Tous les événements",
+      "tickets": "Billets"
+    },
     "quote": {
       "quote": "On ne demande pas l'autorisation. On bâtit la table, on installe les chaises, on invite tout le monde.",
       "attribution": "Imani Joseph, fondatrice"
@@ -30,13 +53,14 @@
     "donate": {
       "chapter": "DON",
       "headline": "Organisme sans but lucratif.",
-      "body": "Musiqlt est un OSBL. Tes dons financent directement les bourses, le studio, et nos programmes communautaires gratuits.",
+      "body": "MusiqualiT est un OSBL. Tes dons financent directement les bourses, le studio, et nos programmes communautaires gratuits.",
       "eyebrow": "DONNE MAINTENANT",
       "cta": "Donner un montant personnalisé",
       "receipt": "Reçu fiscal pour tout don de 20$ et plus."
     },
     "newsletter": {
       "eyebrow": "INFOLETTRE",
+      "label": "Ton adresse courriel",
       "headline": "Reste dans la boucle.",
       "placeholder": "Ton courriel",
       "subscribe": "S'INSCRIRE",
@@ -50,7 +74,7 @@
     "story": {
       "chapter": "NOTRE HISTOIRE",
       "body1": "En 2017, Imani Joseph quitte un emploi confortable dans une major. Elle ouvre un petit studio dans le Mile-End, avec une idée fixe: offrir aux artistes de couleur ce qu'elle n'avait jamais reçu — le temps, l'écoute, le respect, et un plan.",
-      "body2": "Huit ans plus tard, Musiqlt est devenu un écosystème: studio, mentorat, programmes de développement, soirées communautaires. Plus de 120 artistes sont passés par nos portes."
+      "body2": "Huit ans plus tard, MusiqualiT est devenu un écosystème: studio, mentorat, programmes de développement, soirées communautaires. Plus de 120 artistes sont passés par nos portes."
     },
     "team": { "chapter": "L'ÉQUIPE" },
     "milestones": { "chapter": "JALONS" }
@@ -137,7 +161,7 @@
       "fields": {
         "yearsActive": "Années d'activité",
         "currentProject": "Projet actuel",
-        "motivation": "Qu'est-ce que tu cherches chez Musiqlt ?",
+        "motivation": "Qu'est-ce que tu cherches chez MusiqualiT ?",
         "interests": "INTÉRÊTS",
         "back": "Retour",
         "continue": "Continuer"
@@ -204,8 +228,8 @@
     "apply": "Postuler"
   },
   "seo": {
-    "siteName": "Musiqlt",
-    "siteTitle": "Musiqlt · Développement artistique pour artistes de couleur",
-    "description": "Musiqlt accompagne les artistes de couleur depuis Montréal. Studio, mentorat, programmes de développement, communauté."
+    "siteName": "MusiqualiT",
+    "siteTitle": "MusiqualiT · Développement artistique pour artistes de couleur",
+    "description": "MusiqualiT accompagne les artistes de couleur depuis Montréal. Studio, mentorat, programmes de développement, communauté."
   }
 }

@@ -1,22 +1,45 @@
 {
-  "common": { "siteName": "Musiqlt", "learnMore": "LEARN MORE" },
+  "common": { "siteName": "MusiqualiT", "learnMore": "LEARN MORE", "chapter": "Chapter" },
   "home": {
     "tagline": "The sound. The culture. The next wave.",
     "hero": {
-      "tag": "MTL · EST. 2017 · ARTIST DEVELOPMENT",
+      "tag": "MONTRÉAL · NON-PROFIT FOUNDATION",
       "headlineFr": "Le son. La culture. La relève.",
       "headlineEn": "The sound. The culture. The next wave.",
+      "headlineEmFr": "La relève.",
+      "headlineEmEn": "The next wave.",
       "subhead": "Studio. Mentorship. Stage. Community. An ecosystem for artists of colour, by artists of colour.",
-      "marqueeLabel": "Musiqlt artists",
-      "nowPlaying": "NOW PLAYING · THE NEXT WAVE 2026"
+      "marqueeLabel": "MusiqualiT artists",
+      "nowPlaying": "NOW PLAYING · THE NEXT WAVE 2026",
+      "ctaApply": "Apply",
+      "ctaNextShow": "Next show",
+      "videoPause": "Pause video",
+      "videoPlay": "Play video",
+      "videoPlaceholder": "Placeholder video"
     },
     "mission": {
       "chapter": "MISSION",
-      "manifesto": "Building the ecosystem we never saw. For artists of colour, by artists of colour. Studio. Mentorship. Stage. Community. A non-profit."
+      "manifesto": "Building the ecosystem we never saw. For artists of colour, by artists of colour. Studio. Mentorship. Stage. Community. A non-profit.",
+      "manifestoEm": "by artists of colour",
+      "pillarsLabel": "Our mission, in four parts",
+      "pillars": {
+        "exposure": { "title": "Exposure", "body": "Putting Montréal artists in front of audiences, peers and industry." },
+        "education": { "title": "Education", "body": "Understanding the path: the craft, the business, the next step." },
+        "opportunities": { "title": "Opportunities", "body": "Opening doors to gigs, collaborations and partners." },
+        "mentorship": { "title": "Mentorship", "body": "Hands-on: the show itself is where the learning happens." }
+      }
     },
     "programs": { "chapter": "PROGRAMS" },
-    "artists": { "chapter": "THE NEXT WAVE" },
-    "events": { "chapter": "EVENTS" },
+    "artists": { "chapter": "THE NEXT WAVE", "listen": "Listen", "viewAll": "All artists" },
+    "events": {
+      "chapter": "EVENTS",
+      "nextShow": "Next show",
+      "tbaDate": "Date to be announced",
+      "tbaBody": "The next Night n Key is in the works. Join the newsletter to hear about it first.",
+      "notify": "Notify me",
+      "seeAll": "All events",
+      "tickets": "Tickets"
+    },
     "quote": {
       "quote": "We don't ask for permission. We build the table, we set the chairs, we invite everyone.",
       "attribution": "Imani Joseph, founder"
@@ -30,13 +53,14 @@
     "donate": {
       "chapter": "DONATE",
       "headline": "Non-profit organization.",
-      "body": "Musiqlt is a registered non-profit. Your donations fund artist bursaries, studio time, and our free community programs.",
+      "body": "MusiqualiT is a registered non-profit. Your donations fund artist bursaries, studio time, and our free community programs.",
       "eyebrow": "GIVE NOW",
       "cta": "Donate a custom amount",
       "receipt": "Tax receipt issued for donations of $20 or more."
     },
     "newsletter": {
       "eyebrow": "NEWSLETTER",
+      "label": "Your email address",
       "headline": "Stay in the loop.",
       "placeholder": "Your email",
       "subscribe": "SUBSCRIBE",
@@ -50,7 +74,7 @@
     "story": {
       "chapter": "OUR STORY",
       "body1": "In 2017, Imani Joseph left a comfortable major-label job. She opened a small studio in the Mile-End with a fixed idea: give artists of colour what she'd never received — the time, the listening, the respect, and a plan.",
-      "body2": "Eight years later, Musiqlt is an ecosystem: studio, mentorship, development programs, community nights. More than 120 artists have come through our doors."
+      "body2": "Eight years later, MusiqualiT is an ecosystem: studio, mentorship, development programs, community nights. More than 120 artists have come through our doors."
     },
     "team": { "chapter": "THE TEAM" },
     "milestones": { "chapter": "MILESTONES" }
@@ -137,7 +161,7 @@
       "fields": {
         "yearsActive": "Years active",
         "currentProject": "Current project",
-        "motivation": "What are you looking for at Musiqlt?",
+        "motivation": "What are you looking for at MusiqualiT?",
         "interests": "INTERESTS",
         "back": "Back",
         "continue": "Continue"
@@ -204,8 +228,8 @@
     "apply": "Apply"
   },
   "seo": {
-    "siteName": "Musiqlt",
-    "siteTitle": "Musiqlt · Artistic development for artists of colour",
-    "description": "Musiqlt supports artists of colour from Montréal. Studio, mentorship, development programs, community."
+    "siteName": "MusiqualiT",
+    "siteTitle": "MusiqualiT · Artistic development for artists of colour",
+    "description": "MusiqualiT supports artists of colour from Montréal. Studio, mentorship, development programs, community."
   }
 }
