@@ -32,7 +32,7 @@ export function DropZone({ accept, label, multiple, maxBytes, onPick, previewSrc
         setDrag(false)
         handle(e.dataTransfer.files)
       }}
-      className={`flex flex-col items-center justify-center gap-3 w-full rounded-lg border-2 border-dashed p-8 text-center ${drag ? 'border-saffron bg-saffron/10' : 'border-[color:var(--color-rule)]'}`}
+      className={`flex flex-col items-center justify-center gap-3 w-full rounded-lg border-2 border-dashed p-8 text-center ${drag ? 'border-gold bg-gold/10' : 'border-[color:var(--color-rule)]'}`}
     >
       {previewSrc ? (
         // eslint-disable-next-line @next/next/no-img-element

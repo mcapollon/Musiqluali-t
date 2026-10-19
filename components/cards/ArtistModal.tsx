@@ -58,7 +58,7 @@ export function ArtistModal({
                 }
                 className="flex items-center gap-3 mt-4"
               >
-                <span className="grid size-12 place-items-center rounded-full bg-saffron text-ink">
+                <span className="grid size-12 place-items-center rounded-full bg-gold text-ink">
                   {isCurrent && isPlaying ? (
                     <Pause className="size-5" />
                   ) : (
@@ -73,7 +73,7 @@ export function ArtistModal({
               <ul className="flex flex-wrap gap-3 mt-6">
                 {artist.links.map((l) => (
                   <li key={l.href}>
-                    <a href={l.href} className="text-mono-meta text-saffron">
+                    <a href={l.href} className="text-mono-meta text-gold">
                       {l.label} ↗
                     </a>
                   </li>

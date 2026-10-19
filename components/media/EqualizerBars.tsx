@@ -58,7 +58,7 @@ export function EqualizerBars({ className }: { className?: string }) {
     >
       {Array.from({ length: bars }).map((_, i) => {
         const seed = (i * 37) % 9
-        const tint = i % 3 === 0 ? 'bg-saffron/40' : 'bg-bone/15'
+        const tint = i % 3 === 0 ? 'bg-gold/40' : 'bg-bone/15'
         if (live) {
           return (
             <span

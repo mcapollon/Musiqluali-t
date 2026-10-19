@@ -43,7 +43,7 @@ export function MobileNavOverlay({ open, onClose }: { open: boolean; onClose: ()
           className="fixed inset-0 z-[60] bg-ink"
         >
           <div className="section-pad-x flex h-16 items-center justify-between">
-            <span className="font-display text-2xl">MUSIQL<span className="text-saffron">·</span>T</span>
+            <span className="font-display text-2xl">MUSIQL<span className="text-gold">·</span>T</span>
             <button aria-label="Close" onClick={onClose} className="p-2"><X className="size-6" /></button>
           </div>
           <nav className="section-pad-x mt-8 flex flex-col gap-6">
@@ -57,7 +57,7 @@ export function MobileNavOverlay({ open, onClose }: { open: boolean; onClose: ()
             <div className="flex items-center gap-2">
               <ThemeToggle />
               <LocaleSwitch />
-              <a href="#donate" onClick={onClose} className="text-mono-meta text-bone-mute hover:text-saffron whitespace-nowrap">
+              <a href="#donate" onClick={onClose} className="text-mono-meta text-bone-mute hover:text-gold whitespace-nowrap">
                 {t('donate')}
               </a>
             </div>

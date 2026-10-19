@@ -59,7 +59,7 @@ export function AmbientHeroPlayer({ label }: { label: string }) {
         onClick={togglePlay}
         aria-label={playing ? 'Pause hero ambient' : 'Play hero ambient'}
         aria-pressed={playing}
-        className="inline-flex items-center gap-2 text-saffron hover:text-bone transition-colors"
+        className="inline-flex items-center gap-2 text-gold hover:text-bone transition-colors"
       >
         {playing ? <Pause className="size-3" /> : <Play className="size-3" />}
         <span>{playing ? label : `▸ ${label}`}</span>
@@ -70,7 +70,7 @@ export function AmbientHeroPlayer({ label }: { label: string }) {
           onClick={toggleMute}
           aria-label={muted ? 'Unmute hero ambient' : 'Mute hero ambient'}
           aria-pressed={muted}
-          className="text-bone-mute hover:text-saffron transition-colors"
+          className="text-bone-mute hover:text-gold transition-colors"
         >
           {muted ? <VolumeX className="size-3" /> : <Volume2 className="size-3" />}
         </button>

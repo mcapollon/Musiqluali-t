@@ -24,7 +24,7 @@ export function ProgramsPage() {
             <li key={p.slug}>
               <a
                 href={`#${p.slug}`}
-                className="text-mono-meta text-bone-mute hover:text-saffron whitespace-nowrap"
+                className="text-mono-meta text-bone-mute hover:text-gold whitespace-nowrap"
               >
                 {p[locale].title}
               </a>
@@ -49,7 +49,7 @@ export function ProgramsPage() {
               <div>
                 <p className="text-mono-meta text-bone-mute mb-3">{t('outcomes')}</p>
                 <ul className="space-y-2 list-none">
-                  {p[locale].outcomes.map((o) => <li key={o} className="border-l-2 border-saffron pl-3">{o}</li>)}
+                  {p[locale].outcomes.map((o) => <li key={o} className="border-l-2 border-gold pl-3">{o}</li>)}
                 </ul>
               </div>
               <p className="text-mono-meta text-bone-mute">{t('audience')}: <span className="text-bone">{p[locale].audience}</span></p>

@@ -14,7 +14,7 @@ export function ContactPage() {
         <div className="space-y-2">
           <p>Studio Musiqlt · Montréal QC</p>
           <p>
-            <a href="mailto:bonjour@musiqlt.example" className="text-saffron">
+            <a href="mailto:bonjour@musiqlt.example" className="text-gold">
               bonjour@musiqlt.example
             </a>
           </p>

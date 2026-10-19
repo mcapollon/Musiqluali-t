@@ -10,7 +10,7 @@ import { SkipToContent } from '@/components/chrome/SkipToContent'
 import { SiteHeader } from '@/components/chrome/SiteHeader'
 import { SiteFooter } from '@/components/chrome/SiteFooter'
 import { StickyMiniPlayer } from '@/components/media/StickyMiniPlayer'
-import { fraunces, inter, jetbrains } from '@/app/fonts'
+import { anton, bodoni, inter, jetbrains } from '@/app/fonts'
 import '../globals.css'
 
 export function generateStaticParams() {
@@ -48,7 +48,7 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} suppressHydrationWarning className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable}`}>
+    <html lang={locale} suppressHydrationWarning className={`${bodoni.variable} ${anton.variable} ${inter.variable} ${jetbrains.variable}`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <NextIntlClientProvider messages={messages} locale={locale}>

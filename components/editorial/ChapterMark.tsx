@@ -8,14 +8,14 @@ export function ChapterMark({ number, title }: { number: string; title: string }
   return (
     <div ref={ref} className="flex items-center gap-6">
       <span className="text-mono-meta text-bone-mute whitespace-nowrap">
-        CH. {number} — {title}
+        CH. <span className="text-gold">{number}</span> — {title}
       </span>
       <motion.span
         aria-hidden
-        className="h-px bg-[color:var(--color-rule)] origin-left"
+        className="h-px bg-rule origin-left"
         initial={{ scaleX: 0 }}
         animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         style={{ flex: 1 }}
       />
     </div>

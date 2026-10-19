@@ -11,7 +11,7 @@ export function Waveform({ bars = 24, active = false, className, label = 'Audio 
       {Array.from({ length: bars }).map((_, i) => (
         <motion.span
           key={i}
-          className="w-[2px] bg-saffron rounded-sm"
+          className="w-[2px] bg-gold rounded-sm"
           initial={{ height: '20%' }}
           animate={
             reduced

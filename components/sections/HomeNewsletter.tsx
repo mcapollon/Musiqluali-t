@@ -16,8 +16,8 @@ export function HomeNewsletter() {
           onSubmit={(e) => { e.preventDefault(); toast.success(t('toast')) }}
         >
           <label htmlFor="home-newsletter-email" className="sr-only">{t('placeholder')}</label>
-          <input id="home-newsletter-email" type="email" required placeholder={t('placeholder')} className="flex-1 bg-transparent border-b border-[color:var(--color-rule)] py-3 focus:outline-none focus:border-saffron" />
-          <button type="submit" className="text-mono-meta text-saffron">{t('subscribe')}</button>
+          <input id="home-newsletter-email" type="email" required placeholder={t('placeholder')} className="flex-1 bg-transparent border-b border-[color:var(--color-rule)] py-3 focus:outline-none focus:border-gold" />
+          <button type="submit" className="text-mono-meta text-gold">{t('subscribe')}</button>
         </form>
       </div>
     </section>

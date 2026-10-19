@@ -17,7 +17,7 @@ export function WizardProgress({ total = 5 }: { total?: number }) {
               aria-current={state === 'active' ? 'step' : undefined}
               disabled={n > step}
               onClick={() => setStep(n)}
-              className={`h-1.5 w-10 rounded-full ${state === 'pending' ? 'bg-[color:var(--color-rule)]' : 'bg-saffron'} ${state === 'active' ? 'shadow-[0_0_12px_var(--color-saffron)]' : ''}`}
+              className={`h-1.5 w-10 rounded-full ${state === 'pending' ? 'bg-[color:var(--color-rule)]' : 'bg-gold'} ${state === 'active' ? 'shadow-[0_0_12px_var(--color-gold)]' : ''}`}
             />
           </li>
         )

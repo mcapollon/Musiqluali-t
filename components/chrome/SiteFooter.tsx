@@ -37,24 +37,24 @@ export function SiteFooter() {
     <footer className="section-pad-x section-pad-y border-t border-[color:var(--color-rule)] mt-24">
       <div className="grid gap-12 md:grid-cols-3">
         <div>
-          <span className="font-display text-3xl">MUSIQL<span className="text-saffron">·</span>T</span>
+          <span className="font-display text-3xl">MUSIQL<span className="text-gold">·</span>T</span>
           <p className="mt-4 text-bone-mute">{t('blurb')}</p>
         </div>
         <div>
           <p className="text-mono-meta text-bone-mute mb-4">{t('sitemap')}</p>
           <ul className="space-y-2">
-            <li><Link href="/programs" className="hover:text-saffron">{t('nav.programs')}</Link></li>
-            <li><Link href="/artists" className="hover:text-saffron">{t('nav.artists')}</Link></li>
-            <li><Link href="/events" className="hover:text-saffron">{t('nav.events')}</Link></li>
-            <li><Link href="/about" className="hover:text-saffron">{t('nav.about')}</Link></li>
-            <li><Link href="/contact" className="hover:text-saffron">{t('nav.contact')}</Link></li>
-            <li><Link href="/apply" className="hover:text-saffron">{t('nav.apply')}</Link></li>
+            <li><Link href="/programs" className="hover:text-gold">{t('nav.programs')}</Link></li>
+            <li><Link href="/artists" className="hover:text-gold">{t('nav.artists')}</Link></li>
+            <li><Link href="/events" className="hover:text-gold">{t('nav.events')}</Link></li>
+            <li><Link href="/about" className="hover:text-gold">{t('nav.about')}</Link></li>
+            <li><Link href="/contact" className="hover:text-gold">{t('nav.contact')}</Link></li>
+            <li><Link href="/apply" className="hover:text-gold">{t('nav.apply')}</Link></li>
           </ul>
         </div>
         <div>
           <p className="text-mono-meta text-bone-mute mb-4">{t('contactLabel')}</p>
           <p>Studio Musiqlt · Montréal QC</p>
-          <p><a href="mailto:bonjour@musiqlt.example" className="hover:text-saffron">bonjour@musiqlt.example</a></p>
+          <p><a href="mailto:bonjour@musiqlt.example" className="hover:text-gold">bonjour@musiqlt.example</a></p>
           <div className="mt-4 flex gap-4" aria-label={t('social')}>
             <a href="https://instagram.com/musiqlt" aria-label="Instagram"><Instagram className="size-5" /></a>
             <a href="#" aria-label="Facebook"><Facebook className="size-5" /></a>
@@ -66,9 +66,9 @@ export function SiteFooter() {
               id="footer-newsletter-email"
               type="email"
               placeholder={t('newsletterPlaceholder')}
-              className="flex-1 bg-transparent border-b border-[color:var(--color-rule)] py-2 focus:outline-none focus:border-saffron"
+              className="flex-1 bg-transparent border-b border-[color:var(--color-rule)] py-2 focus:outline-none focus:border-gold"
             />
-            <button type="submit" className="text-mono-meta text-saffron">{t('subscribe')}</button>
+            <button type="submit" className="text-mono-meta text-gold">{t('subscribe')}</button>
           </form>
         </div>
       </div>

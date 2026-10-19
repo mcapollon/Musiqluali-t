@@ -65,7 +65,7 @@ export function ArtistTile({
               artistName: artist.name,
             })
           }}
-          className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full bg-saffron text-ink opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full bg-gold text-ink opacity-0 group-hover:opacity-100 transition-opacity"
         >
           <Play className="size-4" />
         </button>

@@ -23,7 +23,7 @@ export function ProgramCard({ program }: { program: Program }) {
       <div className="absolute inset-x-6 bottom-6 space-y-2">
         <h3 className="text-display-m font-display">{copy.title}</h3>
         <p className="text-bone-mute">{copy.blurb}</p>
-        <span className="text-mono-meta text-saffron">→ {t('learnMore')}</span>
+        <span className="text-mono-meta text-gold">→ {t('learnMore')}</span>
       </div>
     </Link>
   )

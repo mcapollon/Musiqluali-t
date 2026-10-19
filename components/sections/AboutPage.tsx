@@ -36,7 +36,7 @@ export function AboutPage() {
         <ol className="space-y-6">
           {milestones.map((m) => (
             <li key={m.year} className="grid grid-cols-12 items-baseline border-t border-[color:var(--color-rule)] pt-6">
-              <span className="col-span-2 font-mono text-3xl text-saffron">{m.year}</span>
+              <span className="col-span-2 font-mono text-3xl text-gold">{m.year}</span>
               <p className="col-span-10 text-bone-mute">{locale === 'fr' ? m.fr : m.en}</p>
             </li>
           ))}

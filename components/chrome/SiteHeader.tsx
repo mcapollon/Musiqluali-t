@@ -33,7 +33,7 @@ export function SiteHeader() {
       >
         <div className="section-pad-x flex items-center justify-between">
           <Link href="/" className={cn('font-display tracking-tight transition-transform', past ? 'text-2xl' : 'text-3xl')}>
-            MUSIQL<span className="text-saffron">·</span>T
+            MUSIQL<span className="text-gold">·</span>T
           </Link>
           <nav aria-label={t('primary')} className="hidden md:flex items-center gap-8">
             {NAV_ROUTES.map((r) => (
@@ -45,7 +45,7 @@ export function SiteHeader() {
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
             <LocaleSwitch />
-            <a href="#donate" className="text-mono-meta text-bone-mute hover:text-saffron whitespace-nowrap">
+            <a href="#donate" className="text-mono-meta text-bone-mute hover:text-gold whitespace-nowrap">
               {t('donate')}
             </a>
             <Link href="/apply">

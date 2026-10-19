@@ -6,7 +6,7 @@ import { MagneticCTA } from '@/components/motion/MagneticCTA'
 export function HomeApplyCTA() {
   const t = useTranslations('home.applyCta')
   return (
-    <section className="bg-saffron text-ink">
+    <section className="bg-gold text-ink">
       <div className="section-pad-x section-pad-y space-y-8">
         <h2 className="text-display-l font-display">{t('headline')}</h2>
         <p className="max-w-xl">{t('blurb')}</p>

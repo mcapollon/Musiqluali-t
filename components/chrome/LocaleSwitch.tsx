@@ -18,7 +18,7 @@ export function LocaleSwitch({ className }: { className?: string }) {
           aria-label={`Switch language to ${l === 'fr' ? 'French' : 'English'}`}
           className={cn(
             'px-3 py-1 rounded-full transition-colors',
-            locale === l ? 'bg-saffron text-ink' : 'text-bone-mute hover:text-bone',
+            locale === l ? 'bg-gold text-ink' : 'text-bone-mute hover:text-bone',
           )}
         >
           {l.toUpperCase()}

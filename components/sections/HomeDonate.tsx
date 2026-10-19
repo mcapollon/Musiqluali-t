@@ -22,7 +22,7 @@ export function HomeDonate() {
               <a
                 key={amt}
                 href="#"
-                className="border border-[color:var(--color-rule)] rounded-md py-4 text-center font-mono text-2xl hover:border-saffron hover:text-saffron transition-colors"
+                className="border border-[color:var(--color-rule)] rounded-md py-4 text-center font-mono text-2xl hover:border-gold hover:text-gold transition-colors"
               >
                 ${amt}
               </a>

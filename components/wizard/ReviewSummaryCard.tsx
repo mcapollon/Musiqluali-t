@@ -20,7 +20,7 @@ export function ReviewSummaryCard({
           type="button"
           aria-label={`Edit ${title}`}
           onClick={() => setStep(gotoStep)}
-          className="p-1 text-bone-mute hover:text-saffron"
+          className="p-1 text-bone-mute hover:text-gold"
         >
           <Pencil className="size-4" />
         </button>

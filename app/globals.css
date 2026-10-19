@@ -1,39 +1,73 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-@theme {
-  --color-ink: #0B0B0C;
-  --color-ink-2: #141416;
-  --color-bone: #F2EBDD;
-  --color-bone-mute: #A8A294;
-  --color-rule: #26252A;
-  --color-saffron: #E3A23A;
-  --color-saffron-deep: #B57A1F;
-  --color-err: #E36A4A;
-  --color-ok: #6FB48A;
+/*
+ * Gala Noir — design tokens.
+ *
+ * Two layers:
+ *   1. Brand primitives (black / white / grey / gold). Fixed values. Use them
+ *      where a colour must not follow the theme (e.g. overlays on footage).
+ *   2. Semantic roles (ink = page, bone = text, rule = hairline). Components
+ *      use these; the light theme flips them.
+ *
+ * Contrast for every text/background pair is asserted in
+ * lib/design/__tests__/contrast.test.ts, which parses this file.
+ * `static` keeps every token emitted so the /style page and inline
+ * `var(--color-*)` references always resolve.
+ */
+@theme static {
+  /* Brand primitives */
+  --color-black: #0A0A0A;
+  --color-black-2: #131313;
+  --color-white: #F5F3EE;
+  --color-grey: #8A8780;
+  --color-gold: #C9A54C;
+  --color-gold-bright: #E2C27A;
+  --color-gold-deep: #9C7A2C;
+  --color-gold-ink: #7A5C1E;
+  --color-err: #E8806A;
+  --color-ok: #7FBF98;
 
-  --font-display: var(--font-fraunces), Georgia, serif;
+  /* Semantic roles (dark is the default and only "gala" lighting) */
+  --color-ink: var(--color-black);
+  --color-ink-2: var(--color-black-2);
+  --color-bone: var(--color-white);
+  --color-bone-mute: var(--color-grey);
+  /* Decorative hairlines only (1.5:1). Never the sole boundary of a control. */
+  --color-rule: rgb(201 165 76 / 0.25);
+  /* Control boundaries (inputs, ghost buttons): ≥3:1 against the page. */
+  --color-rule-strong: rgb(201 165 76 / 0.6);
+
+  --font-display: var(--font-bodoni), 'Bodoni 72', Didot, Georgia, serif;
+  --font-poster: var(--font-anton), 'Arial Narrow', Impact, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
   --radius-pill: 9999px;
   --radius-sm: 2px;
-  --radius-md: 8px;
-  --radius-lg: 24px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
 
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-gala: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-gala: 1.1s;
 }
 
 :root {
   color-scheme: dark;
 }
 
+/* Light theme: same palette, inverted. Gold darkens to stay AA on white. */
 .light {
-  --color-ink: #F4EFE3;
-  --color-ink-2: #ECE6D7;
-  --color-bone: #101012;
-  --color-bone-mute: #5B574F;
-  --color-rule: #D8D2C2;
+  --color-ink: #F5F3EE;
+  --color-ink-2: #EBE8E1;
+  --color-bone: #0A0A0A;
+  --color-bone-mute: #5E5B55;
+  --color-gold: #7A5C1E;
+  --color-gold-bright: #5E4614;
+  --color-gold-deep: #5E4614;
+  --color-rule: rgb(122 92 30 / 0.3);
+  --color-rule-strong: rgb(122 92 30 / 0.75);
   color-scheme: light;
 }
 
@@ -42,24 +76,95 @@
     background: var(--color-ink);
     color: var(--color-bone);
     font-family: var(--font-sans);
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
   :focus-visible {
-    outline: 2px solid var(--color-saffron);
-    outline-offset: 2px;
-    border-radius: 2px;
+    outline: 2px solid var(--color-gold-bright);
+    outline-offset: 3px;
+    border-radius: 0;
   }
-  ::selection { background: var(--color-saffron); color: var(--color-ink); }
+  ::selection { background: var(--color-gold); color: var(--color-black); }
   [lang='fr'] { hyphens: auto; }
+  h1, h2, h3 { font-optical-sizing: auto; }
 }
 
 @layer utilities {
-  .text-display-xl { font-family: var(--font-display); font-size: clamp(2.5rem, 4vw + 1rem, 7rem); line-height: 0.92; letter-spacing: -0.04em; font-weight: 600; }
-  .text-display-l  { font-family: var(--font-display); font-size: clamp(3rem, 4vw + 1rem, 5.5rem); line-height: 1.0; letter-spacing: -0.02em; }
-  .text-display-m  { font-family: var(--font-display); font-size: clamp(2rem, 2.5vw + 1rem, 3.25rem); line-height: 1.05; letter-spacing: -0.015em; }
-  .text-mono-meta  { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  /* Display serif — the voice of the brand. `em` inside = the gold statement word. */
+  .text-display-hero { font-family: var(--font-display); font-size: clamp(3.25rem, 15vw, 16rem); line-height: 0.86; letter-spacing: -0.035em; font-weight: 500; }
+  .text-display-xl   { font-family: var(--font-display); font-size: clamp(2.75rem, 6vw + 1rem, 8.5rem); line-height: 0.9; letter-spacing: -0.03em; font-weight: 500; }
+  .text-display-l    { font-family: var(--font-display); font-size: clamp(2.25rem, 4vw + 1rem, 5.5rem); line-height: 0.95; letter-spacing: -0.02em; font-weight: 500; }
+  .text-display-m    { font-family: var(--font-display); font-size: clamp(1.75rem, 2vw + 1rem, 3.25rem); line-height: 1.05; letter-spacing: -0.01em; font-weight: 500; }
+  :is(.text-display-hero, .text-display-xl, .text-display-l, .text-display-m) em { font-style: italic; color: var(--color-gold); }
+
+  /* Poster caps — event names, dates, lineups. Use sparingly. */
+  .text-poster-xl { font-family: var(--font-poster); font-size: clamp(4rem, 16vw, 17rem); line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
+  .text-poster-l  { font-family: var(--font-poster); font-size: clamp(2.5rem, 7vw, 7.5rem); line-height: 0.92; letter-spacing: 0.01em; text-transform: uppercase; }
+  .text-poster-m  { font-family: var(--font-poster); font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.75rem); line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; }
+
+  .text-lede      { font-size: clamp(1.125rem, 0.5vw + 1rem, 1.375rem); line-height: 1.6; }
+  .text-mono-meta { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; }
+  .text-mono-micro { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; }
+
   .hairline { border-color: var(--color-rule); }
-  .section-pad-y { padding-block: clamp(4rem, 10vw, 9rem); }
-  .section-pad-x { padding-inline: clamp(1.25rem, 4vw, 2.5rem); }
+  .section-pad-y { padding-block: clamp(4.5rem, 11vw, 10rem); }
+  .section-pad-x { padding-inline: clamp(1rem, 4vw, 3rem); }
+
+  /* Gold light on type (logo, statements). Static; the opening animates a band over it. */
+  .text-gold-sheen {
+    background: linear-gradient(100deg, var(--color-gold-deep) 0%, var(--color-gold) 35%, var(--color-gold-bright) 50%, var(--color-gold) 65%, var(--color-gold-deep) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Printed-invitation frame: double hairline, no shadow. */
+  .frame-invitation {
+    border: 1px solid var(--color-rule-strong);
+    outline: 1px solid var(--color-rule);
+    outline-offset: -10px;
+  }
+
+  /*
+   * Image grades — apply to the wrapper of any <img>/<video>, so uploaded
+   * media gets the treatment without editing files.
+   * Stage: grayscale → multiply with gold. Whites turn gold, blacks stay black.
+   */
+  .grade-stage { position: relative; isolation: isolate; overflow: hidden; background: var(--color-black); }
+  .grade-stage :is(img, video) { filter: grayscale(1) contrast(1.2) brightness(1.05); }
+  .grade-stage::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(160deg, var(--color-gold-bright) 0%, var(--color-gold-bright) 30%, var(--color-gold) 100%);
+    mix-blend-mode: multiply;
+  }
+  .grade-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(120% 90% at 50% 40%, transparent 50%, rgb(10 10 10 / 0.6) 100%);
+  }
+
+  /* Portrait: high-contrast B&W. Hover/focus lifts the light, never the colour. */
+  .grade-portrait { position: relative; overflow: hidden; background: var(--color-black); }
+  .grade-portrait :is(img, video) {
+    filter: grayscale(1) contrast(1.18) brightness(0.9);
+    transition: filter var(--duration-gala) var(--ease-gala), transform 1.4s var(--ease-gala);
+  }
+  .grade-portrait:is(:hover, :focus-within) :is(img, video) { filter: grayscale(1) contrast(1.22) brightness(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
