@@ -26,20 +26,20 @@ export function EventPoster({
   const date = event ? new Date(event.dateISO) : null
 
   return (
-    <article className="relative isolate overflow-hidden bg-black text-white">
+    <article className="sd-reveal relative isolate overflow-clip bg-black text-white">
       <div className="grade-stage absolute inset-0">
         <Image
           src={event?.poster ?? flagship.poster}
           alt={event ? '' : flagship.posterAlt[locale]}
           fill
           sizes="100vw"
-          className="object-cover"
+          className="sd-parallax object-cover"
         />
       </div>
       <div aria-hidden className="absolute inset-0 z-3 bg-linear-to-r from-black/85 via-black/40 to-transparent" />
 
       <div className="relative z-10 flex min-h-[34rem] flex-col justify-between gap-12 p-6 sm:p-10 md:min-h-[42rem] md:p-14">
-        <p className="text-mono-meta text-gold-bright">{t('nextShow')}</p>
+        <p className="text-mono-meta text-white/70">{t('nextShow')}</p>
 
         <div>
           <Heading className={event ? 'text-poster-l max-w-5xl' : 'text-poster-xl'}>{copy?.title ?? flagship.name}</Heading>
@@ -53,7 +53,7 @@ export function EventPoster({
           <p className="mt-6 max-w-lg text-white/80">{event ? `${event.venue} — ${copy!.description}` : t('tbaBody')}</p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
           {event ? (
             <a href={event.ticketsHref} className={buttonClass({ size: 'lg' })}>
               {t('tickets')}
@@ -63,11 +63,8 @@ export function EventPoster({
               {t('notify')}
             </a>
           )}
-          <Link
-            href="/events"
-            className={buttonClass({ size: 'lg', variant: 'ghost', className: 'text-white border-white/50 hover:border-gold' })}
-          >
-            {t('seeAll')}
+          <Link href="/events" className={buttonClass({ variant: 'link', className: 'text-white' })}>
+            {t('seeAll')} <span aria-hidden>→</span>
           </Link>
         </div>
       </div>

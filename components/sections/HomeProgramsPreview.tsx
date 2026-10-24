@@ -6,12 +6,12 @@ import { programs } from '@/lib/mock/programs'
 export function HomeProgramsPreview() {
   const t = useTranslations('home.programs')
   return (
-    <section className="section-pad-y border-t border-rule">
+    <section className="sd-rail section-pad-y">
       <div className="section-pad-x">
         <ChapterMark number="02" title={t('chapter')} />
       </div>
       {/* Gallery wall: scrolls sideways on its own, never hijacks vertical scroll. */}
-      <div className="mt-14 overflow-x-auto overscroll-x-contain md:mt-20">
+      <div className="mt-12 overflow-x-auto overscroll-x-contain md:mt-16">
         <ul className="section-pad-x flex w-max snap-x snap-mandatory gap-8 pb-6 md:gap-12">
           {programs.map((p, i) => (
             <li key={p.slug} className="snap-start">

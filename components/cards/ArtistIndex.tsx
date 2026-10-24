@@ -65,7 +65,7 @@ export function ArtistIndex({ artists }: { artists: Artist[] }) {
                 </span>
               </button>
               <div className="hidden shrink-0 text-right sm:block" aria-hidden>
-                <p className="text-mono-micro text-gold">{a.genre}</p>
+                <p className="text-mono-micro text-bone">{a.genre}</p>
                 <p className="text-mono-micro text-bone-mute">{a.city}</p>
               </div>
               {a.track && (
@@ -73,7 +73,7 @@ export function ArtistIndex({ artists }: { artists: Artist[] }) {
                   type="button"
                   onClick={() => play({ ...a.track!, artistId: a.id, artistName: a.name })}
                   aria-label={`${t('listen')} — ${a.name}`}
-                  className="grid size-10 shrink-0 place-items-center border border-rule-strong text-gold transition-colors hover:border-gold hover:bg-gold hover:text-ink"
+                  className="grid size-10 shrink-0 place-items-center rounded-full border border-rule-strong text-bone transition-colors hover:border-gold hover:bg-gold hover:text-ink"
                 >
                   <Play className="size-3.5" aria-hidden />
                 </button>

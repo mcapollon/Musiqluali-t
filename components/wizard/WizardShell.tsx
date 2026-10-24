@@ -30,18 +30,18 @@ export function WizardShell({ children }: { children: React.ReactNode }) {
         />
         <div className="absolute inset-0 z-3 bg-linear-to-b from-black/70 via-black/30 to-black/85" />
         <div className="relative z-10 flex h-full flex-col justify-between p-10 text-white lg:p-14">
-          <p className="text-mono-meta text-gold-bright">
+          <p className="text-mono-meta text-white/70">
             {tn('apply')} · {stepLabel}
           </p>
           <div>
-            <p className="font-display text-[clamp(4.5rem,8vw,7.5rem)] font-light leading-none tabular-nums text-gold">0{step}</p>
+            <p className="font-display text-[clamp(4.5rem,8vw,7.5rem)] font-light leading-none tabular-nums text-white">0{step}</p>
             <p className="text-display-l mt-6">{t('title')}</p>
             <p className="mt-4 max-w-xs text-white/75">{t('blurb')}</p>
           </div>
         </div>
       </aside>
       <div className="section-pad-x py-12 md:py-20 lg:px-20">
-        <p className="text-mono-meta text-gold">{stepLabel}</p>
+        <p className="text-mono-meta text-bone-mute">{stepLabel}</p>
         <h1 className="text-display-l mt-4">{t('title')}</h1>
         <p className="mt-4 max-w-md text-bone-mute md:hidden">{t('blurb')}</p>
         <div className="mt-10">

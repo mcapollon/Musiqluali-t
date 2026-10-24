@@ -17,8 +17,10 @@ type Props = {
    * 'load': words rise from first paint, for above-the-fold headlines. Needs
    * no hydration (fast LCP, works without JS) and waits for the logo opening
    * via html[data-intro] (see globals.css).
+   * 'read': no rise; words brighten line by line as they scroll through the
+   * viewport (scroll-driven, for long statements). Static where unsupported.
    */
-  reveal?: 'scroll' | 'load'
+  reveal?: 'scroll' | 'load' | 'read'
 }
 
 const sizeCls = { hero: 'text-display-hero', xl: 'text-display-xl', l: 'text-display-l', m: 'text-display-m' } as const
@@ -51,7 +53,7 @@ export function DisplayHeading({ text, emphasis, size = 'l', className, as: As =
   return (
     <As
       ref={ref}
-      className={cn(sizeCls[size], reveal === 'scroll' && !inView && 'reveal-wait', className)}
+      className={cn(sizeCls[size], reveal === 'scroll' && !inView && 'reveal-wait', reveal === 'read' && 'sd-read', className)}
       style={delay !== undefined ? ({ '--reveal-delay': `${delay}s` } as React.CSSProperties) : undefined}
     >
       <span className="sr-only">{text}</span>
@@ -60,11 +62,17 @@ export function DisplayHeading({ text, emphasis, size = 'l', className, as: As =
           space ? (
             <Fragment key={i}> </Fragment>
           ) : (
-            <span key={i} className={cn('inline-block overflow-hidden pb-[0.14em] mb-[-0.14em] align-bottom')}>
-              <span className="word-rise" style={{ '--i': n++ } as React.CSSProperties}>
+            reveal === 'read' ? (
+              <span key={i} className="sd-word">
                 {em ? <em>{w}</em> : w}
               </span>
-            </span>
+            ) : (
+              <span key={i} className={cn('inline-block overflow-hidden pb-[0.14em] mb-[-0.14em] align-bottom')}>
+                <span className="word-rise" style={{ '--i': n++ } as React.CSSProperties}>
+                  {em ? <em>{w}</em> : w}
+                </span>
+              </span>
+            )
           ),
         )}
       </span>

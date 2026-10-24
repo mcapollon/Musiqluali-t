@@ -36,7 +36,7 @@ export function StickyMiniPlayer() {
         <aside
           role="region"
           aria-label={t('audioPlayer')}
-          className="animate-rise frame-invitation fixed inset-x-4 bottom-4 z-40 mx-auto max-w-3xl bg-ink-2/95 p-4 backdrop-blur"
+          className="animate-rise border border-rule fixed inset-x-4 bottom-4 z-40 mx-auto max-w-3xl bg-ink-2/95 p-4 backdrop-blur"
         >
           <div className="flex items-center gap-4">
             <div className="flex gap-1">

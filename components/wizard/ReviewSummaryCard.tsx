@@ -17,7 +17,7 @@ export function ReviewSummaryCard({
   return (
     <article className="border-t border-rule pt-6">
       <header className="mb-4 flex items-center justify-between">
-        <h2 className="text-mono-meta text-gold">{title}</h2>
+        <h2 className="text-mono-meta text-bone-mute">{title}</h2>
         <button
           type="button"
           aria-label={t('edit', { section: title })}

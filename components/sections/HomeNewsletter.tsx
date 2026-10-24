@@ -4,10 +4,10 @@ import { useTranslations } from 'next-intl'
 export function HomeNewsletter() {
   const t = useTranslations('home.newsletter')
   return (
-    <section id="newsletter" className="section-pad-x section-pad-y scroll-mt-24 border-t border-rule">
-      <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
+    <section id="newsletter" className="section-pad-x section-pad-y scroll-mt-24">
+      <div className="sd-rise flex flex-col justify-between gap-10 md:flex-row md:items-end">
         <div>
-          <p className="text-mono-meta text-gold">{t('eyebrow')}</p>
+          <p className="text-mono-meta text-bone-mute">{t('eyebrow')}</p>
           <h2 className="text-display-l mt-4">{t('headline')}</h2>
         </div>
         <form
@@ -29,7 +29,7 @@ export function HomeNewsletter() {
             placeholder={t('placeholder')}
             className="flex-1 border-b border-rule-strong bg-transparent py-3 text-lg placeholder:text-bone-mute focus:border-gold"
           />
-          <button type="submit" className="text-mono-meta pb-3 text-gold transition-colors hover:text-gold-bright">
+          <button type="submit" className="text-mono-meta pb-3 text-bone transition-colors hover:text-gold-bright">
             {t('subscribe')}
           </button>
         </form>

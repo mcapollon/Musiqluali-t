@@ -1,12 +1,14 @@
 import { cn } from '@/lib/utils/cn'
 
-export type ButtonVariant = 'primary' | 'ghost' | 'quiet'
+export type ButtonVariant = 'primary' | 'ghost' | 'quiet' | 'link'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 const variantClass: Record<ButtonVariant, string> = {
   primary: 'bg-gold text-ink hover:bg-gold-bright',
   ghost: 'bg-transparent text-bone border border-rule-strong hover:border-gold hover:text-gold-bright',
   quiet: 'bg-transparent text-bone-mute hover:text-bone underline-offset-[6px] decoration-gold hover:underline',
+  /** Secondary action as a text link (pair it with a trailing arrow). */
+  link: 'bg-transparent text-bone hover:text-gold-bright',
 }
 
 const sizeClass: Record<ButtonSize, string> = {
@@ -28,7 +30,7 @@ export function buttonClass({
   return cn(
     'inline-flex items-center justify-center gap-3 rounded-none font-sans font-medium uppercase tracking-[0.18em] whitespace-nowrap transition-colors duration-500',
     variantClass[variant],
-    sizeClass[size],
+    variant === 'link' ? 'h-12 px-0 text-xs' : sizeClass[size],
     className,
   )
 }

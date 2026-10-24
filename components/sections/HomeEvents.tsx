@@ -14,9 +14,9 @@ export function HomeEvents() {
   const t = useTranslations('home.events')
   const [next, ...later] = UPCOMING
   return (
-    <section id="next-show" className="section-pad-x section-pad-y scroll-mt-24 border-t border-rule">
+    <section id="next-show" className="section-pad-x section-pad-y scroll-mt-24">
       <ChapterMark number="04" title={t('chapter')} />
-      <div className="mt-14 md:mt-20">
+      <div className="mt-12 md:mt-16">
         <EventPoster event={next} />
       </div>
       {later.length > 0 && (

@@ -13,13 +13,13 @@ export function HomeMission() {
   return (
     <section className="section-pad-x section-pad-y">
       <ChapterMark number="01" title={t('chapter')} />
-      <DisplayHeading text={t('manifesto')} emphasis={t('manifestoEm')} size="l" as="p" className="mt-14 max-w-6xl md:mt-20" />
+      <DisplayHeading text={t('manifesto')} emphasis={t('manifestoEm')} size="l" as="p" reveal="read" className="mt-12 max-w-6xl md:mt-16" />
       <h3 className="sr-only">{t('pillarsLabel')}</h3>
-      <ol className="mt-20 grid gap-px bg-rule sm:grid-cols-2 lg:grid-cols-4 md:mt-28">
+      <ol className="mt-24 grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4 md:mt-32">
         {PILLARS.map((key, i) => (
-          <li key={key} className="bg-ink">
-            <RevealOnScroll delay={i * 0.12} className="flex h-full flex-col gap-4 py-8 sm:p-8">
-              <span className="text-mono-meta text-gold" aria-hidden>
+          <li key={key}>
+            <RevealOnScroll delay={i * 0.12} className="flex h-full flex-col gap-4">
+              <span className="text-mono-meta text-bone-mute" aria-hidden>
                 {String(i + 1).padStart(2, '0')}
               </span>
               <p className="text-display-m">{t(`pillars.${key}.title`)}</p>

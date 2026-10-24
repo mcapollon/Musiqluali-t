@@ -24,7 +24,7 @@ export function ArtistModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent closeLabel={ta('close')} className="frame-invitation max-w-3xl rounded-none bg-ink-2 p-0 overflow-hidden">
+      <DialogContent closeLabel={ta('close')} className="max-w-3xl rounded-none border border-rule bg-ink-2 p-0 overflow-hidden">
         <div className="grid md:grid-cols-2">
           <div className="grade-portrait relative aspect-[3/4] md:aspect-auto">
             <Image
@@ -39,7 +39,7 @@ export function ArtistModal({
             <DialogTitle className="text-display-l font-display">
               {artist.name}
             </DialogTitle>
-            <p className="text-mono-meta text-gold">
+            <p className="text-mono-meta text-bone-mute">
               {artist.genre} · {artist.city}
               {artist.pronouns ? ` · ${artist.pronouns}` : ''}
             </p>
@@ -74,7 +74,7 @@ export function ArtistModal({
               <ul className="flex flex-wrap gap-3 mt-6">
                 {artist.links.map((l) => (
                   <li key={l.href}>
-                    <a href={l.href} className="text-mono-meta text-gold">
+                    <a href={l.href} className="text-mono-meta text-bone-mute">
                       {l.label} ↗
                     </a>
                   </li>

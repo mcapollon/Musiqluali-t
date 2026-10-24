@@ -38,7 +38,7 @@ export function HomeHero() {
   }
 
   return (
-    <section className="relative flex min-h-[calc(100svh-5rem)] flex-col overflow-hidden bg-black text-white">
+    <section className="relative flex min-h-[calc(100svh-5rem)] flex-col overflow-clip bg-black text-white">
       {/* Stage: footage graded gold over deep blacks. */}
       <div className="grade-stage absolute inset-0">
         <Image
@@ -48,12 +48,12 @@ export function HomeHero() {
           loading="eager"
           fetchPriority="high"
           sizes="100vw"
-          className={showVideo ? 'object-cover' : 'object-cover motion-safe:animate-[kenburns_24s_ease-in-out_infinite_alternate]'}
+          className="sd-parallax object-cover"
         />
         {showVideo && (
           <video
             ref={videoRef}
-            className="absolute inset-0 size-full object-cover"
+            className="sd-parallax absolute inset-0 size-full object-cover"
             src={heroMedia.videoSrc ?? undefined}
             poster={heroMedia.poster}
             autoPlay
@@ -69,9 +69,9 @@ export function HomeHero() {
       <div aria-hidden className="absolute inset-0 z-3 bg-linear-to-t from-black via-black/55 to-black/25" />
       <GrainOverlay className="absolute inset-0 z-3 size-full" opacity={0.08} />
 
-      <div className="relative z-10 section-pad-x flex flex-1 flex-col justify-between gap-10 pt-8 pb-8 md:pt-10">
+      <div className="sd-recede relative z-10 section-pad-x flex flex-1 flex-col justify-between gap-10 pt-8 pb-8 md:pt-10">
         <div className="flex flex-col items-start gap-3 md:flex-row md:justify-between md:gap-4">
-          <p className="text-mono-meta text-gold-bright">{t('tag')}</p>
+          <p className="text-mono-meta text-white/70">{t('tag')}</p>
           <div className="flex items-center gap-3">
             <AmbientHeroPlayer label={t('nowPlaying')} />
             {!reduced && <EqualizerBars />}
@@ -87,15 +87,12 @@ export function HomeHero() {
             tone="stage"
           />
           <p className="text-lede mt-8 max-w-xl text-white/80">{t('subhead')}</p>
-          <div className="mt-10 flex flex-wrap gap-3">
+          <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-4">
             <Link href="/apply" className={buttonClass({ size: 'lg' })}>
               {t('ctaApply')}
             </Link>
-            <a
-              href="#next-show"
-              className={buttonClass({ size: 'lg', variant: 'ghost', className: 'text-white border-white/50 hover:border-gold' })}
-            >
-              {t('ctaNextShow')}
+            <a href="#next-show" className={buttonClass({ variant: 'link', className: 'text-white' })}>
+              {t('ctaNextShow')} <span aria-hidden>→</span>
             </a>
           </div>
         </div>
@@ -104,7 +101,7 @@ export function HomeHero() {
           <Marquee
             ariaLabel={t('marqueeLabel')}
             items={artists.map((a) => ({ label: a.name, meta: a.genre }))}
-            className="border-white/15 text-white"
+            className="text-white"
           />
           <div className="flex items-center justify-between gap-4 text-mono-micro text-white/70">
             <span>{heroMedia.isPlaceholder && showVideo ? t('videoPlaceholder') : null}</span>

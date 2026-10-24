@@ -33,10 +33,11 @@
   --color-ink-2: var(--color-black-2);
   --color-bone: var(--color-white);
   --color-bone-mute: var(--color-grey);
-  /* Decorative hairlines only (1.5:1). Never the sole boundary of a control. */
-  --color-rule: rgb(201 165 76 / 0.25);
-  /* Control boundaries (inputs, ghost buttons): ≥3:1 against the page. */
-  --color-rule-strong: rgb(201 165 76 / 0.6);
+  /* Neutral hairlines: lines structure lists, they never decorate. Gold is
+     reserved for the primary action and one highlighted phrase. */
+  --color-rule: rgb(245 243 238 / 0.1);
+  /* Control boundaries (inputs, outlined chips): ≥3:1 against the page. */
+  --color-rule-strong: rgb(245 243 238 / 0.42);
 
   /*
    * Bridge for the vendored shadcn/base-ui components in components/ui,
@@ -141,7 +142,7 @@
   .text-mono-micro { font-family: var(--font-sans); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
 
   .hairline { border-color: var(--color-rule); }
-  .section-pad-y { padding-block: clamp(4.5rem, 11vw, 10rem); }
+  .section-pad-y { padding-block: clamp(5rem, 9vw, 9rem); }
   .section-pad-x { padding-inline: clamp(1rem, 4vw, 3rem); }
 
   /* Gold light on type (logo, statements). Static; the opening animates a band over it. */
@@ -152,12 +153,6 @@
     color: transparent;
   }
 
-  /* Printed-invitation frame: double hairline, no shadow. */
-  .frame-invitation {
-    border: 1px solid var(--color-rule-strong);
-    outline: 1px solid var(--color-rule);
-    outline-offset: -10px;
-  }
 
   /*
    * Image grades — apply to the wrapper of any <img>/<video>, so uploaded
@@ -165,7 +160,9 @@
    * Stage: grayscale → multiply with gold. Whites turn gold, blacks stay black.
    */
   /* Position (relative/absolute/sticky) comes from the call site. */
-  .grade-stage { isolation: isolate; overflow: hidden; background: var(--color-black); }
+  /* overflow: clip (not hidden) so these frames don't become scroll containers,
+     which would freeze the scroll-driven parallax/reveal inside them. */
+  .grade-stage { isolation: isolate; overflow: clip; background: var(--color-black); }
   .grade-stage :is(img, video) { filter: grayscale(1) contrast(1.2) brightness(1.05); }
   .grade-stage::after {
     content: '';
@@ -186,7 +183,7 @@
   }
 
   /* Portrait: high-contrast B&W. Hover/focus lifts the light, never the colour. */
-  .grade-portrait { overflow: hidden; background: var(--color-black); }
+  .grade-portrait { overflow: clip; background: var(--color-black); }
   .grade-portrait :is(img, video) {
     filter: grayscale(1) contrast(1.18) brightness(0.9);
     transition: filter var(--duration-gala) var(--ease-gala), transform 1.4s var(--ease-gala);
@@ -210,7 +207,6 @@
 .reveal-wait .word-rise { animation-play-state: paused; }
 /* Hold the reveal until the logo opening hands off (FLY_AT in LogoIntro.tsx, ≈2.05 s). */
 html[data-intro='play'] { --reveal-delay: 2.05s; }
-@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08) translate3d(-1%, -1%, 0); } }
 /* Entrances: wizard steps, player, bios (rise) and overlays (fade). */
 @keyframes rise-in { from { opacity: 0; transform: translateY(14px); } }
 @keyframes fade-in { from { opacity: 0; } }
@@ -235,6 +231,36 @@ html[data-intro='play'] .logo-intro-mark { animation: intro-in 1s var(--ease-gal
 @keyframes intro-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 @keyframes intro-failsafe { to { opacity: 0; visibility: hidden; } }
 @keyframes intro-reveal { to { opacity: 1; } }
+
+/*
+ * Scroll-driven immersion (CSS scroll timelines: compositor-only, no JS, no
+ * scroll-jacking; native scroll stays the source of truth). Progressive: where
+ * unsupported, or with reduced motion, everything simply renders in place.
+ *   .sd-reveal    image frame opens like a letterbox as it enters
+ *   .sd-parallax  image drifts slower than the page inside its frame
+ *   .sd-recede    hero content settles back as you scroll past it
+ *   .sd-rise      a block lifts into place on entry
+ *   .sd-read      words light up line by line as they are read
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .sd-reveal { animation: sd-reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 32%; }
+    .sd-parallax { animation: sd-parallax linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+    .sd-recede { animation: sd-recede linear both; animation-timeline: view(); animation-range: exit 0% exit 90%; }
+    .sd-rise { animation: sd-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+    .sd-read .sd-word { animation: sd-word linear both; animation-timeline: view(); animation-range: entry 100% cover 42%; }
+    /* Inside a sideways scroller, view() would follow that horizontal scroller;
+       .sd-rail lends its own vertical page timeline to the items instead. */
+    .sd-rail { view-timeline: --sd-rail block; }
+    .sd-rail :is(.sd-reveal, .sd-parallax) { animation-timeline: --sd-rail; }
+    .sd-rail .sd-reveal { animation-range: entry 10% cover 40%; }
+  }
+}
+@keyframes sd-reveal { from { clip-path: inset(12% 8% 12% 8%); } to { clip-path: inset(0); } }
+@keyframes sd-parallax { from { transform: translateY(-5%) scale(1.12); } to { transform: translateY(5%) scale(1.12); } }
+@keyframes sd-recede { to { opacity: 0; transform: translateY(-8vh); } }
+@keyframes sd-rise { from { opacity: 0; transform: translateY(48px); } }
+@keyframes sd-word { from { opacity: 0.16; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

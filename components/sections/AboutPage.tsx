@@ -2,7 +2,6 @@ import Image from 'next/image'
 import { useTranslations, useLocale } from 'next-intl'
 import { ChapterMark } from '@/components/editorial/ChapterMark'
 import { PageIntro } from '@/components/editorial/PageIntro'
-import { GalaMark } from '@/components/editorial/GalaMark'
 import { RevealOnScroll } from '@/components/motion/RevealOnScroll'
 import { TeamMember } from '@/components/cards/TeamMember'
 import { team } from '@/lib/mock/team'
@@ -18,14 +17,14 @@ export function AboutPage() {
     <>
       <PageIntro chapter={t('chapter')} title={t('intro')} />
 
-      <section className="section-pad-x section-pad-y grid items-center gap-12 border-t border-rule md:grid-cols-2 md:gap-20">
-        <div className="grade-portrait relative aspect-[4/5]">
+      <section className="section-pad-x section-pad-y grid items-center gap-12 md:grid-cols-2 md:gap-20">
+        <div className="sd-reveal grade-portrait relative aspect-[4/5]">
           {/* PLACEHOLDER image (Unsplash). */}
           <Image
             src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&auto=format&fit=crop&q=80"
             alt={t('founderAlt')}
             fill
-            className="object-cover"
+            className="sd-parallax object-cover"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
@@ -38,7 +37,7 @@ export function AboutPage() {
         </div>
       </section>
 
-      <section className="section-pad-x section-pad-y border-t border-rule">
+      <section className="section-pad-x section-pad-y">
         <ChapterMark number="02" title={t('team.chapter')} />
         <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 md:mt-20 md:grid-cols-3 md:gap-x-10">
           {team.map((m, i) => (
@@ -49,7 +48,7 @@ export function AboutPage() {
         </div>
       </section>
 
-      <section className="section-pad-x section-pad-y border-t border-rule">
+      <section className="section-pad-x section-pad-y">
         <ChapterMark number="03" title={t('milestones.chapter')} />
         <ol className="mt-14 md:mt-20">
           {milestones.map((m) => (
@@ -57,12 +56,11 @@ export function AboutPage() {
               key={m.year}
               className="grid grid-cols-[6rem_1fr] items-baseline gap-6 border-t border-rule py-8 md:grid-cols-[14rem_1fr] md:gap-10"
             >
-              <span className="font-display text-3xl font-light leading-none tabular-nums text-gold md:text-5xl">{m.year}</span>
+              <span className="font-display text-3xl font-light leading-none tabular-nums text-bone md:text-5xl">{m.year}</span>
               <p className="text-lede">{locale === 'fr' ? m.fr : m.en}</p>
             </li>
           ))}
         </ol>
-        <GalaMark className="mt-20" />
       </section>
     </>
   )

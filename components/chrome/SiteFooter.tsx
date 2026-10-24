@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 import { Link } from '@/lib/i18n/navigation'
-import { GalaMark } from '@/components/editorial/GalaMark'
 import { Wordmark } from './Wordmark'
 
 function Instagram(props: React.SVGProps<SVGSVGElement>) {
@@ -37,7 +36,6 @@ export function SiteFooter() {
   const year = new Date().getFullYear()
   return (
     <footer className="section-pad-x section-pad-y border-t border-rule">
-      <GalaMark className="mb-16" />
       <div className="grid gap-12 md:grid-cols-3">
         <div>
           <Wordmark className="text-4xl" />
@@ -64,16 +62,6 @@ export function SiteFooter() {
             <a href="#" aria-label="Facebook"><Facebook className="size-5" /></a>
             <a href="#" aria-label="YouTube"><Youtube className="size-5" /></a>
           </div>
-          <form className="mt-6 flex gap-2" onSubmit={(e) => e.preventDefault()}>
-            <label htmlFor="footer-newsletter-email" className="sr-only">{t('newsletterPlaceholder')}</label>
-            <input
-              id="footer-newsletter-email"
-              type="email"
-              placeholder={t('newsletterPlaceholder')}
-              className="flex-1 bg-transparent border-b border-rule-strong py-2 placeholder:text-bone-mute focus:border-gold"
-            />
-            <button type="submit" className="text-mono-meta text-gold">{t('subscribe')}</button>
-          </form>
         </div>
       </div>
       <div className="mt-16 flex flex-wrap items-center justify-between gap-4 text-mono-meta text-bone-mute">

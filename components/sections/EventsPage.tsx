@@ -17,7 +17,7 @@ const PAST = events
   .sort((a, b) => b.dateISO.localeCompare(a.dateISO))
 
 const tabCls =
-  'text-mono-meta h-11 flex-none rounded-none border-0 px-0 text-bone-mute data-active:text-gold after:bg-gold hover:text-bone'
+  'text-mono-meta h-11 flex-none rounded-none border-0 px-0 text-bone-mute data-active:text-bone after:bg-bone hover:text-bone'
 
 export function EventsPage() {
   const t = useTranslations('eventsPage')

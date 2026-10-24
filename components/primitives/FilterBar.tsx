@@ -12,7 +12,7 @@ type Props<T extends string> = {
 export function FilterBar<T extends string>({ label, values, selected, onSelect, allLabel }: Props<T>) {
   return (
     <div role="group" className="flex flex-wrap items-center gap-3" aria-label={label}>
-      <span aria-hidden className="text-mono-meta mr-2 text-gold">
+      <span aria-hidden className="text-mono-meta mr-2 text-bone-mute">
         {label}
       </span>
       <button type="button" aria-pressed={selected === 'all'} onClick={() => onSelect('all')}>

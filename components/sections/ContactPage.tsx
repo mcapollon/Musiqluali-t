@@ -12,7 +12,7 @@ export function ContactPage() {
         <DisplayHeading text={t('intro')} size="xl" as="h1" reveal="load" />
         <p className="text-lede max-w-md text-bone-mute">{t('body')}</p>
         <div className="space-y-2 border-t border-rule pt-6">
-          <p className="text-mono-meta text-gold">Montréal, QC</p>
+          <p className="text-mono-meta text-bone-mute">Montréal, QC</p>
           {/* TODO: real contact email (placeholder below). */}
           <p>
             <a href="mailto:bonjour@musiqlt.example" className="font-display text-2xl transition-colors hover:text-gold-bright">
@@ -21,7 +21,7 @@ export function ContactPage() {
           </p>
         </div>
       </div>
-      <div className="frame-invitation p-6 sm:p-10">
+      <div>
         <ContactForm />
       </div>
     </section>

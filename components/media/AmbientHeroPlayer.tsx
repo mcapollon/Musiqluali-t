@@ -61,7 +61,7 @@ export function AmbientHeroPlayer({ label }: { label: string }) {
         onClick={togglePlay}
         aria-label={playing ? t('ambientPause') : t('ambientPlay')}
         aria-pressed={playing}
-        className="inline-flex items-center gap-2 text-left text-gold-bright hover:text-white transition-colors"
+        className="inline-flex items-center gap-2 text-left text-white/70 hover:text-white transition-colors"
       >
         {playing ? <Pause className="size-3" /> : <Play className="size-3" />}
         <span>{label}</span>

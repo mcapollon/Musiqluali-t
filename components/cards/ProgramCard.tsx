@@ -13,27 +13,26 @@ export function ProgramCard({ program, index }: { program: Program; index: numbe
       href={{ pathname: '/programs', hash: program.slug }}
       className="group block w-[78vw] shrink-0 sm:w-[52vw] md:w-[24rem] lg:w-[26rem]"
     >
-      <div className="grade-portrait relative aspect-[4/5] w-full">
+      <div className="sd-reveal grade-portrait relative aspect-[4/5] w-full">
         {/* PLACEHOLDER image (Unsplash) until real program photos are supplied. */}
         <Image
           src={program.cover}
           alt=""
           fill
           sizes="(max-width: 768px) 78vw, 26rem"
-          className="object-cover group-hover:scale-[1.03]"
+          className="sd-parallax object-cover"
         />
       </div>
-      <div className="mt-6 flex items-baseline gap-4 border-t border-rule pt-5">
-        <span className="text-mono-meta text-gold" aria-hidden>
+      {/* One left edge: number, title, text and link all align with the image. */}
+      <div className="mt-6 space-y-3">
+        <span className="text-mono-meta block text-bone-mute" aria-hidden>
           {String(index + 1).padStart(2, '0')}
         </span>
-        <div className="space-y-2">
-          <h3 className="text-display-m transition-colors duration-500 group-hover:text-gold-bright">{copy.title}</h3>
-          <p className="text-bone-mute">{copy.blurb}</p>
-          <span className="text-mono-micro text-gold inline-block pt-2">
-            {t('learnMore')} <span aria-hidden>→</span>
-          </span>
-        </div>
+        <h3 className="text-display-m transition-colors duration-500 group-hover:text-gold-bright">{copy.title}</h3>
+        <p className="text-bone-mute">{copy.blurb}</p>
+        <span className="text-mono-micro inline-block pt-2 text-bone transition-colors group-hover:text-gold-bright">
+          {t('learnMore')} <span aria-hidden>→</span>
+        </span>
       </div>
     </Link>
   )

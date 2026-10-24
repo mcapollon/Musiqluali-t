@@ -7,21 +7,21 @@ export function HomeDonate() {
   const t = useTranslations('home.donate')
   const f = useFormatter()
   return (
-    <section id="donate" className="section-pad-x section-pad-y scroll-mt-32 border-t border-rule">
+    <section id="donate" className="section-pad-x section-pad-y scroll-mt-32">
       <ChapterMark number="05" title={t('chapter')} />
-      <div className="mt-14 grid items-start gap-12 md:mt-20 md:grid-cols-2">
+      <div className="sd-rise mt-12 grid items-start gap-12 md:mt-16 md:grid-cols-2">
         <div className="space-y-6">
           <p className="text-display-l">{t('headline')}</p>
           <p className="max-w-md text-bone-mute">{t('body')}</p>
         </div>
         <div className="space-y-5">
-          <p className="text-mono-meta text-gold">{t('eyebrow')}</p>
+          <p className="text-mono-meta text-bone-mute">{t('eyebrow')}</p>
           <div className="grid grid-cols-3 gap-3">
             {[25, 50, 100].map((amt) => (
               <a
                 key={amt}
                 href="#"
-                className="border border-rule-strong py-6 text-center font-display text-3xl transition-colors duration-500 hover:border-gold hover:text-gold-bright md:text-4xl"
+                className="border border-rule-strong py-6 text-center font-display text-3xl font-light transition-colors duration-500 hover:border-gold hover:text-gold-bright md:text-4xl"
               >
                 {f.number(amt, { style: 'currency', currency: 'CAD', currencyDisplay: 'narrowSymbol', maximumFractionDigits: 0 })}
               </a>
