@@ -10,8 +10,11 @@ import { SkipToContent } from '@/components/chrome/SkipToContent'
 import { SiteHeader } from '@/components/chrome/SiteHeader'
 import { SiteFooter } from '@/components/chrome/SiteFooter'
 import { StickyMiniPlayer } from '@/components/media/StickyMiniPlayer'
-import { albert } from '@/app/fonts'
 import '../globals.css'
+
+// Satoshi from Fontshare (see the <head> note below). Loaded without blocking first paint.
+const FONTSHARE_CSS = 'https://api.fontshare.com/v2/css?f%5B%5D=satoshi@300,400,500&display=swap'
+const FONTSHARE_SWAP = `(function(){var l=document.getElementById('fontshare-css');if(!l)return;function on(){l.media='all'}if(l.sheet)on();else l.addEventListener('load',on)})()`
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -48,7 +51,25 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} suppressHydrationWarning className={albert.variable}>
+    <html lang={locale} suppressHydrationWarning>
+      <head>
+        {/*
+          Satoshi (the NCBF typeface) by Indian Type Foundry, ITF Free Font License.
+          Served from Fontshare's own servers on purpose: the licence forbids
+          redistributing the font files through a repository, and this repo is
+          public, so the files must never be committed here.
+        */}
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
+        {/* Non-blocking: fetched early, applied when it arrives; text paints first in
+            'Satoshi Fallback' (metric-matched in globals.css), so nothing jumps on swap. */}
+        <link rel="preload" as="style" href={FONTSHARE_CSS} />
+        <link id="fontshare-css" rel="stylesheet" href={FONTSHARE_CSS} media="print" suppressHydrationWarning />
+        <script dangerouslySetInnerHTML={{ __html: FONTSHARE_SWAP }} />
+        <noscript>
+          <link rel="stylesheet" href={FONTSHARE_CSS} />
+        </noscript>
+      </head>
       <body>
         {/* Dark only ("a gala has one lighting"). Provider kept so a theme can return without restructuring. */}
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>

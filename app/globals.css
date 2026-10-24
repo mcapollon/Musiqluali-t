@@ -64,7 +64,7 @@
 
   /* One family. `display`, `poster` and `mono` are kept as aliases so existing
      classes (font-display, font-poster, font-mono) resolve to it, not to extra fonts. */
-  --font-sans: var(--font-albert), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Satoshi', 'Satoshi Fallback', ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-sans);
   --font-poster: var(--font-display);
   --font-mono: var(--font-sans);
@@ -84,6 +84,17 @@
 
 :root {
   color-scheme: dark;
+}
+
+/* Stand-in while Satoshi loads: Arial resized to Satoshi's metrics, so the swap
+   doesn't shift text. Metrics only (no font data), as used on ncbf-pi.vercel.app. */
+@font-face {
+  font-family: 'Satoshi Fallback';
+  src: local('Arial');
+  ascent-override: 92.36%;
+  descent-override: 21.95%;
+  line-gap-override: 9.14%;
+  size-adjust: 109.35%;
 }
 
 @layer base {
@@ -108,26 +119,26 @@
 
 @layer utilities {
   /*
-   * Quiet luxury type scale, one family. Headlines are large, regular weight,
+   * Quiet luxury type scale, one family (Satoshi, as on NCBF). Headlines large, medium weight,
    * sentence case, slightly tightened; text stays open. Hierarchy comes from
    * size and space, not from mixing faces, weights or italics.
    * `em` inside = the gold statement word (colour only).
    */
-  .text-display-hero { font-family: var(--font-display); font-weight: 400; font-size: clamp(3rem, 9.5vw, 10.5rem); line-height: 1; letter-spacing: -0.025em; }
-  .text-display-xl   { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.5rem, 4.6vw + 1rem, 7rem); line-height: 1.04; letter-spacing: -0.02em; }
-  .text-display-l    { font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 2.4vw + 1rem, 4rem); line-height: 1.12; letter-spacing: -0.015em; }
-  .text-display-m    { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.5rem, 1.2vw + 1rem, 2.5rem); line-height: 1.2; letter-spacing: -0.01em; }
+  .text-display-hero { font-family: var(--font-display); font-weight: 500; font-size: clamp(3rem, 9.5vw, 10.5rem); line-height: 1.02; letter-spacing: -0.02em; }
+  .text-display-xl   { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.5rem, 4.6vw + 1rem, 7rem); line-height: 1.05; letter-spacing: -0.015em; }
+  .text-display-l    { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem, 2.4vw + 1rem, 4rem); line-height: 1.1; letter-spacing: -0.01em; }
+  .text-display-m    { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.5rem, 1.2vw + 1rem, 2.5rem); line-height: 1.15; letter-spacing: -0.005em; }
   :is(.text-display-hero, .text-display-xl, .text-display-l, .text-display-m) em { font-style: normal; color: var(--color-gold); }
 
   /* Poster: event names and dates at full scale. Sentence case keeps "Night n Key" as written. */
-  .text-poster-xl { font-family: var(--font-display); font-weight: 400; font-size: clamp(3.25rem, 11vw, 12rem); line-height: 0.98; letter-spacing: -0.03em; }
-  .text-poster-l  { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.25rem, 5vw, 5.5rem); line-height: 1.02; letter-spacing: -0.02em; }
-  .text-poster-m  { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.375rem, 1.4vw + 0.875rem, 2.25rem); line-height: 1.15; letter-spacing: -0.01em; }
+  .text-poster-xl { font-family: var(--font-display); font-weight: 500; font-size: clamp(3.25rem, 11vw, 12rem); line-height: 0.98; letter-spacing: -0.03em; }
+  .text-poster-l  { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.25rem, 5vw, 5.5rem); line-height: 1.02; letter-spacing: -0.02em; }
+  .text-poster-m  { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.375rem, 1.4vw + 0.875rem, 2.25rem); line-height: 1.15; letter-spacing: -0.01em; }
 
   .text-lede       { font-size: clamp(1.0625rem, 0.4vw + 1rem, 1.25rem); line-height: 1.7; }
   /* Small labels: tracked sans capitals (names kept for compatibility; no monospace any more). */
-  .text-mono-meta  { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; }
-  .text-mono-micro { font-family: var(--font-sans); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; }
+  .text-mono-meta  { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+  .text-mono-micro { font-family: var(--font-sans); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
 
   .hairline { border-color: var(--color-rule); }
   .section-pad-y { padding-block: clamp(4.5rem, 11vw, 10rem); }
