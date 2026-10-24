@@ -48,7 +48,7 @@ export function Step03Journey() {
     >
       <div>
         <Label>
-          {t('yearsActive')}: <span className="font-mono text-gold">{years}</span>
+          {t('yearsActive')}: <span className="text-gold">{years}</span>
         </Label>
         <Controller
           control={control}

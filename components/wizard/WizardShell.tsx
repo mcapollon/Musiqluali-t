@@ -34,7 +34,7 @@ export function WizardShell({ children }: { children: React.ReactNode }) {
             {tn('apply')} · {stepLabel}
           </p>
           <div>
-            <p className="font-poster text-[clamp(6rem,11vw,10rem)] leading-none text-gold">0{step}</p>
+            <p className="font-display text-[clamp(4.5rem,8vw,7.5rem)] leading-none tracking-[0.04em] text-gold">0{step}</p>
             <p className="text-display-l mt-6">{t('title')}</p>
             <p className="mt-4 max-w-xs text-white/75">{t('blurb')}</p>
           </div>

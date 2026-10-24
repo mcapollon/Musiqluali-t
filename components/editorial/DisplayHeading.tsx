@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils/cn'
 
 type Props = {
   text: string
-  /** Substring of `text` set in gold italic — the "statement" word. */
+  /** Substring of `text` set in gold — the "statement" word. */
   emphasis?: string | undefined
   size?: 'hero' | 'xl' | 'l' | 'm'
   className?: string
@@ -60,7 +60,7 @@ export function DisplayHeading({ text, emphasis, size = 'l', className, as: As =
           space ? (
             <Fragment key={i}> </Fragment>
           ) : (
-            <span key={i} className={cn('inline-block overflow-hidden pb-[0.14em] mb-[-0.14em] align-bottom', em && 'pr-[0.06em]')}>
+            <span key={i} className={cn('inline-block overflow-hidden pb-[0.14em] mb-[-0.14em] align-bottom')}>
               <span className="word-rise" style={{ '--i': n++ } as React.CSSProperties}>
                 {em ? <em>{w}</em> : w}
               </span>

@@ -19,7 +19,7 @@ export function HomeMission() {
         {PILLARS.map((key, i) => (
           <li key={key} className="bg-ink">
             <RevealOnScroll delay={i * 0.12} className="flex h-full flex-col gap-4 py-8 sm:p-8">
-              <span className="font-display text-5xl italic leading-none text-gold" aria-hidden>
+              <span className="text-mono-meta text-gold" aria-hidden>
                 {String(i + 1).padStart(2, '0')}
               </span>
               <p className="text-display-m">{t(`pillars.${key}.title`)}</p>

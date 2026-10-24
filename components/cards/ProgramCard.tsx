@@ -24,7 +24,7 @@ export function ProgramCard({ program, index }: { program: Program; index: numbe
         />
       </div>
       <div className="mt-6 flex items-baseline gap-4 border-t border-rule pt-5">
-        <span className="font-display text-2xl italic text-gold" aria-hidden>
+        <span className="text-mono-meta text-gold" aria-hidden>
           {String(index + 1).padStart(2, '0')}
         </span>
         <div className="space-y-2">

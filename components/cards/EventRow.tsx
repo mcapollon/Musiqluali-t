@@ -14,10 +14,10 @@ export function EventRow({ event, archival = false }: { event: EventItem; archiv
     <article className="group grid grid-cols-[5.5rem_1fr] items-baseline gap-x-6 gap-y-3 border-t border-rule py-8 md:grid-cols-[9rem_1fr_auto] md:gap-x-10">
       <time
         dateTime={event.dateISO}
-        className={cn('font-poster text-4xl uppercase leading-none md:text-6xl', archival ? 'text-bone-mute' : 'text-gold')}
+        className={cn('font-display text-4xl leading-none tracking-[0.04em] md:text-5xl', archival ? 'text-bone-mute' : 'text-gold')}
       >
         {f.dateTime(date, { day: '2-digit' })}
-        <span className="block font-mono text-xs tracking-[0.16em] mt-2 text-bone-mute">
+        <span className="text-mono-micro mt-3 block text-bone-mute">
           {f.dateTime(date, archival ? { month: 'short', year: 'numeric' } : { month: 'short' })}
         </span>
       </time>

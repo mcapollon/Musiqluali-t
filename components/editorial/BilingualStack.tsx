@@ -18,7 +18,7 @@ export function BilingualStack({ fr, en, emFr, emEn, tone = 'page' }: Props) {
         reveal="load"
         className={tone === 'stage' ? 'relative z-10 text-white' : 'relative z-10 text-bone'}
       />
-      <p aria-hidden className={`mt-4 font-display text-xl italic md:text-3xl ${tone === 'stage' ? 'text-white/70' : 'text-bone-mute'}`} lang={isFr ? 'en' : 'fr'}>
+      <p aria-hidden className={`text-mono-meta mt-6 ${tone === 'stage' ? 'text-white/70' : 'text-bone-mute'}`} lang={isFr ? 'en' : 'fr'}>
         {isFr ? en : fr}
       </p>
     </div>

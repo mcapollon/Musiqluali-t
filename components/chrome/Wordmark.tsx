@@ -14,7 +14,7 @@ const toneCls = {
  */
 export function Wordmark({ className, tone = 'gold' }: { className?: string; tone?: keyof typeof toneCls }) {
   return (
-    <span className={cn('font-display font-medium leading-none tracking-[-0.02em]', toneCls[tone], className)}>
+    <span className={cn('font-display leading-none tracking-[0.04em]', toneCls[tone], className)}>
       MusiqualiT
     </span>
   )

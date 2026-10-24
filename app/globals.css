@@ -62,10 +62,12 @@
   --color-input: var(--color-rule-strong);
   --color-ring: var(--color-gold-bright);
 
-  --font-display: var(--font-bodoni), 'Bodoni 72', Didot, Georgia, serif;
-  --font-poster: var(--font-anton), 'Arial Narrow', Impact, sans-serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  /* Two families only. `poster` and `mono` are kept as aliases so older classes
+     (font-poster, font-mono) quietly resolve to the system, not to extra fonts. */
+  --font-display: var(--font-marcellus), Optima, Candara, 'Segoe UI', serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-poster: var(--font-display);
+  --font-mono: var(--font-sans);
 
   --radius-pill: 9999px;
   /* Gala: crisp edges. Cards, inputs and menus are near-square; only pills stay round. */
@@ -92,6 +94,8 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    /* Marcellus has one weight and no italic: never let the browser fake them. */
+    font-synthesis: none;
   }
   :focus-visible {
     outline: 2px solid var(--color-gold-bright);
@@ -100,25 +104,30 @@
   }
   ::selection { background: var(--color-gold); color: var(--color-black); }
   [lang='fr'] { hyphens: auto; }
-  h1, h2, h3 { font-optical-sizing: auto; }
 }
 
 @layer utilities {
-  /* Display serif — the voice of the brand. `em` inside = the gold statement word. */
-  .text-display-hero { font-family: var(--font-display); font-size: clamp(3.25rem, 15vw, 16rem); line-height: 0.86; letter-spacing: -0.035em; font-weight: 500; }
-  .text-display-xl   { font-family: var(--font-display); font-size: clamp(2.75rem, 6vw + 1rem, 8.5rem); line-height: 0.9; letter-spacing: -0.03em; font-weight: 500; }
-  .text-display-l    { font-family: var(--font-display); font-size: clamp(2.25rem, 4vw + 1rem, 5.5rem); line-height: 0.95; letter-spacing: -0.02em; font-weight: 500; }
-  .text-display-m    { font-family: var(--font-display); font-size: clamp(1.75rem, 2vw + 1rem, 3.25rem); line-height: 1.05; letter-spacing: -0.01em; font-weight: 500; }
-  :is(.text-display-hero, .text-display-xl, .text-display-l, .text-display-m) em { font-style: italic; color: var(--color-gold); }
+  /*
+   * Quiet luxury type scale. One display face at one weight; short display
+   * lines (hero, page titles) in capitals, longer statements in sentence case.
+   * Positive tracking and open leading: the letters breathe, nothing collides.
+   * `em` inside = the gold statement word (colour only, never italic).
+   */
+  .text-display-hero { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.75rem, 9vw, 10rem); line-height: 1.04; letter-spacing: 0.01em; text-transform: uppercase; }
+  .text-display-xl   { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.25rem, 4vw + 1rem, 6.25rem); line-height: 1.08; letter-spacing: 0.01em; text-transform: uppercase; }
+  .text-display-l    { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.875rem, 2.2vw + 1rem, 3.75rem); line-height: 1.18; letter-spacing: 0.005em; }
+  .text-display-m    { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.5rem, 1.2vw + 1rem, 2.375rem); line-height: 1.22; }
+  :is(.text-display-hero, .text-display-xl, .text-display-l, .text-display-m) em { font-style: normal; color: var(--color-gold); }
 
-  /* Poster caps — event names, dates, lineups. Use sparingly. */
-  .text-poster-xl { font-family: var(--font-poster); font-size: clamp(4rem, 16vw, 17rem); line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
-  .text-poster-l  { font-family: var(--font-poster); font-size: clamp(2.5rem, 7vw, 7.5rem); line-height: 0.92; letter-spacing: 0.01em; text-transform: uppercase; }
-  .text-poster-m  { font-family: var(--font-poster); font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.75rem); line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; }
+  /* Poster capitals: event names and dates. Same display face, more air. */
+  .text-poster-xl { font-family: var(--font-display); font-size: clamp(3rem, 10vw, 11rem); line-height: 1; letter-spacing: 0.03em; text-transform: uppercase; }
+  .text-poster-l  { font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 5rem); line-height: 1.05; letter-spacing: 0.03em; text-transform: uppercase; }
+  .text-poster-m  { font-family: var(--font-display); font-size: clamp(1.25rem, 1.4vw + 0.75rem, 2rem); line-height: 1.15; letter-spacing: 0.06em; text-transform: uppercase; }
 
-  .text-lede      { font-size: clamp(1.125rem, 0.5vw + 1rem, 1.375rem); line-height: 1.6; }
-  .text-mono-meta { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; }
-  .text-mono-micro { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .text-lede       { font-size: clamp(1.0625rem, 0.4vw + 1rem, 1.25rem); line-height: 1.7; }
+  /* Small labels: tracked sans capitals (names kept for compatibility; no monospace any more). */
+  .text-mono-meta  { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; }
+  .text-mono-micro { font-family: var(--font-sans); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; }
 
   .hairline { border-color: var(--color-rule); }
   .section-pad-y { padding-block: clamp(4.5rem, 11vw, 10rem); }
