@@ -53,7 +53,7 @@ export function ArtistIndex({ artists }: { artists: Artist[] }) {
                 </span>
                 <span
                   className={cn(
-                    'font-display uppercase leading-[1.08] tracking-[0.02em] text-[clamp(1.625rem,4.6vw,4.75rem)] transition-colors duration-700',
+                    'font-display font-light leading-[1.04] tracking-[-0.02em] text-[clamp(2rem,5.4vw,5.5rem)] transition-colors duration-700',
                     isActive ? 'md:text-bone' : 'md:text-bone/45',
                     'group-hover:text-gold-bright group-focus-visible:text-gold-bright',
                   )}

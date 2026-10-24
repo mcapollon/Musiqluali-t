@@ -28,7 +28,7 @@ export default function Confirmation() {
         <ol className="mt-16 grid gap-10 text-left md:grid-cols-3 md:gap-8">
           {(['review', 'interview', 'onboarding'] as const).map((k, i) => (
             <li key={k} className="border-t border-rule pt-5">
-              <p className="font-display text-4xl leading-none tracking-[0.04em] text-gold">0{i + 1}</p>
+              <p className="font-display text-4xl font-light leading-none tabular-nums text-gold">0{i + 1}</p>
               <p className="text-mono-meta mt-4">{t(`steps.${k}.title`)}</p>
               <p className="mt-2 text-bone-mute">{t(`steps.${k}.body`)}</p>
             </li>

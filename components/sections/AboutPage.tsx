@@ -57,7 +57,7 @@ export function AboutPage() {
               key={m.year}
               className="grid grid-cols-[6rem_1fr] items-baseline gap-6 border-t border-rule py-8 md:grid-cols-[14rem_1fr] md:gap-10"
             >
-              <span className="font-display text-3xl leading-none tracking-[0.04em] text-gold md:text-5xl">{m.year}</span>
+              <span className="font-display text-3xl font-light leading-none tabular-nums text-gold md:text-5xl">{m.year}</span>
               <p className="text-lede">{locale === 'fr' ? m.fr : m.en}</p>
             </li>
           ))}

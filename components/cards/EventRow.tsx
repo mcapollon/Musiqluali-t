@@ -14,7 +14,7 @@ export function EventRow({ event, archival = false }: { event: EventItem; archiv
     <article className="group grid grid-cols-[5.5rem_1fr] items-baseline gap-x-6 gap-y-3 border-t border-rule py-8 md:grid-cols-[9rem_1fr_auto] md:gap-x-10">
       <time
         dateTime={event.dateISO}
-        className={cn('font-display text-4xl leading-none tracking-[0.04em] md:text-5xl', archival ? 'text-bone-mute' : 'text-gold')}
+        className={cn('font-display text-4xl font-light leading-none tabular-nums md:text-5xl', archival ? 'text-bone-mute' : 'text-gold')}
       >
         {f.dateTime(date, { day: '2-digit' })}
         <span className="text-mono-micro mt-3 block text-bone-mute">

@@ -10,7 +10,7 @@ import { SkipToContent } from '@/components/chrome/SkipToContent'
 import { SiteHeader } from '@/components/chrome/SiteHeader'
 import { SiteFooter } from '@/components/chrome/SiteFooter'
 import { StickyMiniPlayer } from '@/components/media/StickyMiniPlayer'
-import { hanken, marcellus } from '@/app/fonts'
+import { albert } from '@/app/fonts'
 import '../globals.css'
 
 export function generateStaticParams() {
@@ -48,7 +48,7 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} suppressHydrationWarning className={`${marcellus.variable} ${hanken.variable}`}>
+    <html lang={locale} suppressHydrationWarning className={albert.variable}>
       <body>
         {/* Dark only ("a gala has one lighting"). Provider kept so a theme can return without restructuring. */}
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>

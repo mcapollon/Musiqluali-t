@@ -13,7 +13,7 @@ export function Marquee({ items, speed = 90, ariaLabel, className }: Props) {
       {items.map((item, i) => (
         <Fragment key={`${item.label}-${i}`}>
           <li className="flex items-baseline gap-3 whitespace-nowrap">
-            <span className="font-display text-xl uppercase tracking-[0.06em] md:text-2xl">{item.label}</span>
+            <span className="font-display text-2xl font-light tracking-[-0.01em] md:text-3xl">{item.label}</span>
             {item.meta && <span className="text-mono-micro opacity-70">{item.meta}</span>}
           </li>
           <li aria-hidden className="size-1 shrink-0 rotate-45 self-center bg-gold" />
