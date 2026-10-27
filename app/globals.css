@@ -260,7 +260,8 @@ html[data-intro='play'] .logo-intro-mark { animation: intro-in 1s var(--ease-gal
 @keyframes sd-parallax { from { transform: translateY(-5%) scale(1.12); } to { transform: translateY(5%) scale(1.12); } }
 @keyframes sd-recede { to { opacity: 0; transform: translateY(-8vh); } }
 @keyframes sd-rise { from { opacity: 0; transform: translateY(48px); } }
-@keyframes sd-word { from { opacity: 0.16; } }
+/* 0.55 floor: unread words (gold emphasis included) still clear 3:1 for large text on ink. */
+@keyframes sd-word { from { opacity: 0.55; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
