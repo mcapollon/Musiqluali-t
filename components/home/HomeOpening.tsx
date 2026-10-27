@@ -51,7 +51,8 @@ export function HomeOpening() {
   return (
     <section id="overture" data-act className="relative bg-black text-white">
       <div data-scene="iris" className="relative flex min-h-[calc(100svh-5rem)] flex-col overflow-clip">
-        <div data-iris-media className="grade-stage absolute inset-0">
+        {/* The footage as shot (black and white): no gold grade on the spotlight. */}
+        <div data-iris-media className="absolute inset-0 overflow-clip bg-black">
           <div data-iris-zoom className="absolute inset-0">
             <Image
               src={heroMedia.poster}

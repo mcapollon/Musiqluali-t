@@ -1,19 +1,24 @@
 // Home page media. Kept as data (not in components) so a CMS can drive it later.
 
 export type HeroMedia = {
-  /** Looping, muted performance footage. Desktop only; mobile and reduced motion get the poster. */
+  /** Looping, muted footage behind the opening. Desktop only; mobile and reduced motion get the poster. */
   videoSrc: string | null
+  /** A frame from the same footage: shown before the video plays, and instead of it on phones. */
   poster: string
-  /** True until real Night n Key footage replaces the stock clip. Shows a small label in the hero. */
+  /** True while the footage is a stand-in. Shows a small "placeholder video" label in the hero. */
   isPlaceholder: boolean
 }
 
-// PLACEHOLDER: Mixkit stock clip (free licence) + Unsplash still, hot-linked.
-// Replace with real Night n Key footage (≈10–20 s loop, 720p H.264, < 6 MB) and a frame from it as poster.
+// Night n Key, year one (MusiqualiT's own footage). Web loop cut from the 1080p master
+// ("public/Night In Key Year One - Musiquali-T (1080p).mp4"), with ffmpeg:
+//   0:03 → 0:36.6 (after the logo intro, before the credit and end cards), letterbox
+//   cropped (1892x850 from y=114), no audio, 1280px, 30fps, H.264 CRF 26, faststart.
+// The file starts at the master's 0:03, so the native loop always restarts there.
+// Poster: the empty stage at 0:04.5, same crop.
 export const heroMedia: HeroMedia = {
-  videoSrc: 'https://assets.mixkit.co/videos/45938/45938-720.mp4',
-  poster: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=1920&auto=format&fit=crop&q=75',
-  isPlaceholder: true,
+  videoSrc: '/video/hero-year-one.mp4',
+  poster: '/video/hero-year-one.jpg',
+  isPlaceholder: false,
 }
 
 /** The flagship series, used when no upcoming date is published yet. */
