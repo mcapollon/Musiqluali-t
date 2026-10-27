@@ -299,7 +299,7 @@ html[data-intro='play'] .logo-intro-count { animation: intro-count 1.75s cubic-b
        --iris-house is how much of the footage still shows in the dark house around the spot. */
     --iris-r: min(17svh, 30vw);
     --iris-f: clamp(18px, 3.5svh, 36px);
-    --iris-house: 0.18;
+    --iris-house: 0.019;
   }
   html[data-motion] [data-scene='iris']:not([data-flow]) [data-iris-media] {
     -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 calc(var(--iris-r) - var(--iris-f)), rgb(0 0 0 / var(--iris-house)) calc(var(--iris-r) + var(--iris-f)));
