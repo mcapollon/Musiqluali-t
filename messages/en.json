@@ -13,9 +13,9 @@
       "nowPlaying": "NOW PLAYING · THE NEXT WAVE 2026",
       "ctaApply": "Apply",
       "ctaNextShow": "Next show",
-      "videoPause": "Pause video",
-      "videoPlay": "Play video",
-      "videoPlaceholder": "Placeholder video"
+      "scenePause": "Pause the scene",
+      "scenePlay": "Play the scene",
+      "sceneLabel": "3D rendering of an intimate music room: candlelit tables, then the stage where a drum kit, keyboard and microphone wait under warm spotlights."
     },
     "mission": {
       "chapter": "MISSION",

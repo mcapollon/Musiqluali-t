@@ -1,4 +1,3 @@
-export { HomeHero } from './HomeHero'
 export { HomeMission } from './HomeMission'
 export { HomeProgramsPreview } from './HomeProgramsPreview'
 export { HomeArtists } from './HomeArtists'

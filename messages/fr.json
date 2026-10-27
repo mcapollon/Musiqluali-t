@@ -13,9 +13,9 @@
       "nowPlaying": "NOW PLAYING · LA RELÈVE 2026",
       "ctaApply": "Postuler",
       "ctaNextShow": "Prochain spectacle",
-      "videoPause": "Mettre la vidéo en pause",
-      "videoPlay": "Lire la vidéo",
-      "videoPlaceholder": "Vidéo provisoire"
+      "scenePause": "Mettre la scène en pause",
+      "scenePlay": "Relancer la scène",
+      "sceneLabel": "Rendu 3D d'une salle de spectacle intime : tables éclairées à la bougie, puis la scène où attendent une batterie, un clavier et un micro sous des projecteurs dorés."
     },
     "mission": {
       "chapter": "MISSION",
