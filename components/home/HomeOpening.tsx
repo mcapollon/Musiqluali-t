@@ -29,12 +29,13 @@ import { artists } from '@/lib/mock/artists'
 export function HomeOpening() {
   const t = useTranslations('home.hero')
   const reduced = useReducedMotion()
-  const wide = useMediaQuery('(min-width: 768px)')
+  // False until hydrated, then true unless reduced motion: the video never autoplays for reduced-motion users.
+  const motionOk = useMediaQuery('(prefers-reduced-motion: no-preference)')
   const videoRef = useRef<HTMLVideoElement>(null)
   const [paused, setPaused] = useState(false)
 
-  // Footage on desktop only; phones and reduced motion get the still.
-  const showVideo = Boolean(heroMedia.videoSrc) && wide && !reduced
+  // Footage at every size (portrait screens get a lighter portrait crop); reduced motion gets the still.
+  const showVideo = Boolean(heroMedia.videoSrc) && motionOk
 
   const toggleVideo = () => {
     const v = videoRef.current
@@ -67,7 +68,6 @@ export function HomeOpening() {
               <video
                 ref={videoRef}
                 className="absolute inset-0 size-full object-cover"
-                src={heroMedia.videoSrc ?? undefined}
                 poster={heroMedia.poster}
                 autoPlay
                 muted
@@ -75,7 +75,13 @@ export function HomeOpening() {
                 playsInline
                 preload="auto"
                 aria-hidden
-              />
+              >
+                {/* Chosen once, at load: portrait screens (phones, portrait tablets) get the centre crop. */}
+                {heroMedia.videoSrcPortrait && (
+                  <source src={heroMedia.videoSrcPortrait} media="(max-aspect-ratio: 3/4)" type="video/mp4" />
+                )}
+                <source src={heroMedia.videoSrc ?? undefined} type="video/mp4" />
+              </video>
             )}
           </div>
         </div>

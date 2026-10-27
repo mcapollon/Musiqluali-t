@@ -1,8 +1,10 @@
 // Home page media. Kept as data (not in components) so a CMS can drive it later.
 
 export type HeroMedia = {
-  /** Looping, muted footage behind the opening. Desktop only; mobile and reduced motion get the poster. */
+  /** Looping, muted footage behind the opening, at every size; reduced motion gets the poster. */
   videoSrc: string | null
+  /** Optional lighter cut for portrait screens (phones): the centre of the frame, which is all a portrait crop shows. */
+  videoSrcPortrait?: string
   /** A frame from the same footage: shown before the video plays, and instead of it on phones. */
   poster: string
   /** True while the footage is a stand-in. Shows a small "placeholder video" label in the hero. */
@@ -14,9 +16,11 @@ export type HeroMedia = {
 //   0:03 → 0:36.6 (after the logo intro, before the credit and end cards), letterbox
 //   cropped (1892x850 from y=114), no audio, 1280px, 30fps, H.264 CRF 26, faststart.
 // The file starts at the master's 0:03, so the native loop always restarts there.
+// Portrait cut, same timing: crop 640x850 from x=626 (the frame's centre), 540px wide, CRF 27 (2.0 MB).
 // Poster: the empty stage at 0:04.5, same crop.
 export const heroMedia: HeroMedia = {
   videoSrc: '/video/hero-year-one.mp4',
+  videoSrcPortrait: '/video/hero-year-one-portrait.mp4',
   poster: '/video/hero-year-one.jpg',
   isPlaceholder: false,
 }
