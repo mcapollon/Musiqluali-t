@@ -296,14 +296,15 @@ html[data-intro='play'] .logo-intro-count { animation: intro-count 1.75s cubic-b
     height: calc(100svh - 5rem);
     /* The follow spot. --iris-r is the circle's radius (scrubbed by the motion system, same values
        as the original clip-path circle); --iris-f softens its edge, half inside, half outside it;
-       --iris-house is how much of the footage still shows in the dark house around the spot. */
+       --iris-house is how much of the footage still shows in the dark house around the spot;
+       --iris-x/--iris-y place it (centre by default; the motion system makes it follow the mouse). */
     --iris-r: min(17svh, 30vw);
     --iris-f: clamp(18px, 3.5svh, 36px);
-    --iris-house: 0.019;
+    --iris-house: 0.1;
   }
   html[data-motion] [data-scene='iris']:not([data-flow]) [data-iris-media] {
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 calc(var(--iris-r) - var(--iris-f)), rgb(0 0 0 / var(--iris-house)) calc(var(--iris-r) + var(--iris-f)));
-    mask-image: radial-gradient(circle at 50% 50%, #000 calc(var(--iris-r) - var(--iris-f)), rgb(0 0 0 / var(--iris-house)) calc(var(--iris-r) + var(--iris-f)));
+    -webkit-mask-image: radial-gradient(circle at var(--iris-x, 50%) var(--iris-y, 50%), #000 calc(var(--iris-r) - var(--iris-f)), rgb(0 0 0 / var(--iris-house)) calc(var(--iris-r) + var(--iris-f)));
+    mask-image: radial-gradient(circle at var(--iris-x, 50%) var(--iris-y, 50%), #000 calc(var(--iris-r) - var(--iris-f)), rgb(0 0 0 / var(--iris-house)) calc(var(--iris-r) + var(--iris-f)));
   }
   html[data-motion] [data-scene='iris']:not([data-flow]) [data-iris-zoom] { transform: scale(1.35); }
   html[data-motion] [data-scene='iris']:not([data-flow]) :is([data-iris-shade], [data-iris-copy]) { opacity: 0; }

@@ -123,7 +123,45 @@ function iris(scene: HTMLElement) {
     if (st && st.progress < 1) scrollToY(st.end)
   }
   copy.addEventListener('focusin', onFocus)
-  return () => copy.removeEventListener('focusin', onFocus)
+  const cleanups = [() => copy.removeEventListener('focusin', onFocus)]
+  if (window.matchMedia('(pointer: fine)').matches) cleanups.push(followSpot(scene, tl))
+  return () => cleanups.forEach((c) => c())
+}
+
+/**
+ * The follow spot: on a mouse, the spot tracks the pointer, a beat behind, like
+ * an operator finding the performer. As the stage opens it glides back to the
+ * centre (fully centred by 60% of the opening), so the opening radius, sized
+ * from the centre, still clears every corner. Touch and keyboard: centred.
+ */
+function followSpot(scene: HTMLElement, tl: gsap.core.Timeline) {
+  const aim = { x: 0, y: 0 } // px from the frame's centre
+  const render = () => {
+    const k = 1 - gsap.utils.clamp(0, 1, tl.progress() / 0.6)
+    scene.style.setProperty('--iris-x', `calc(50% + ${(aim.x * k).toFixed(1)}px)`)
+    scene.style.setProperty('--iris-y', `calc(50% + ${(aim.y * k).toFixed(1)}px)`)
+  }
+  const follow = { duration: 0.7, ease: 'power3.out', onUpdate: render }
+  const xTo = gsap.quickTo(aim, 'x', follow)
+  const yTo = gsap.quickTo(aim, 'y', follow)
+  const onMove = (e: PointerEvent) => {
+    const r = scene.getBoundingClientRect()
+    xTo(e.clientX - r.left - r.width / 2)
+    yTo(e.clientY - r.top - r.height / 2)
+  }
+  const onLeave = () => {
+    xTo(0)
+    yTo(0)
+  }
+  scene.addEventListener('pointermove', onMove)
+  scene.addEventListener('pointerleave', onLeave)
+  tl.eventCallback('onUpdate', render) // scroll pulls it home as the stage opens
+  return () => {
+    scene.removeEventListener('pointermove', onMove)
+    scene.removeEventListener('pointerleave', onLeave)
+    scene.style.removeProperty('--iris-x')
+    scene.style.removeProperty('--iris-y')
+  }
 }
 
 /** Words of a scene-mode heading rise once as it enters (also the flow fallback). */
