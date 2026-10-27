@@ -23,7 +23,7 @@ export function HomeFinale() {
   const partners = door('partners')
 
   return (
-    <section id="your-seat" data-act className="section-pad-x section-pad-y relative">
+    <section id="your-seat" data-act className="theme-ivory section-pad-x section-pad-y relative">
       <ChapterMark number="XI" title={t('acts.finale')} />
       <DisplayHeading text={t('finale.title')} emphasis={t('finale.titleEm')} size="xl" as="p" className="mt-12 max-w-5xl md:mt-16" />
 

@@ -15,7 +15,7 @@ export function HomeNextShow() {
   const t = useTranslations('home')
   const [next, ...later] = UPCOMING
   return (
-    <section id="next-show" data-act className="section-pad-x section-pad-y scroll-mt-24">
+    <section id="next-show" data-act className="theme-ivory section-pad-x section-pad-y scroll-mt-24">
       <ChapterMark number="VIII" title={t('acts.nextShow')} />
       <div className="mt-12 md:mt-16">
         <EventPoster event={next} />

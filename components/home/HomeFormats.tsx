@@ -4,16 +4,18 @@ import { ChapterMark } from '@/components/editorial/ChapterMark'
 import { formats, type ShowFormat } from '@/lib/mock/formats'
 import { cn } from '@/lib/utils/cn'
 
+// Flyers pinned to the wall. Dark flyers carry their own stage lighting (.theme-dark),
+// so they read the same on an ivory or a dark wall.
 const POSTER: Record<ShowFormat['poster'], { card: string; name: string; meta: string }> = {
   // Flagship: gold on black, the house style.
-  gold: { card: 'bg-ink-2 border border-gold/50', name: 'text-gold', meta: 'text-bone-mute' },
-  // Listening Room style: black on white, little more than the name.
-  ivory: { card: 'bg-bone', name: 'text-ink', meta: 'text-ink-mute' },
-  // Announced, not yet running: the name drawn, not filled.
-  outline: { card: 'bg-black border border-rule-strong', name: 'text-outline-bone', meta: 'text-bone-mute' },
+  gold: { card: 'theme-dark bg-ink border border-gold/50', name: 'text-gold', meta: 'text-bone-mute' },
+  // Listening Room style: black on white paper, little more than the name.
+  ivory: { card: 'bg-[#fff] border border-black/10 shadow-[0_1px_0_rgb(10_10_10/0.04)]', name: 'text-black', meta: 'text-ink-mute' },
+  // Announced, not yet running: the name drawn, not filled (follows the wall's lighting).
+  outline: { card: 'border border-rule-strong', name: 'text-outline-bone', meta: 'text-bone-mute' },
   // A light coming up behind the name.
   glow: {
-    card: 'bg-black bg-[radial-gradient(70%_60%_at_50%_100%,rgb(226_194_122/0.28),transparent_70%)] border border-rule',
+    card: 'theme-dark bg-ink bg-[radial-gradient(70%_60%_at_50%_100%,rgb(226_194_122/0.28),transparent_70%)] border border-rule',
     name: 'text-bone',
     meta: 'text-bone-mute',
   },
@@ -29,7 +31,7 @@ export function HomeFormats() {
   const locale = useLocale() as 'fr' | 'en'
 
   return (
-    <section id="now-showing" data-act data-gallery className="section-pad-y lg:py-0">
+    <section id="now-showing" data-act data-gallery className="theme-ivory section-pad-y lg:py-0">
       <div data-gallery-pin className="lg:flex lg:h-svh lg:flex-col lg:justify-center lg:pt-20">
         <div
           data-gallery-viewport

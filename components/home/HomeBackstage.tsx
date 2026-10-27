@@ -13,7 +13,7 @@ const STEPS = ['meeting', 'arrangement', 'rehearsals', 'show'] as const
 export function HomeBackstage() {
   const t = useTranslations('home')
   return (
-    <section id="backstage" data-act className="relative">
+    <section id="backstage" data-act className="theme-ivory relative">
       <div className="section-pad-x pt-[clamp(5rem,9vw,9rem)]">
         <ChapterMark number="IV" title={t('acts.backstage')} />
         <div className="mt-12 grid gap-10 md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-end lg:gap-16">

@@ -398,8 +398,8 @@ function lights(root: HTMLElement) {
 
 function readText(root: HTMLElement) {
   for (const el of all(root, '[data-motion-text="read"]')) {
-    // On ivory, gold-deep emphasis only clears 3:1 at full strength: it stays lit, and ink dims less.
-    const ivory = Boolean(el.closest('.on-ivory'))
+    // In ivory acts, gold emphasis stays lit (full contrast), and ink dims less.
+    const ivory = Boolean(el.closest('.theme-ivory'))
     const words = all(el, '.motion-word').filter((w) => !(ivory && w.querySelector('em')))
     if (!words.length) continue
     gsap.fromTo(

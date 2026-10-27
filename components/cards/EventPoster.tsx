@@ -27,7 +27,8 @@ export function EventPoster({
 
   return (
     // Opens from an inset frame to full bleed as it is scrolled in (data-progress-scene, scrubbed).
-    <article data-progress-scene className="relative isolate overflow-clip bg-black text-white">
+    // theme-dark: the poster is its own stage, even on an ivory wall.
+    <article data-progress-scene className="theme-dark relative isolate overflow-clip bg-black text-white">
       <div className="grade-stage absolute inset-0">
         <Image
           src={event?.poster ?? flagship.poster}

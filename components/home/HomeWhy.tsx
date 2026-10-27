@@ -11,15 +11,15 @@ import { DisplayHeading } from '@/components/editorial/DisplayHeading'
 export function HomeWhy() {
   const t = useTranslations('home')
   return (
-    <section id="the-gap" data-act className="relative">
+    <section id="the-gap" data-act className="theme-ivory relative">
       <div
         data-scene="statement"
         className="section-pad-x relative isolate flex min-h-[calc(100svh-5rem)] flex-col justify-center gap-12 overflow-clip py-14 md:gap-16 md:py-24"
       >
-        {/* A cold spot from above: the light hasn't reached the stage yet. */}
+        {/* A soft shadow from above: the light hasn't reached the stage yet. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(45%_60%_at_70%_0%,rgb(245_243_238/0.07),transparent_70%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(45%_60%_at_70%_0%,rgb(10_10_10/0.05),transparent_70%)]"
         />
         <ChapterMark number="II" title={t('acts.why')} />
         <div className="max-w-6xl space-y-4 md:space-y-6">

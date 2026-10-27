@@ -78,6 +78,11 @@ export const CONTRAST_PAIRS: { fg: string; bg: string; min: 4.5 | 3; use: string
   { fg: 'ok', bg: 'ink', min: 4.5, use: 'Success message' },
   { fg: 'white', bg: 'black', min: 4.5, use: 'Text over graded footage' },
   { fg: 'ink', bg: 'white', min: 4.5, use: 'Text in the ivory act (house lights)' },
-  { fg: 'ink-mute', bg: 'white', min: 4.5, use: 'Secondary text in the ivory act' },
-  { fg: 'gold-deep', bg: 'white', min: 3, use: 'Large gold display words in the ivory act' },
+  { fg: 'ink-mute', bg: 'white', min: 4.5, use: 'Secondary text in ivory acts' },
+  { fg: 'ink-mute', bg: 'ivory-2', min: 4.5, use: 'Secondary text on a raised ivory surface' },
+  { fg: 'black', bg: 'ivory-2', min: 4.5, use: 'Text on a raised ivory surface' },
+  { fg: 'gold-ink', bg: 'white', min: 4.5, use: 'Gold labels, numerals and emphasis in ivory acts' },
+  { fg: 'gold-ink', bg: 'ivory-2', min: 4.5, use: 'Gold on a raised ivory surface' },
+  { fg: 'gold-ink-hover', bg: 'white', min: 4.5, use: 'Gold hover in ivory acts' },
+  { fg: 'white', bg: 'gold-ink', min: 4.5, use: 'Primary button label in ivory acts' },
 ]
