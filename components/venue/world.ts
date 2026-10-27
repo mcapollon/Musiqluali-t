@@ -1,7 +1,9 @@
 /**
  * The Night n Key room: one persistent Three.js world for the home-page opening.
- * Built entirely in code (no model files): architecture, furniture and the
- * band's instruments as clean, correctly scaled forms; light does the rest.
+ * Architecture and the band's instruments are modelled in code (props.ts);
+ * furniture, chandeliers and surface textures are CC0 assets from Poly Haven
+ * (public/venue/assets, see CREDITS.md). If an asset fails to load, the room
+ * falls back to simple forms rather than failing.
  *
  * Scene graph (realtime-architecture §2):
  *   world
@@ -15,6 +17,9 @@
  * world state → ambient (time) → render → performance sample.
  */
 import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
+import { comboAmp, drumKit, grandPiano, uprightBass, vocalMic, type PropMaterials } from './props'
 import { BUDGET, CHAPTERS, MOTION, PALETTE, QUALITY, SCALE, type QualityTier, type Vec3, type WorldState } from '@/lib/venue/worldBible'
 
 export type VenueWorld = {
@@ -24,6 +29,8 @@ export type VenueWorld = {
   resize(width: number, height: number): void
   needsFrame(): boolean
   info(): { calls: number; triangles: number; tier: QualityTier; dpr: number }
+  /** QA only (?venue-debug): pin the camera to an arbitrary pose; null returns to the path. */
+  debugView(pose: { p: Vec3; t: Vec3; fov: number } | null): void
   dispose(): void
 }
 
@@ -85,30 +92,6 @@ function plankTexture(k: number): THREE.CanvasTexture {
   return t
 }
 
-function keybedTexture(k: number): THREE.CanvasTexture {
-  const c = document.createElement('canvas')
-  c.width = 2048 * k
-  c.height = 128 * k
-  const g = c.getContext('2d')!
-  const whites = 45
-  const w = c.width / whites
-  g.fillStyle = '#0c0c0c'
-  g.fillRect(0, 0, c.width, c.height)
-  for (let i = 0; i < whites; i++) {
-    g.fillStyle = '#ebe6dc'
-    g.fillRect(i * w + 1, 0, w - 2, c.height)
-  }
-  const pattern = [1, 1, 0, 1, 1, 1, 0] // black keys after C D (skip E) F G A (skip B)
-  for (let i = 0; i < whites - 1; i++) {
-    if (!pattern[i % 7]) continue
-    g.fillStyle = '#111'
-    g.fillRect(i * w + w * 0.68, 0, w * 0.64, c.height * 0.62)
-  }
-  const t = new THREE.CanvasTexture(c)
-  t.colorSpace = THREE.SRGBColorSpace
-  return t
-}
-
 function signTexture(k: number): THREE.CanvasTexture {
   const c = document.createElement('canvas')
   c.width = 2048 * k
@@ -119,6 +102,13 @@ function signTexture(k: number): THREE.CanvasTexture {
   g.textAlign = 'center'
   g.textBaseline = 'middle'
   g.font = '500 210px Satoshi, "Satoshi Fallback", Arial, sans-serif'
+  // a soft wide halo under crisp letters: the glow of gilt under light, without a bloom pass
+  g.shadowColor = 'rgba(255, 236, 200, 0.85)'
+  g.shadowBlur = 46
+  g.globalAlpha = 0.55
+  g.fillText('Night n Key', 1024, 168)
+  g.shadowBlur = 0
+  g.globalAlpha = 1
   g.fillText('Night n Key', 1024, 168)
   const t = new THREE.CanvasTexture(c)
   t.colorSpace = THREE.SRGBColorSpace
@@ -223,6 +213,137 @@ const dustMaterial = (color: THREE.Color) =>
     blending: THREE.AdditiveBlending,
   })
 
+// ---------------------------------------------------------------- assets
+
+const ASSETS = '/venue/assets/'
+
+type Assets = {
+  table: THREE.Mesh | null
+  chair: THREE.Mesh | null
+  chandelier: THREE.Mesh[]
+  parquet: { map: THREE.Texture; normal: THREE.Texture; rough: THREE.Texture } | null
+  velvet: { normal: THREE.Texture; rough: THREE.Texture } | null
+  plaster: { normal: THREE.Texture; rough: THREE.Texture } | null
+}
+
+/** Meshes of a glTF scene, with their node transforms up to date. */
+function meshesOf(scene: THREE.Object3D) {
+  scene.updateMatrixWorld(true)
+  const out: THREE.Mesh[] = []
+  scene.traverse((o) => {
+    if ((o as THREE.Mesh).isMesh) out.push(o as THREE.Mesh)
+  })
+  return out
+}
+
+async function loadAssets(anisotropy: number, small: boolean): Promise<Assets> {
+  const gltf = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
+  const model = (name: string) => gltf.loadAsync(ASSETS + name).then((g) => meshesOf(g.scene)).catch(() => [] as THREE.Mesh[])
+  // Decode off the main thread (ImageBitmap) where supported: decoding <img>
+  // textures at upload time was the single biggest boot cost on phones.
+  const bitmaps = typeof createImageBitmap === 'function'
+  const bitmapLoader = new THREE.ImageBitmapLoader().setOptions({ imageOrientation: 'flipY' })
+  const imageLoader = new THREE.TextureLoader()
+  const map = async (name: string, srgb = false) => {
+    let t: THREE.Texture
+    if (bitmaps) {
+      t = new THREE.Texture(await bitmapLoader.loadAsync(ASSETS + name))
+      t.flipY = false // already flipped during decode
+      t.needsUpdate = true
+    } else {
+      t = await imageLoader.loadAsync(ASSETS + name)
+    }
+    t.wrapS = t.wrapT = THREE.RepeatWrapping
+    t.anisotropy = anisotropy
+    if (srgb) t.colorSpace = THREE.SRGBColorSpace
+    return t
+  }
+  const pq = small ? '_512' : ''
+  const [table, chair, chandelier, parquet, velvet, plaster] = await Promise.all([
+    model('round_wooden_table_01.glb'),
+    model('dining_chair_02.glb'),
+    model('Chandelier_01.glb'),
+    Promise.all([map(`parquet_diff${pq}.webp`, true), map(`parquet_nor${pq}.webp`), map(`parquet_rough${pq}.webp`)])
+      .then(([m, n, r]) => ({ map: m, normal: n, rough: r }))
+      .catch(() => null),
+    Promise.all([map('velvet_nor.webp'), map('velvet_rough.webp')])
+      .then(([n, r]) => ({ normal: n, rough: r }))
+      .catch(() => null),
+    Promise.all([map('plaster_nor.webp'), map('plaster_rough.webp')])
+      .then(([n, r]) => ({ normal: n, rough: r }))
+      .catch(() => null),
+  ])
+  return { table: table[0] ?? null, chair: chair[0] ?? null, chandelier, parquet, velvet, plaster }
+}
+
+/**
+ * A tiny painted cube of the room as gloss sees it: dark, with the warm lamp rig
+ * overhead, the gold curtain toward the stage and candle points toward the house.
+ * Phong materials use it directly, so lacquer and metal reflect the room without
+ * a PMREM prefilter (which cost ~0.8 s of main thread).
+ */
+function roomReflections(): THREE.CubeTexture {
+  const face = (paint: (g: CanvasRenderingContext2D) => void) => {
+    const c = document.createElement('canvas')
+    c.width = c.height = 64
+    const g = c.getContext('2d')!
+    g.fillStyle = '#070605'
+    g.fillRect(0, 0, 64, 64)
+    paint(g)
+    return c
+  }
+  const dot = (g: CanvasRenderingContext2D, x: number, y: number, r: number, a: number) => {
+    const grd = g.createRadialGradient(x, y, 0, x, y, r)
+    grd.addColorStop(0, `rgba(255, 214, 160, ${a})`)
+    grd.addColorStop(1, 'rgba(255, 214, 160, 0)')
+    g.fillStyle = grd
+    g.fillRect(x - r, y - r, r * 2, r * 2)
+  }
+  const band = (g: CanvasRenderingContext2D, y0: number, y1: number, a: number) => {
+    const grd = g.createLinearGradient(0, y0, 0, y1)
+    grd.addColorStop(0, 'rgba(226, 178, 102, 0)')
+    grd.addColorStop(0.5, `rgba(226, 178, 102, ${a})`)
+    grd.addColorStop(1, 'rgba(226, 178, 102, 0)')
+    g.fillStyle = grd
+    g.fillRect(0, y0, 64, y1 - y0)
+  }
+  const side = face((g) => [14, 32, 50].forEach((x) => dot(g, x, 30, 6, 0.5)))
+  const cube = new THREE.CubeTexture([
+    side, // +x
+    side, // -x
+    face((g) => [16, 32, 48].forEach((x) => dot(g, x, 40, 9, 0.95))), // +y: the lamp rig
+    face((g) => band(g, 0, 64, 0.4)), // -y: the lit stage floor (what a raised piano lid reflects)
+    face((g) => [8, 20, 32, 44, 56].forEach((x) => dot(g, x, 40, 4, 0.6))), // +z: candles in the house
+    face((g) => band(g, 18, 58, 0.55)), // -z: the gold curtain
+  ])
+  cube.colorSpace = THREE.SRGBColorSpace
+  cube.needsUpdate = true
+  return cube
+}
+
+/** Soft radial falloff for the light pools sconces throw on the walls. */
+function poolTexture(): THREE.CanvasTexture {
+  const c = document.createElement('canvas')
+  c.width = c.height = 128
+  const g = c.getContext('2d')!
+  const grd = g.createRadialGradient(64, 52, 2, 64, 64, 64)
+  grd.addColorStop(0, 'rgba(255,255,255,1)')
+  grd.addColorStop(0.35, 'rgba(255,255,255,0.35)')
+  grd.addColorStop(1, 'rgba(255,255,255,0)')
+  g.fillStyle = grd
+  g.fillRect(0, 0, 128, 128)
+  return new THREE.CanvasTexture(c)
+}
+
+/** InstancedMesh of a glTF mesh: each instance = placement × the node's own transform. */
+function instanceOf(src: THREE.Mesh, placements: THREE.Matrix4[], mat?: THREE.Material) {
+  const im = new THREE.InstancedMesh(src.geometry, mat ?? (src.material as THREE.Material), placements.length)
+  const m = new THREE.Matrix4()
+  placements.forEach((p, i) => im.setMatrixAt(i, m.multiplyMatrices(p, src.matrixWorld)))
+  im.computeBoundingSphere()
+  return im
+}
+
 // ---------------------------------------------------------------- world
 
 export async function createVenueWorld(
@@ -239,6 +360,8 @@ export async function createVenueWorld(
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, quality.dpr))
   renderer.shadowMap.enabled = quality.shadows > 0
   renderer.shadowMap.type = THREE.PCFShadowMap
+
+  const assetsReady = loadAssets(tier === 'high' ? 8 : 4, tier !== 'high') // in flight while the room is built
 
   const scene = new THREE.Scene()
   scene.background = new THREE.Color(PALETTE.void)
@@ -267,24 +390,31 @@ export async function createVenueWorld(
   // ---- materials (one instance per family; disposed once at teardown)
   const gold = new THREE.Color(PALETTE.gold)
   const tex = tier === 'high' ? 1 : 0.5
+  const env = roomReflections()
+  const gloss = (color: string, specular: string, shininess: number, reflectivity: number) =>
+    new THREE.MeshPhongMaterial({ color, specular, shininess, envMap: env, combine: THREE.MixOperation, reflectivity })
   const M = {
-    floor: new THREE.MeshStandardMaterial({ map: plankTexture(tex), roughness: 0.42, metalness: 0 }),
+    floor: new THREE.MeshStandardMaterial({ color: '#2a1d14', roughness: 0.6, metalness: 0 }),
     wall: new THREE.MeshStandardMaterial({ color: PALETTE.wall, roughness: 0.95 }),
     slat: new THREE.MeshStandardMaterial({ color: '#1c1511', roughness: 0.62 }),
     velvet: new THREE.MeshPhysicalMaterial({ color: PALETTE.velvet, roughness: 0.88, sheen: 1, sheenRoughness: 0.42, sheenColor: gold }),
     riser: new THREE.MeshStandardMaterial({ color: '#0a0a0a', roughness: 0.55 }),
     edge: new THREE.MeshBasicMaterial({ color: gold.clone(), toneMapped: false }),
-    lacquer: new THREE.MeshPhysicalMaterial({ color: PALETTE.lacquer, roughness: 0.35, clearcoat: 1, clearcoatRoughness: 0.12 }),
-    head: new THREE.MeshStandardMaterial({ color: '#e6e0d4', roughness: 0.75 }),
-    resonant: new THREE.MeshStandardMaterial({ color: '#141210', roughness: 0.6 }),
-    bronze: new THREE.MeshStandardMaterial({ color: PALETTE.bronze, metalness: 0.85, roughness: 0.32 }),
-    chrome: new THREE.MeshStandardMaterial({ color: PALETTE.chrome, metalness: 0.75, roughness: 0.28 }),
+    lacquer: gloss(PALETTE.lacquer, '#d8ccb8', 90, 0.3),
+    bronze: gloss('#5e4318', '#ffd58a', 55, 0.4),
+    chrome: gloss('#2b2926', '#f2ece2', 110, 0.5),
     tolex: new THREE.MeshStandardMaterial({ color: '#141313', roughness: 0.95 }),
     grille: new THREE.MeshStandardMaterial({ color: '#211f1c', roughness: 1 }),
-    keybed: new THREE.MeshStandardMaterial({ map: keybedTexture(tex), roughness: 0.4 }),
+    ebony: new THREE.MeshStandardMaterial({ color: '#0d0c0b', roughness: 0.55 }),
+    ivory: new THREE.MeshStandardMaterial({ color: '#ece6d8', roughness: 0.45 }),
+    goldLeaf: gloss('#7d5e25', '#ffe0a0', 70, 0.42),
+    wood: gloss('#1c0c05', '#5a4030', 30, 0.1),
+    spruce: new THREE.MeshStandardMaterial({ color: '#6e4e2e', roughness: 0.7 }),
+    rubber: new THREE.MeshStandardMaterial({ color: '#0a0a0a', roughness: 0.9 }),
+    votive: new THREE.MeshBasicMaterial({ color: new THREE.Color(PALETTE.practical).multiplyScalar(0.9), toneMapped: false, transparent: true, opacity: 0.85 }),
+    shade: new THREE.MeshBasicMaterial({ color: new THREE.Color(PALETTE.practical), toneMapped: false }),
+    pool: new THREE.MeshBasicMaterial({ map: poolTexture(), color: new THREE.Color(PALETTE.practical), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }),
     table: new THREE.MeshStandardMaterial({ color: '#17120e', roughness: 0.4 }),
-    seat: new THREE.MeshStandardMaterial({ color: '#100d0b', roughness: 0.7 }),
-    candle: new THREE.MeshBasicMaterial({ color: new THREE.Color(PALETTE.practical).multiplyScalar(2.2), toneMapped: false }),
     lens: new THREE.MeshBasicMaterial({ color: new THREE.Color(PALETTE.stageKey), toneMapped: false }),
     sign: new THREE.MeshBasicMaterial({ map: signTexture(tex), color: gold.clone(), transparent: true, toneMapped: false, depthWrite: false }),
     rig: new THREE.MeshStandardMaterial({ color: '#141414', metalness: 0.7, roughness: 0.5 }),
@@ -376,9 +506,9 @@ export async function createVenueWorld(
   const trussZ = stageFront + 1.0
   mesh(box(S.width + 1, 0.22, 0.22), M.rig, [0, trussY, trussZ], landmarks)
   const spotTargets: Vec3[] = [
-    [-2.2, S.height + 0.6, S.centerZ - 0.4], // kit
-    [0.1, S.height + 0.9, stageFront - 1.1], // mic
-    [2.1, S.height + 0.8, S.centerZ], // keys
+    [-2.1, S.height + 0.9, S.centerZ + 0.1], // piano
+    [0.25, S.height + 1.1, stageFront - 1.0], // mic
+    [1.9, S.height + 0.8, S.centerZ - 0.8], // kit
   ]
   // Side cans hang on the truss; the vocal key is a front-of-house can on the
   // ceiling, so nothing hangs between the audience and the sign.
@@ -436,101 +566,124 @@ export async function createVenueWorld(
   scene.add(hemi)
 
   await yieldToMain()
-  // ---- chapter set: the band
-  const kit = new THREE.Group()
-  kit.position.set(-2.15, S.height, S.centerZ - 0.5)
-  mesh(cyl(0.3, 0.3, 0.42, 40), M.lacquer, [0, 0.31, 0], kit, { rot: [Math.PI / 2, 0, 0], cast: true }) // kick
-  mesh(new THREE.CircleGeometry(0.29, 40), M.resonant, [0, 0.31, 0.212], kit) // front head
-  mesh(new THREE.RingGeometry(0.11, 0.125, 40), M.bronze, [0, 0.31, 0.214], kit) // port ring
-  mesh(cyl(0.18, 0.18, 0.14), M.lacquer, [0.48, 0.66, 0.34], kit, { rot: [0.18, 0, -0.12], cast: true }) // snare
-  mesh(cyl(0.006, 0.006, 0.6, 8), M.chrome, [0.48, 0.32, 0.34], kit)
-  mesh(cyl(0.13, 0.13, 0.17), M.lacquer, [-0.17, 0.78, 0.05], kit, { rot: [0.35, 0, 0.12], cast: true }) // rack toms
-  mesh(cyl(0.14, 0.14, 0.18), M.lacquer, [0.17, 0.79, 0.05], kit, { rot: [0.35, 0, -0.12], cast: true })
-  mesh(cyl(0.2, 0.2, 0.38), M.lacquer, [-0.62, 0.4, 0.25], kit, { cast: true }) // floor tom
-  mesh(cyl(0.006, 0.006, 0.95, 8), M.chrome, [0.82, 0.48, 0.18], kit) // hi-hat stand
-  mesh(cyl(0.18, 0.18, 0.01, 40), M.bronze, [0.82, 0.96, 0.18], kit)
-  mesh(cyl(0.18, 0.18, 0.01, 40), M.bronze, [0.82, 0.985, 0.18], kit)
-  for (const [x, y, z, r, tilt] of [[-0.55, 1.42, -0.1, 0.25, 0.28], [0.62, 1.26, -0.2, 0.29, -0.22]] as const) {
-    mesh(cyl(0.006, 0.006, y, 8), M.chrome, [x, y / 2, z], kit) // cymbal stands
-    mesh(cyl(r, r * 0.96, 0.008, 48), M.bronze, [x, y, z], kit, { rot: [0.1, 0, tilt], cast: true })
+  // ---- chapter set: the band (jazz trio + voice): piano audience-left with its
+  // lid open to the house, bass between, kit upstage right, the mic down centre
+  const P: PropMaterials = {
+    lacquer: M.lacquer, ebony: M.ebony, ivory: M.ivory, gold: M.goldLeaf, bronze: M.bronze, chrome: M.chrome,
+    wood: M.wood, spruce: M.spruce, tolex: M.tolex, grille: M.grille, rubber: M.rubber,
   }
-  mesh(cyl(0.17, 0.17, 0.06), M.seat, [0.05, 0.5, -0.55], kit) // throne
-  mesh(cyl(0.02, 0.02, 0.48, 8), M.chrome, [0.05, 0.24, -0.55], kit)
-  band.add(kit)
-
-  const keys = new THREE.Group()
-  keys.position.set(2.15, S.height, S.centerZ + 0.1)
-  keys.rotation.y = -0.35
-  for (const s of [-1, 1]) mesh(box(0.035, 0.98, 0.035), M.chrome, [0, 0.44, 0], keys, { rot: [0, 0, s * 0.72] })
-  mesh(box(1.32, 0.09, 0.36), M.lacquer, [0, 0.9, 0], keys, { cast: true })
-  mesh(new THREE.PlaneGeometry(1.22, 0.16), M.keybed, [0, 0.947, 0.07], keys, { rot: [-Math.PI / 2, 0, 0] })
-  band.add(keys)
-
-  const amp = new THREE.Group()
-  amp.position.set(3.45, S.height, S.centerZ - 1.2)
-  amp.rotation.y = -0.25
-  mesh(box(0.62, 0.95, 0.45), M.tolex, [0, 0.475, 0], amp, { cast: true })
-  mesh(new THREE.PlaneGeometry(0.54, 0.7), M.grille, [0, 0.42, 0.227], amp)
-  mesh(box(0.12, 0.03, 0.004), M.bronze, [0, 0.86, 0.228], amp) // badge
-  band.add(amp)
-
-  const mic = new THREE.Group()
-  mic.position.set(0.1, S.height, stageFront - 0.85)
-  mesh(cyl(0.13, 0.14, 0.025, 32), M.chrome, [0, 0.012, 0], mic)
-  mesh(cyl(0.009, 0.009, 1.48, 10), M.chrome, [0, 0.74, 0], mic)
-  // handheld mic in its clip, angled up toward the singer
-  mesh(cyl(0.022, 0.015, 0.17, 16), M.lacquer, [0, 1.518, 0.076], mic, { rot: [1.1, 0, 0] })
-  mesh(new THREE.SphereGeometry(0.029, 16, 12), M.chrome, [0, 1.556, 0.152], mic)
-  band.add(mic)
-
-  // floor wedges: trapezoid profile, sloped face toward the performer
-  const wedgeShape = new THREE.Shape([new THREE.Vector2(0, 0), new THREE.Vector2(0.44, 0), new THREE.Vector2(0.44, 0.13), new THREE.Vector2(0.06, 0.34), new THREE.Vector2(0, 0.34)])
-  const wedgeGeo = new THREE.ExtrudeGeometry(wedgeShape, { depth: 0.56, bevelEnabled: false })
-  wedgeGeo.rotateY(Math.PI / 2)
-  wedgeGeo.translate(-0.28, 0, 0.22)
-  for (const s of [-1, 1]) mesh(wedgeGeo, M.tolex, [s * 1.2, S.height, stageFront - 0.25], band, { rot: [0, s * 0.3, 0], cast: true })
+  const piano = grandPiano(P).group
+  piano.position.set(-2.55, S.height, S.centerZ + 0.35)
+  piano.rotation.y = Math.PI / 2 + 0.35 // keyboard stage-left, tail upstage-centre, bentside to the audience
+  const bass = uprightBass(P)
+  bass.position.set(0.95, S.height, S.centerZ - 1.0)
+  bass.rotation.y = -0.25
+  const kit = drumKit(P)
+  kit.position.set(2.15, S.height, S.centerZ - 0.75)
+  kit.rotation.y = -0.32
+  const amp = comboAmp(P)
+  amp.position.set(3.55, S.height, S.centerZ - 1.3)
+  amp.rotation.y = -0.4
+  const mic = vocalMic(P)
+  mic.position.set(0.25, S.height, stageFront - 0.85)
+  band.add(piano, bass, kit, amp, mic)
 
   await yieldToMain()
-  // ---- chapter set: the house (tables, chairs, candles)
+  // ---- surfaces + chapter set: the house (CC0 furniture, votives, chandeliers, sconces)
+  const assets = await assetsReady
+  if (!assets.parquet) {
+    M.floor.map = plankTexture(tex) // fallback: drawn oak planks
+    M.floor.color.set('#ffffff')
+  } else {
+    for (const t of [assets.parquet.map, assets.parquet.normal, assets.parquet.rough]) t.repeat.set(R.width / 1.6, floorDepth / 1.6)
+    M.floor.map = assets.parquet.map
+    M.floor.normalMap = assets.parquet.normal
+    M.floor.roughnessMap = assets.parquet.rough
+    M.floor.color.set('#7a6656') // darken the oak to a smoked finish
+    M.floor.roughness = 0.85
+    M.floor.needsUpdate = true
+  }
+  if (assets.plaster) {
+    for (const t of [assets.plaster.normal, assets.plaster.rough]) t.repeat.set(5, 2)
+    M.wall.normalMap = assets.plaster.normal
+    M.wall.normalScale.set(0.6, 0.6)
+    M.wall.roughnessMap = assets.plaster.rough
+    M.wall.needsUpdate = true
+  }
+  if (assets.velvet) {
+    for (const t of [assets.velvet.normal, assets.velvet.rough]) t.repeat.set(7, 4)
+    M.velvet.normalMap = assets.velvet.normal
+    M.velvet.normalScale.set(0.8, 0.8)
+    M.velvet.roughnessMap = assets.velvet.rough
+    M.velvet.needsUpdate = true
+  }
+
   const tableSpots: Vec3[] = []
   for (const z of [-1.6, -4.4, -7.2, -10.0]) for (const x of [-4.9, -2.4, 2.4, 4.9]) tableSpots.push([x, 0, z])
-  const tops = new THREE.InstancedMesh(cyl(0.42, 0.42, 0.035, 40), M.table, tableSpots.length)
-  const stems = new THREE.InstancedMesh(cyl(0.035, 0.035, 0.72, 10), M.rig, tableSpots.length)
-  const candles = new THREE.InstancedMesh(cyl(0.025, 0.025, 0.07, 10), M.candle, tableSpots.length)
-  const seats = new THREE.InstancedMesh(box(0.42, 0.045, 0.42), M.seat, tableSpots.length * 2)
-  const backs = new THREE.InstancedMesh(box(0.42, 0.42, 0.04), M.seat, tableSpots.length * 2)
+  const r = rng(11)
+  const place4 = (x: number, y: number, z: number, yaw = 0, sx = 1, sy = 1, sz = sx) =>
+    new THREE.Matrix4().compose(new THREE.Vector3(x, y, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), yaw), new THREE.Vector3(sx, sy, sz))
+  const tableTop = 0.74
+  const tablePlacements = tableSpots.map(([x, , z]) => place4(x, 0, z, r() * Math.PI, 0.44, tableTop / 1.004))
+  // two chairs per table on the audience side, turned toward the stage
+  const chairPlacements = tableSpots.flatMap(([x, , z]) => [-0.34, 0.34].map((dx) => place4(x + dx, 0, z + 0.55, Math.PI + dx * 0.5 + (r() - 0.5) * 0.25)))
+  if (assets.table) {
+    const tables = instanceOf(assets.table, tablePlacements)
+    tables.receiveShadow = shadows
+    house.add(tables)
+  } else {
+    const tops = new THREE.InstancedMesh(cyl(0.3, 0.3, 0.035, 40), M.table, tableSpots.length)
+    tableSpots.forEach(([x, , z], i) => tops.setMatrixAt(i, place4(x, tableTop, z)))
+    house.add(tops)
+  }
+  if (assets.chair) house.add(instanceOf(assets.chair, chairPlacements))
+  // glass votives: a warm cylinder on each table, glow sprite above it
+  const votives = new THREE.InstancedMesh(cyl(0.032, 0.03, 0.065, 16), M.votive, tableSpots.length)
   const glowPos: number[] = []
   const glowSeed: number[] = []
-  const r = rng(11)
   tableSpots.forEach(([x, , z], i) => {
-    dummy.rotation.set(0, 0, 0)
-    dummy.position.set(x, 0.74, z)
-    dummy.updateMatrix()
-    tops.setMatrixAt(i, dummy.matrix)
-    dummy.position.set(x, 0.37, z)
-    dummy.updateMatrix()
-    stems.setMatrixAt(i, dummy.matrix)
-    dummy.position.set(x, 0.795, z)
-    dummy.updateMatrix()
-    candles.setMatrixAt(i, dummy.matrix)
-    glowPos.push(x, 0.86, z)
+    votives.setMatrixAt(i, place4(x + 0.08, tableTop + 0.035, z - 0.05))
+    glowPos.push(x + 0.08, tableTop + 0.09, z - 0.05)
     glowSeed.push(r())
-    ;[-0.36, 0.36].forEach((dx, j) => {
-      const yaw = (r() - 0.5) * 0.4
-      dummy.rotation.set(0, yaw, 0)
-      dummy.position.set(x + dx, 0.46, z + 0.62)
-      dummy.updateMatrix()
-      seats.setMatrixAt(i * 2 + j, dummy.matrix)
-      dummy.position.set(x + dx, 0.7, z + 0.82)
-      dummy.updateMatrix()
-      backs.setMatrixAt(i * 2 + j, dummy.matrix)
-    })
   })
-  for (const im of [tops, stems, seats, backs]) {
-    im.castShadow = false
-    im.receiveShadow = shadows
+  house.add(votives)
+
+  // chandeliers over the outer table rows, hung low enough to read in the house frame
+  const chandelierAt: Vec3[] = [[-3.65, 4.75, -11.2], [3.65, 4.75, -11.2]]
+  const chandelierScale = 1.35
+  for (const part of assets.chandelier) {
+    const mat = part.material as THREE.MeshStandardMaterial
+    if (mat.name.startsWith('lamps')) {
+      mat.emissive = new THREE.Color(PALETTE.practical)
+      mat.emissiveIntensity = 1.2
+    } else {
+      mat.metalness = 0.45 // no env map: keep some diffuse so the brass reads
+    }
+    house.add(instanceOf(part, chandelierAt.map(([x, y, z]) => place4(x, y, z, 0.4, chandelierScale))))
   }
-  house.add(tops, stems, candles, seats, backs)
+  if (assets.chandelier.length) {
+    const chainTop = chandelierAt[0]![1]
+    const chains = new THREE.InstancedMesh(cyl(0.008, 0.008, R.height - chainTop, 6), M.goldLeaf, chandelierAt.length)
+    chandelierAt.forEach(([x, , z], i) => chains.setMatrixAt(i, place4(x, (R.height + chainTop) / 2, z)))
+    house.add(chains)
+  }
+
+  // brass sconces down both side walls, each throwing a soft pool of light on the slats
+  const sconceZ = [0.2, -3.6, -7.4, -11.2]
+  const sconceAt: Vec3[] = sconceZ.flatMap((z) => [-1, 1].map((sx) => [sx * (R.width / 2 - 0.16), 2.45, z] as Vec3))
+  const plates = new THREE.InstancedMesh(box(0.03, 0.26, 0.12), M.goldLeaf, sconceAt.length)
+  const shades = new THREE.InstancedMesh(cyl(0.06, 0.085, 0.15, 20), M.shade, sconceAt.length)
+  const pools = new THREE.InstancedMesh(new THREE.PlaneGeometry(1.5, 2.4), M.pool, sconceAt.length)
+  sconceAt.forEach(([x, y, z], i) => {
+    const sx = Math.sign(x)
+    plates.setMatrixAt(i, place4(x + sx * 0.05, y, z))
+    shades.setMatrixAt(i, place4(x - sx * 0.05, y + 0.06, z))
+    pools.setMatrixAt(i, place4(x + sx * 0.035, y + 0.15, z, -sx * Math.PI / 2))
+    glowPos.push(x - sx * 0.05, y + 0.06, z)
+    glowSeed.push(r())
+  })
+  pools.renderOrder = 2
+  house.add(plates, shades, pools)
 
   const candleGlowGeo = new THREE.BufferGeometry()
   candleGlowGeo.setAttribute('position', new THREE.Float32BufferAttribute(glowPos, 3))
@@ -538,7 +691,7 @@ export async function createVenueWorld(
   const candleGlow = glowMaterial(new THREE.Color(PALETTE.practical), 0.8)
   atmosphere.add(new THREE.Points(candleGlowGeo, candleGlow))
 
-  const houseLights = [-0.6, -3.2, -8.4].map((z, i) => {
+  const houseLights = [-0.6, -4.2, -9.2].map((z, i) => {
     const l = new THREE.PointLight(PALETTE.practical, 0, 12, 2)
     l.position.set(0, i === 0 ? 3.6 : 2.8, z)
     scene.add(l)
@@ -589,6 +742,7 @@ export async function createVenueWorld(
   let time = 0
   let lastSmooth = -1
   let pointerDirty = false
+  let pinned: { p: Vec3; t: Vec3; fov: number } | null = null
   const frameTimes: number[] = []
   const BASE = { spot: [900, 2600, 900], rim: 110, house: [14, 130, 100] }
 
@@ -605,6 +759,13 @@ export async function createVenueWorld(
   }
 
   function applyCamera(smooth: number) {
+    if (pinned) {
+      pathRig.position.set(...pinned.p)
+      pathRig.quaternion.setFromRotationMatrix(lookM.lookAt(v3(pinned.p), v3(pinned.t), up))
+      camera.fov = pinned.fov
+      camera.updateProjectionMatrix()
+      return
+    }
     const last = CHAPTERS.length - 1
     const u = Math.min(1, Math.max(0, smooth / last))
     posCurve.getPoint(u, tmpP)
@@ -628,8 +789,10 @@ export async function createVenueWorld(
     cones.forEach((m) => (m.uniforms.uOpacity!.value = w.cones * (1 + audio * 0.35)))
     M.edge.color.copy(gold).multiplyScalar(0.25 + 0.75 * w.edge)
     M.sign.color.copy(gold).multiplyScalar(0.25 + 1.6 * w.sign)
-    M.lens.color.set(PALETTE.stageKey).multiplyScalar(0.3 + 2.4 * w.key * lift)
+    M.lens.color.set(PALETTE.stageKey).multiplyScalar(0.08 + 0.42 * w.key * lift)
     candleGlow.uniforms.uIntensity!.value = 0.35 + 0.75 * w.house
+    M.shade.color.set(PALETTE.practical).multiplyScalar(0.5 + 0.9 * w.house)
+    M.pool.opacity = 0.05 + 0.14 * w.house
     dust.uniforms.uIntensity!.value = 0.15 + 0.35 * w.cones
     ;(scene.fog as THREE.FogExp2).density = w.fog
     renderer.toneMappingExposure = w.exposure
@@ -655,7 +818,17 @@ export async function createVenueWorld(
 
   applyCamera(0)
   applyWorld(worldAt(0))
-  await yieldToMain()
+  // Upload textures one per task (instead of all inside the first render).
+  const textures = new Set<THREE.Texture>()
+  scene.traverse((o) => {
+    const mats = (o as THREE.Mesh).material
+    if (!mats) return
+    for (const mat of ([] as THREE.Material[]).concat(mats)) for (const v of Object.values(mat)) if (v instanceof THREE.Texture) textures.add(v)
+  })
+  for (const t of textures) {
+    renderer.initTexture(t)
+    await yieldToMain()
+  }
   await renderer.compileAsync(scene, camera)
   await yieldToMain()
 
@@ -692,18 +865,24 @@ export async function createVenueWorld(
       for (const m of [candleGlow, dust]) m.uniforms.uPx!.value = pxScale()
       lastSmooth = -1
     },
+    debugView(pose) {
+      pinned = pose
+      lastSmooth = -1
+    },
     needsFrame: () => pointerDirty || audio > 0.001,
     info: () => ({ calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, tier, dpr: renderer.getPixelRatio() }),
     dispose() {
+      env.dispose()
+      const mats = new Set<THREE.Material>(Object.values(M))
       scene.traverse((o) => {
         const m = o as THREE.Mesh
         m.geometry?.dispose()
+        if (m.material) for (const mat of ([] as THREE.Material[]).concat(m.material)) mats.add(mat)
       })
-      for (const mat of Object.values(M)) {
-        ;(mat as THREE.MeshStandardMaterial).map?.dispose()
+      for (const mat of mats) {
+        for (const v of Object.values(mat)) if (v instanceof THREE.Texture) v.dispose()
         mat.dispose()
       }
-      for (const m of [...cones, candleGlow, dust]) m.dispose()
       renderer.dispose()
     },
   }

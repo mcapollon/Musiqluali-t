@@ -248,6 +248,7 @@ export function VenueHero() {
         </div>
         {/* Legibility where the copy sits (bottom-left), the room stays open above. */}
         <div aria-hidden className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-black/0" />
+        <div aria-hidden className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/70 to-black/0" />
         <div aria-hidden className="absolute inset-y-0 left-0 w-full bg-linear-to-r from-black/55 to-black/0 md:w-2/3" />
         <GrainOverlay className="absolute inset-0 size-full" opacity={0.08} />
 
