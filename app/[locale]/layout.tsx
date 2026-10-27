@@ -4,16 +4,18 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
 import { ThemeProvider } from 'next-themes'
 import { routing, type AppLocale } from '@/lib/i18n/routing'
-import { LenisProvider } from '@/components/motion/LenisProvider'
+import { MotionProvider } from '@/components/motion/MotionProvider'
 import { LazyToaster } from '@/components/ui/LazyToaster'
 import { SkipToContent } from '@/components/chrome/SkipToContent'
 import { SiteHeader } from '@/components/chrome/SiteHeader'
 import { SiteFooter } from '@/components/chrome/SiteFooter'
 import { StickyMiniPlayer } from '@/components/media/StickyMiniPlayer'
+import { INTRO_SCRIPT } from '@/components/chrome/logoIntroScript'
 import '../globals.css'
 
-// Satoshi from Fontshare (see the <head> note below). Loaded without blocking first paint.
-const FONTSHARE_CSS = 'https://api.fontshare.com/v2/css?f%5B%5D=satoshi@300,400,500&display=swap'
+// Melodrama (display) + Satoshi (text) from Fontshare (see the <head> note below). Loaded without blocking first paint.
+// Order matters: with satoshi listed first, the API silently drops the second family (checked 2026-10-27).
+const FONTSHARE_CSS = 'https://api.fontshare.com/v2/css?f%5B%5D=melodrama@400,500,600&f%5B%5D=satoshi@300,400,500&display=swap'
 const FONTSHARE_SWAP = `(function(){var l=document.getElementById('fontshare-css');if(!l)return;function on(){l.media='all'}if(l.sheet)on();else l.addEventListener('load',on)})()`
 
 export function generateStaticParams() {
@@ -53,8 +55,10 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
+        {/* Before first paint: motion flag + logo opening (home only). See logoIntroScript.ts. */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
         {/*
-          Satoshi (the NCBF typeface) by Indian Type Foundry, ITF Free Font License.
+          Satoshi (the NCBF typeface) and Melodrama, both by Indian Type Foundry, ITF Free Font License.
           Served from Fontshare's own servers on purpose: the licence forbids
           redistributing the font files through a repository, and this repo is
           public, so the files must never be committed here.
@@ -74,14 +78,14 @@ export default async function LocaleLayout({
         {/* Dark only ("a gala has one lighting"). Provider kept so a theme can return without restructuring. */}
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
           <NextIntlClientProvider messages={messages} locale={locale}>
-            <LenisProvider>
+            <MotionProvider>
               <SkipToContent label={locale === 'fr' ? 'Aller au contenu' : 'Skip to content'} />
               <SiteHeader />
               <main id="main" className="pt-20">{children}</main>
               <SiteFooter />
               <StickyMiniPlayer />
               <LazyToaster position="bottom-right" />
-            </LenisProvider>
+            </MotionProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

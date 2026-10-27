@@ -35,11 +35,11 @@ export function ArtistIndex({ artists }: { artists: Artist[] }) {
 
   return (
     <div className="grid gap-12 md:grid-cols-[1fr_minmax(15rem,26vw)]">
-      <ul className="border-b border-rule">
+      <ul data-reveal-group className="border-b border-rule">
         {artists.map((a) => {
           const isActive = a.id === active?.id
           return (
-            <li key={a.id} className="flex items-center gap-4 border-t border-rule py-4 md:py-5">
+            <li key={a.id} data-reveal-item className="flex items-center gap-4 border-t border-rule py-4 md:py-5">
               <button
                 type="button"
                 onClick={() => setOpenId(a.id)}
@@ -85,7 +85,7 @@ export function ArtistIndex({ artists }: { artists: Artist[] }) {
 
       {/* Desktop portrait panel: one image lit at a time. Decorative; names carry the meaning. */}
       <div aria-hidden className="relative hidden md:block">
-        <div className="grade-portrait sticky top-28 aspect-[3/4] w-full">
+        <div data-image-reveal className="grade-portrait sticky top-28 aspect-[3/4] w-full">
           {artists
             .filter((a) => a.id === active?.id || seen.has(a.id))
             .map((a) => (

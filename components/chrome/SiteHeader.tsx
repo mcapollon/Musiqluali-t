@@ -31,6 +31,12 @@ export function SiteHeader() {
           past ? 'bg-ink/90 backdrop-blur py-3 border-rule' : 'py-5 border-transparent',
         )}
       >
+        {/* Reading position: a gold hairline mapped 1:1 to the scrollbar (data-scroll-progress). */}
+        <span
+          data-scroll-progress
+          aria-hidden
+          className="absolute inset-x-0 -bottom-px h-px origin-left scale-x-0 bg-gold/70"
+        />
         <div className="section-pad-x flex items-center justify-between gap-6">
           <Link href="/" className="inline-block shrink-0">
             {/* data-wordmark-target: where the logo opening lands; hidden only while it plays. */}

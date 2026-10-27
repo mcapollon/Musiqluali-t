@@ -1,10 +1,12 @@
 'use client'
 import { useEffect, useRef } from 'react'
+import { useTranslations } from 'next-intl'
 import { Wordmark } from './Wordmark'
 import { INTRO_STORAGE_KEY } from './logoIntroScript'
 
 const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)'
 const SWEEP_EASE = 'cubic-bezier(0.45, 0, 0.2, 1)'
+const CURTAIN_EASE = 'cubic-bezier(0.76, 0, 0.24, 1)' // power4.inOut, as EASE.curtain in lib/motion/tokens.ts
 
 // Timeline (ms from navigation start). Keep FLY_AT in sync with --reveal-delay in globals.css.
 const SWEEP_AT = 350
@@ -19,15 +21,20 @@ function play(el: HTMLElement, keyframes: Keyframe[], opts: KeyframeAnimationOpt
 const WORDMARK_SIZE = 'text-[clamp(3.25rem,13vw,11rem)] pb-[0.15em]'
 
 /**
- * The opening: the wordmark fades up on black, a band of light crosses it,
- * holds a beat, then glides into the header as the room lights come up. ≈ 3.2 s,
+ * The overture: "Ce soir" on black, a count from 00 to 100 and a gold
+ * hairline filling as the house settles (all CSS, from first paint), a band
+ * of light crosses the wordmark, then the curtain parts in two as the mark
+ * glides into the header. ≈ 3.2 s,
  * skippable by any click, key, wheel or touch, once per session, never with
  * reduced motion (gated by INTRO_SCRIPT before first paint). CSS failsafes in
  * globals.css clear it after 5 s if this script never runs.
  */
 export function LogoIntro() {
+  const t = useTranslations('home.overture')
   const overlayRef = useRef<HTMLDivElement>(null)
-  const bgRef = useRef<HTMLDivElement>(null)
+  const leftRef = useRef<HTMLDivElement>(null)
+  const rightRef = useRef<HTMLDivElement>(null)
+  const furnitureRef = useRef<HTMLDivElement>(null)
   const markRef = useRef<HTMLDivElement>(null)
   const bandRef = useRef<HTMLDivElement>(null)
   const bandInnerRef = useRef<HTMLDivElement>(null)
@@ -35,11 +42,13 @@ export function LogoIntro() {
   useEffect(() => {
     const root = document.documentElement
     const overlay = overlayRef.current
-    const bg = bgRef.current
+    const left = leftRef.current
+    const right = rightRef.current
+    const furniture = furnitureRef.current
     const mark = markRef.current
     const band = bandRef.current
     const bandInner = bandInnerRef.current
-    if (root.dataset.intro !== 'play' || !overlay || !bg || !mark || !band || !bandInner) return
+    if (root.dataset.intro !== 'play' || !overlay || !left || !right || !furniture || !mark || !band || !bandInner) return
 
     const controls: Animation[] = []
     const timers: number[] = []
@@ -92,7 +101,11 @@ export function LogoIntro() {
         } else {
           controls.push(play(mark, [{ opacity: 1 }, { opacity: 0 }], { duration: 600 }))
         }
-        controls.push(play(bg, [{ opacity: 1 }, { opacity: 0 }], { duration: FLY_MS, easing: 'ease-out' }))
+        // The curtain parts on the room; the count and hairline bow out first.
+        const part = { duration: FLY_MS, easing: CURTAIN_EASE }
+        controls.push(play(furniture, [{ opacity: 1 }, { opacity: 0 }], { duration: 300 }))
+        controls.push(play(left, [{ transform: 'none' }, { transform: 'translateX(-101%)' }], part))
+        controls.push(play(right, [{ transform: 'none' }, { transform: 'translateX(101%)' }], part))
       }, flyAt),
     )
     timers.push(window.setTimeout(finish, flyAt + FLY_MS + 50))
@@ -106,7 +119,21 @@ export function LogoIntro() {
 
   return (
     <div ref={overlayRef} aria-hidden className="logo-intro fixed inset-0 z-100 place-items-center">
-      <div ref={bgRef} className="absolute inset-0 bg-black" />
+      {/* Two halves of the house curtain; a thin gold seam where they meet. */}
+      <div ref={leftRef} className="absolute inset-y-0 left-0 w-1/2 border-r border-gold/30 bg-black" />
+      <div ref={rightRef} className="absolute inset-y-0 right-0 w-1/2 border-l border-gold/30 bg-black" />
+      {/* Count, label and hairline: CSS from first paint (.logo-intro-count/-bar), done by the hand-off. */}
+      <div ref={furnitureRef} className="section-pad-x absolute inset-x-0 bottom-10 md:bottom-14">
+        <div className="flex items-end justify-between gap-6 pb-5">
+          <p className="text-mono-meta text-white/70">
+            {t('tonight')} <span className="text-white/40">· {t('doors')}</span>
+          </p>
+          <p className="logo-intro-count text-figures text-5xl leading-none text-gold md:text-7xl" />
+        </div>
+        <div className="h-px bg-rule">
+          <div className="logo-intro-bar h-full origin-left bg-gold" />
+        </div>
+      </div>
       {/* Outer: flies to the header (JS). Inner: fades up (CSS). Kept apart so the two transforms never fight. */}
       <div ref={markRef} className="relative inline-block" style={{ transformOrigin: '0 0' }}>
         <div className="logo-intro-mark relative">

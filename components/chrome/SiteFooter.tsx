@@ -35,40 +35,43 @@ export function SiteFooter() {
   const t = useTranslations('footer')
   const year = new Date().getFullYear()
   return (
-    <footer className="section-pad-x section-pad-y border-t border-rule">
-      <div className="grid gap-12 md:grid-cols-3">
-        <div>
-          <Wordmark className="text-4xl" />
-          <p className="mt-4 text-bone-mute">{t('blurb')}</p>
-        </div>
-        <div>
-          <p className="text-mono-meta text-bone-mute mb-4">{t('sitemap')}</p>
-          <ul className="space-y-2">
-            <li><Link href="/programs" className="hover:text-gold">{t('nav.programs')}</Link></li>
-            <li><Link href="/artists" className="hover:text-gold">{t('nav.artists')}</Link></li>
-            <li><Link href="/events" className="hover:text-gold">{t('nav.events')}</Link></li>
-            <li><Link href="/about" className="hover:text-gold">{t('nav.about')}</Link></li>
-            <li><Link href="/contact" className="hover:text-gold">{t('nav.contact')}</Link></li>
-            <li><Link href="/apply" className="hover:text-gold">{t('nav.apply')}</Link></li>
-          </ul>
-        </div>
-        <div>
-          <p className="text-mono-meta text-bone-mute mb-4">{t('contactLabel')}</p>
-          <p>Montréal, QC</p>
-          {/* TODO: real contact email and social handles (placeholders below). */}
-          <p><a href="mailto:bonjour@musiqlt.example" className="hover:text-gold">bonjour@musiqlt.example</a></p>
-          <div className="mt-4 flex gap-4" aria-label={t('social')}>
-            <a href="https://instagram.com/musiqlt" aria-label="Instagram"><Instagram className="size-5" /></a>
-            <a href="#" aria-label="Facebook"><Facebook className="size-5" /></a>
-            <a href="#" aria-label="YouTube"><Youtube className="size-5" /></a>
+    // The page lifts away and the footer rises from behind it (data-footer-reveal, scrubbed).
+    <footer data-footer-reveal className="overflow-clip border-t border-rule">
+      <div data-footer-inner className="section-pad-x section-pad-y">
+        <div className="grid gap-12 md:grid-cols-3">
+          <div>
+            <Wordmark className="text-4xl" />
+            <p className="mt-4 text-bone-mute">{t('blurb')}</p>
+          </div>
+          <div>
+            <p className="text-mono-meta text-bone-mute mb-4">{t('sitemap')}</p>
+            <ul className="space-y-2">
+              <li><Link href="/programs" className="hover:text-gold">{t('nav.programs')}</Link></li>
+              <li><Link href="/artists" className="hover:text-gold">{t('nav.artists')}</Link></li>
+              <li><Link href="/events" className="hover:text-gold">{t('nav.events')}</Link></li>
+              <li><Link href="/about" className="hover:text-gold">{t('nav.about')}</Link></li>
+              <li><Link href="/contact" className="hover:text-gold">{t('nav.contact')}</Link></li>
+              <li><Link href="/apply" className="hover:text-gold">{t('nav.apply')}</Link></li>
+            </ul>
+          </div>
+          <div>
+            <p className="text-mono-meta text-bone-mute mb-4">{t('contactLabel')}</p>
+            <p>Montréal, QC</p>
+            {/* TODO: real contact email and social handles (placeholders below). */}
+            <p><a href="mailto:bonjour@musiqlt.example" className="hover:text-gold">bonjour@musiqlt.example</a></p>
+            <div className="mt-4 flex gap-4" aria-label={t('social')}>
+              <a href="https://instagram.com/musiqlt" aria-label="Instagram"><Instagram className="size-5" /></a>
+              <a href="#" aria-label="Facebook"><Facebook className="size-5" /></a>
+              <a href="#" aria-label="YouTube"><Youtube className="size-5" /></a>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="mt-16 flex flex-wrap items-center justify-between gap-4 text-mono-meta text-bone-mute">
-        <span>© {year} MusiqualiT</span>
-        <div className="flex gap-6">
-          <a href="#">{t('legal.privacy')}</a>
-          <a href="#">{t('legal.terms')}</a>
+        <div className="mt-16 flex flex-wrap items-center justify-between gap-4 text-mono-meta text-bone-mute">
+          <span>© {year} MusiqualiT</span>
+          <div className="flex gap-6">
+            <a href="#">{t('legal.privacy')}</a>
+            <a href="#">{t('legal.terms')}</a>
+          </div>
         </div>
       </div>
     </footer>

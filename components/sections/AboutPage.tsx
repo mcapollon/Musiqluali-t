@@ -18,13 +18,13 @@ export function AboutPage() {
       <PageIntro chapter={t('chapter')} title={t('intro')} />
 
       <section className="section-pad-x section-pad-y grid items-center gap-12 md:grid-cols-2 md:gap-20">
-        <div className="sd-reveal grade-portrait relative aspect-[4/5]">
+        <div data-image-reveal className="grade-portrait relative aspect-[4/5]">
           {/* PLACEHOLDER image (Unsplash). */}
           <Image
             src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&auto=format&fit=crop&q=80"
             alt={t('founderAlt')}
             fill
-            className="sd-parallax object-cover"
+            data-parallax className="object-cover"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>

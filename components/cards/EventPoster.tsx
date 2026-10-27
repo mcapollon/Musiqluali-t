@@ -26,25 +26,32 @@ export function EventPoster({
   const date = event ? new Date(event.dateISO) : null
 
   return (
-    <article className="sd-reveal relative isolate overflow-clip bg-black text-white">
+    // Opens from an inset frame to full bleed as it is scrolled in (data-progress-scene, scrubbed).
+    <article data-progress-scene className="relative isolate overflow-clip bg-black text-white">
       <div className="grade-stage absolute inset-0">
         <Image
           src={event?.poster ?? flagship.poster}
           alt={event ? '' : flagship.posterAlt[locale]}
           fill
           sizes="100vw"
-          className="sd-parallax object-cover"
+          data-parallax
+          className="object-cover"
         />
       </div>
       <div aria-hidden className="absolute inset-0 z-3 bg-linear-to-r from-black/85 via-black/40 to-transparent" />
 
-      <div className="relative z-10 flex min-h-[34rem] flex-col justify-between gap-12 p-6 sm:p-10 md:min-h-[42rem] md:p-14">
-        <p className="text-mono-meta text-white/70">{t('nextShow')}</p>
+      <div
+        data-reveal-group
+        className="relative z-10 flex min-h-[34rem] flex-col justify-between gap-12 p-6 sm:p-10 md:min-h-[42rem] md:p-14"
+      >
+        <p data-reveal-item className="text-mono-meta text-white/70">
+          {t('nextShow')}
+        </p>
 
-        <div>
+        <div data-reveal-item>
           <Heading className={event ? 'text-poster-l max-w-5xl' : 'text-poster-xl'}>{copy?.title ?? flagship.name}</Heading>
           {date ? (
-            <p className="text-poster-l mt-4 text-gold">
+            <p className="text-poster-l text-figures mt-4 text-gold">
               <time dateTime={event!.dateISO}>{f.dateTime(date, { day: '2-digit', month: 'long' })}</time>
             </p>
           ) : (
@@ -53,7 +60,7 @@ export function EventPoster({
           <p className="mt-6 max-w-lg text-white/80">{event ? `${event.venue} — ${copy!.description}` : t('tbaBody')}</p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
+        <div data-reveal-item className="flex flex-wrap items-center gap-x-10 gap-y-4">
           {event ? (
             <a href={event.ticketsHref} className={buttonClass({ size: 'lg' })}>
               {t('tickets')}

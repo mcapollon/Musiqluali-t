@@ -77,4 +77,7 @@ export const CONTRAST_PAIRS: { fg: string; bg: string; min: 4.5 | 3; use: string
   { fg: 'err', bg: 'ink', min: 4.5, use: 'Error message' },
   { fg: 'ok', bg: 'ink', min: 4.5, use: 'Success message' },
   { fg: 'white', bg: 'black', min: 4.5, use: 'Text over graded footage' },
+  { fg: 'ink', bg: 'white', min: 4.5, use: 'Text in the ivory act (house lights)' },
+  { fg: 'ink-mute', bg: 'white', min: 4.5, use: 'Secondary text in the ivory act' },
+  { fg: 'gold-deep', bg: 'white', min: 3, use: 'Large gold display words in the ivory act' },
 ]

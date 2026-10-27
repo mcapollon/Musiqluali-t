@@ -17,7 +17,7 @@ export function TeamMember({ member }: { member: TeamItem }) {
         aria-controls={bioId}
         className="group block w-full text-left"
       >
-        <div className="sd-reveal grade-portrait relative aspect-[3/4]">
+        <div data-image-reveal className="grade-portrait relative aspect-[3/4]">
           {/* PLACEHOLDER image (Unsplash). */}
           <Image src={member.photo} alt="" fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover" />
         </div>

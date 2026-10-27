@@ -11,10 +11,10 @@ export function EventRow({ event, archival = false }: { event: EventItem; archiv
   const copy = locale === 'fr' ? event.fr : event.en
 
   return (
-    <article className="group grid grid-cols-[5.5rem_1fr] items-baseline gap-x-6 gap-y-3 border-t border-rule py-8 md:grid-cols-[9rem_1fr_auto] md:gap-x-10">
+    <article data-reveal-item className="group grid grid-cols-[5.5rem_1fr] items-baseline gap-x-6 gap-y-3 border-t border-rule py-8 md:grid-cols-[9rem_1fr_auto] md:gap-x-10">
       <time
         dateTime={event.dateISO}
-        className={cn('font-display text-4xl font-light leading-none tabular-nums md:text-5xl', archival ? 'text-bone-mute' : 'text-bone')}
+        className={cn('text-figures text-4xl leading-none md:text-5xl', archival ? 'text-bone-mute' : 'text-bone')}
       >
         {f.dateTime(date, { day: '2-digit' })}
         <span className="text-mono-micro mt-3 block text-bone-mute">

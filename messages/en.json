@@ -1,38 +1,95 @@
 {
   "common": { "siteName": "MusiqualiT", "learnMore": "LEARN MORE" },
   "home": {
-    "tagline": "The sound. The culture. The next wave.",
+    "acts": {
+      "label": "Tonight's programme",
+      "opening": "Overture",
+      "why": "The gap",
+      "mission": "Spotlight",
+      "backstage": "Backstage",
+      "impact": "Since 2023",
+      "formats": "Now showing",
+      "artists": "The next wave",
+      "nextShow": "Next date",
+      "credits": "Credits",
+      "lights": "House lights",
+      "finale": "Your seat"
+    },
+    "overture": { "tonight": "Tonight", "doors": "Doors opening" },
     "hero": {
-      "tag": "MONTRÉAL · NON-PROFIT FOUNDATION",
-      "headlineFr": "Le son. La culture. La relève.",
-      "headlineEn": "The sound. The culture. The next wave.",
-      "headlineEmFr": "La relève.",
-      "headlineEmEn": "The next wave.",
-      "subhead": "Studio. Mentorship. Stage. Community. An ecosystem for artists of colour, by artists of colour.",
+      "tag": "Montréal · Non-profit",
+      "lineA": "Spotlight",
+      "lineB": "on the next wave.",
+      "lineBEm": "the next wave.",
+      "lede": "MusiqualiT creates intimate, carefully produced music experiences that put Montréal's Black and racialized artists in the spotlight.",
       "marqueeLabel": "MusiqualiT artists",
       "nowPlaying": "NOW PLAYING · THE NEXT WAVE 2026",
       "ctaApply": "Apply",
       "ctaNextShow": "Next show",
       "videoPause": "Pause video",
       "videoPlay": "Play video",
-      "videoPlaceholder": "Placeholder video"
+      "videoPlaceholder": "Placeholder video",
+      "scrollCue": "Scroll to step in"
+    },
+    "why": {
+      "talent": "The talent is here.",
+      "talentEm": "here.",
+      "gap": "The infrastructure isn't. Yet.",
+      "gapEm": "Yet.",
+      "body": "Montréal, Quebec and Canada are full of talented Black and racialized artists. What's missing is the infrastructure to help them grow, professionalize and deliver ever stronger musical experiences. MusiqualiT was founded to fill part of that gap, alongside other organizations: the work needed is bigger than any one group."
     },
     "mission": {
-      "chapter": "MISSION",
-      "manifesto": "Building the ecosystem we never saw. For artists of colour, by artists of colour. Studio. Mentorship. Stage. Community. A non-profit.",
-      "manifestoEm": "by artists of colour",
-      "pillarsLabel": "Our mission, in four parts",
-      "pillars": {
-        "exposure": { "title": "Exposure", "body": "Putting Montréal artists in front of audiences, peers and industry." },
-        "education": { "title": "Education", "body": "Understanding the path: the craft, the business, the next step." },
-        "opportunities": { "title": "Opportunities", "body": "Opening doors to gigs, collaborations and partners." },
-        "mentorship": { "title": "Mentorship", "body": "Hands-on: the show itself is where the learning happens." }
+      "eyebrow": "Our mission",
+      "items": {
+        "spotlight": { "verb": "Light the stage", "body": "Intimate, carefully produced nights where local Black and racialized artists top the bill." },
+        "grow": { "verb": "Help them grow", "body": "Support their professional growth: every show is prepared like a course, from the first meeting to the stage." },
+        "gather": { "verb": "Bring us together", "body": "Gather a community around cultural diversity in music." }
       }
     },
-    "programs": { "chapter": "PROGRAMS" },
-    "artists": { "chapter": "THE NEXT WAVE", "listen": "Listen", "viewAll": "All artists" },
+    "backstage": {
+      "title": "A show is built.",
+      "titleEm": "built.",
+      "intro": "Here, the stage is also a school. Every Night n Key evening is built with the artist, step by step.",
+      "stepOf": "Step {n} of {total}",
+      "steps": {
+        "meeting": { "title": "The first meeting", "body": "We sit down with you, listen to your songs, talk about what you want to say on stage and choose your set together." },
+        "arrangement": { "title": "The arrangement", "body": "Our music director re-arranges your songs for a live band, keeping what makes your sound yours." },
+        "rehearsals": { "title": "Rehearsals", "body": "You rehearse with the musicians and get coached on voice, presence and transitions: everything that holds a show together." },
+        "show": { "title": "The show", "body": "A professionally produced night in front of a real audience. You walk off stage proud of what you did." }
+      }
+    },
+    "impact": {
+      "title": "The audience is already here.",
+      "titleEm": "already here.",
+      "items": {
+        "nights": "Night n Key nights since April 2023",
+        "audience": "people on average each night",
+        "artists": "artists on the bill each night",
+        "followers": "followers on Instagram",
+        "volunteers": "volunteers at every event"
+      },
+      "outcomesLabel": "For the artists",
+      "outcomes": {
+        "visibility": "Visibility on our platforms.",
+        "band": "A first stage with a band.",
+        "festivals": "Then bookings at Montréal festivals."
+      }
+    },
+    "formats": {
+      "title": "Our nights",
+      "intro": "Original formats where the music is alive. And more in the works.",
+      "status": { "running": "Running", "upcoming": "Coming soon" },
+      "cta": "See the dates"
+    },
+    "artists": {
+      "chapter": "THE NEXT WAVE",
+      "title": "Their names, in lights.",
+      "titleEm": "in lights.",
+      "listen": "Listen",
+      "viewAll": "All artists"
+    },
     "events": {
-      "chapter": "EVENTS",
+      "chapter": "NEXT DATE",
       "nextShow": "Next show",
       "tbaDate": "Date to be announced",
       "tbaBody": "The next Night n Key is in the works. Join the newsletter to hear about it first.",
@@ -40,23 +97,34 @@
       "seeAll": "All events",
       "tickets": "Tickets"
     },
-    "quote": {
-      "quote": "We don't ask for permission. We build the table, we set the chairs, we invite everyone.",
-      "attribution": "Imani Joseph, founder"
+    "credits": {
+      "title": "What guides us",
+      "values": {
+        "integrity": { "name": "Integrity", "line": "Acting with transparency and honesty toward artists, audiences and partners." },
+        "quality": { "name": "Quality", "line": "Carefully produced performances and experiences, delivered by professionals." },
+        "creativity": { "name": "Creativity", "line": "Original formats where the music is alive, never a repetition." },
+        "community": { "name": "Community", "line": "Bringing artists, audiences and volunteers together around shared experiences." },
+        "inclusion": { "name": "Inclusion and diversity", "line": "Real space for Black and racialized artists and for cultural diversity in music." },
+        "ambition": { "name": "Ambition", "line": "Building, over the long term, infrastructure that changes the scene for good." },
+        "recognition": { "name": "Recognition of artists", "line": "Valuing artists' work and paying them fairly." }
+      },
+      "end": "Thank you for being here."
     },
-    "applyCta": {
-      "headline": "You make music. We build your career.",
-      "blurb": "Apply to the program. Three admission rounds each year.",
-      "primaryCta": "Apply",
-      "secondaryCta": "Discover our programs"
+    "lights": {
+      "eyebrow": "House lights up",
+      "label": "Our vision",
+      "vision": "A Quebec music ecosystem where Black and racialized artists make a full living from their art, at home and on the world's big stages.",
+      "visionEm": "make a full living from their art,",
+      "support": "Supported by lasting programs, festivals and infrastructure that carry their voice and that of the generations that follow."
     },
-    "donate": {
-      "chapter": "DONATE",
-      "headline": "Non-profit organization.",
-      "body": "MusiqualiT is a registered non-profit. Your donations fund artist bursaries, studio time, and our free community programs.",
-      "eyebrow": "GIVE NOW",
-      "cta": "Donate a custom amount",
-      "receipt": "Tax receipt issued for donations of $20 or more."
+    "finale": {
+      "title": "There's a place for you.",
+      "titleEm": "for you.",
+      "doors": {
+        "artists": { "who": "Artists", "title": "Take the stage.", "body": "Night n Key is prepared with you, from the first meeting to the final bow.", "cta": "Apply" },
+        "audience": { "who": "Audience", "title": "Take your seat.", "body": "Intimate nights, living music. Be there for the next show.", "cta": "Next show" },
+        "partners": { "who": "Partners and donors", "title": "Back the stage.", "body": "Your support builds the infrastructure local artists are still missing.", "cta": "Donate" }
+      }
     },
     "newsletter": {
       "eyebrow": "NEWSLETTER",

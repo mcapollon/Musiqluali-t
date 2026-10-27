@@ -31,9 +31,9 @@ export function ProgramsPage() {
         <section key={p.slug} id={p.slug} className="section-pad-x section-pad-y scroll-mt-36">
           <ChapterMark number={String(i + 1).padStart(2, '0')} title={p[locale].title} as="div" />
           <div className="mt-12 grid items-center gap-12 md:mt-16 md:grid-cols-2 md:gap-20">
-            <div className={cn('sd-reveal grade-portrait relative aspect-[4/5]', i % 2 && 'md:order-2')}>
+            <div data-image-reveal className={cn('grade-portrait relative aspect-[4/5]', i % 2 && 'md:order-2')}>
               {/* PLACEHOLDER image (Unsplash) until real program photos are supplied. */}
-              <Image src={p.cover} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" className="sd-parallax object-cover" />
+              <Image src={p.cover} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" data-parallax className="object-cover" />
             </div>
             <div className="space-y-8">
               <h2 className="text-display-l">{p[locale].title}</h2>
