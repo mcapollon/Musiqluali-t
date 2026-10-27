@@ -29,7 +29,7 @@ export function RiseWords({ text, emphasis, from = 0 }: { text: string; emphasis
         space ? (
           <Fragment key={k}> </Fragment>
         ) : (
-          <span key={k} className="inline-block overflow-hidden pb-[0.12em] mb-[-0.12em] align-bottom">
+          <span key={k} className="inline-block overflow-hidden pt-[0.06em] mt-[-0.06em] pb-[0.3em] mb-[-0.3em] align-bottom">
             <span className="word-rise" style={{ '--i': i } as React.CSSProperties}>
               {em ? <em>{w}</em> : w}
             </span>

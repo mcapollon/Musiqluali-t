@@ -61,7 +61,7 @@ export function HomeFormats() {
                     />
                     {t(`formats.status.${format.status}`)}
                   </p>
-                  <h3 className={cn('font-display text-[clamp(2.5rem,3.6vw,4rem)] leading-[0.95] font-medium hyphens-none', style.name)}>
+                  <h3 className={cn('font-display text-[clamp(2rem,3.2vw,3.5rem)] leading-[1.02] font-medium tracking-[-0.02em] hyphens-none', style.name)}>
                     {copy.name}
                   </h3>
                   {copy.line ? <p className={cn('text-mono-micro', style.meta)}>{copy.line}</p> : <span aria-hidden />}

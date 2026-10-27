@@ -23,7 +23,7 @@ export function HomeMission() {
             <span aria-hidden className="text-mono-meta text-gold">
               {String(i + 1).padStart(2, '0')}
             </span>
-            <h3 data-sweep className="light-sweep text-display-hero pb-[0.06em]">
+            <h3 data-sweep className="light-sweep text-display-hero pb-[0.3em] mb-[-0.24em]">
               {t(`mission.items.${key}.verb`)}
             </h3>
             <p data-reveal className="text-lede text-bone-mute">

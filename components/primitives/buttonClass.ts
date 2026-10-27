@@ -11,10 +11,11 @@ const variantClass: Record<ButtonVariant, string> = {
   link: 'bg-transparent text-bone hover:text-gold-bright',
 }
 
+// min-h, not h: on narrow phones a long label may wrap to two lines instead of overflowing the page.
 const sizeClass: Record<ButtonSize, string> = {
-  sm: 'h-10 px-5 text-[0.6875rem]',
-  md: 'h-12 px-7 text-xs',
-  lg: 'h-14 px-9 text-sm',
+  sm: 'min-h-10 px-5 py-2 text-[0.6875rem]',
+  md: 'min-h-12 px-7 py-2.5 text-xs',
+  lg: 'min-h-14 px-9 py-3 text-sm',
 }
 
 /**
@@ -28,9 +29,9 @@ export function buttonClass({
   className,
 }: { variant?: ButtonVariant; size?: ButtonSize; className?: string | undefined } = {}) {
   return cn(
-    'inline-flex items-center justify-center gap-3 rounded-none font-sans font-medium uppercase tracking-[0.18em] whitespace-nowrap transition-colors duration-500',
+    'inline-flex max-w-full items-center justify-center gap-3 rounded-none text-center font-sans font-medium uppercase tracking-[0.18em] text-balance sm:whitespace-nowrap transition-colors duration-500',
     variantClass[variant],
-    variant === 'link' ? 'h-12 px-0 text-xs' : sizeClass[size],
+    variant === 'link' ? 'min-h-12 px-0 text-xs' : sizeClass[size],
     className,
   )
 }

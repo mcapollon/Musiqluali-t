@@ -67,12 +67,21 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
 
   // Layout effect: hidden "from" states are applied before the new route paints.
   useLayoutEffect(() => {
-    const mm = initMotion(document.body)
+    let mm = initMotion(document.body)
+    let live = true
     const refresh = () => ScrollTrigger.refresh()
-    // Late fonts and images change heights, and so every trigger's position.
-    void document.fonts?.ready.then(refresh)
+    // Late fonts change line breaks, so whether a scene fits its stage (motionSystem's fit check):
+    // if they were still loading at first build, rebuild once they land. Late images only move triggers.
+    if (document.fonts && document.fonts.status !== 'loaded') {
+      void document.fonts.ready.then(() => {
+        if (!live) return
+        mm.revert()
+        mm = initMotion(document.body)
+      })
+    }
     window.addEventListener('load', refresh)
     return () => {
+      live = false
       window.removeEventListener('load', refresh)
       mm.revert()
     }

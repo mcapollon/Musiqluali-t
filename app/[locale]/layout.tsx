@@ -13,9 +13,8 @@ import { StickyMiniPlayer } from '@/components/media/StickyMiniPlayer'
 import { INTRO_SCRIPT } from '@/components/chrome/logoIntroScript'
 import '../globals.css'
 
-// Melodrama (display) + Satoshi (text) from Fontshare (see the <head> note below). Loaded without blocking first paint.
-// Order matters: with satoshi listed first, the API silently drops the second family (checked 2026-10-27).
-const FONTSHARE_CSS = 'https://api.fontshare.com/v2/css?f%5B%5D=melodrama@400,500,600&f%5B%5D=satoshi@300,400,500&display=swap'
+// Satoshi from Fontshare (see the <head> note below). Loaded without blocking first paint.
+const FONTSHARE_CSS = 'https://api.fontshare.com/v2/css?f%5B%5D=satoshi@300,400,500&display=swap'
 const FONTSHARE_SWAP = `(function(){var l=document.getElementById('fontshare-css');if(!l)return;function on(){l.media='all'}if(l.sheet)on();else l.addEventListener('load',on)})()`
 
 export function generateStaticParams() {
@@ -58,7 +57,7 @@ export default async function LocaleLayout({
         {/* Before first paint: motion flag + logo opening (home only). See logoIntroScript.ts. */}
         <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
         {/*
-          Satoshi (the NCBF typeface) and Melodrama, both by Indian Type Foundry, ITF Free Font License.
+          Satoshi (the NCBF typeface) by Indian Type Foundry, ITF Free Font License.
           Served from Fontshare's own servers on purpose: the licence forbids
           redistributing the font files through a repository, and this repo is
           public, so the files must never be committed here.

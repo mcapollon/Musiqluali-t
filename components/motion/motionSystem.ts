@@ -47,6 +47,21 @@ const all = <T extends Element = HTMLElement>(root: ParentNode, selector: string
 
 const blur = (px: number) => `blur(${px}px)`
 
+/**
+ * Screens tall enough to hold a pinned scene (same query as the CSS opening
+ * frames in globals.css). Shorter screens (small phones, landscape) get every
+ * act in normal flow; so does any scene whose content measures taller than
+ * the stage (marked [data-flow]).
+ */
+const STAGE_QUERY = '(min-height: 600px)'
+
+/**
+ * Masked words park below their mask, so no sliver shows. The mask is the word's line
+ * box plus 0.3em for descenders (DisplayHeading, RiseWords): at most 1.3x the word's own
+ * height at the tightest display line-height, so 150% always clears it.
+ */
+const PARKED = 150
+
 /** Pinned scenes hold just under the fixed 5rem header. */
 const stageTop = () => parseFloat(getComputedStyle(document.documentElement).fontSize) * 5
 const pinAt = () => `top ${stageTop()}px`
@@ -71,9 +86,11 @@ function iris(scene: HTMLElement) {
   const cue = scene.querySelector('[data-iris-cue]')
   if (!media || !copy) return
 
-  // Same opening radius as the CSS first frame (globals.css), in px so it interpolates.
+  // The spot: a radial mask (globals.css) with a soft edge around radius --iris-r. Same radii as the
+  // original hard circle: start = the CSS first frame, end = past the frame's corners (+ the widest
+  // soft band, 36px, so no vignette is left). In px so they interpolate.
   const r0 = () => Math.min(window.innerHeight * 0.17, window.innerWidth * 0.3)
-  const r1 = () => Math.hypot(scene.clientWidth, scene.clientHeight) / 2 + 24
+  const r1 = () => Math.hypot(scene.clientWidth, scene.clientHeight) / 2 + 24 + 36
 
   const tl = gsap.timeline({
     scrollTrigger: {
@@ -87,9 +104,9 @@ function iris(scene: HTMLElement) {
     },
   })
   tl.fromTo(
-    media,
-    { clipPath: () => `circle(${r0()}px at 50% 50%)` },
-    { clipPath: () => `circle(${r1()}px at 50% 50%)`, ease: 'power2.in', duration: 1 },
+    scene,
+    { '--iris-r': () => `${r0()}px` },
+    { '--iris-r': () => `${r1()}px`, ease: 'power2.in', duration: 1 },
     0,
   )
   if (zoom) tl.fromTo(zoom, { scale: 1.35 }, { scale: 1, ease: EASE.scrub, duration: 1 }, 0)
@@ -109,19 +126,44 @@ function iris(scene: HTMLElement) {
   return () => copy.removeEventListener('focusin', onFocus)
 }
 
-function statement(scene: HTMLElement) {
-  const blocks = all(scene, '[data-statement]')
-  const body = scene.querySelector('[data-statement-body]')
-  const tl = gsap.timeline({
-    scrollTrigger: { trigger: scene, start: pinAt, end: '+=120%', pin: true, scrub: SCRUB.tight, anticipatePin: 1 },
+/** Words of a scene-mode heading rise once as it enters (also the flow fallback). */
+function riseOnce(block: Element) {
+  gsap.fromTo(
+    block.querySelectorAll('.motion-word'),
+    { yPercent: PARKED },
+    {
+      yPercent: 0,
+      duration: DURATION.text,
+      ease: EASE.enter,
+      stagger: STAGGER.word * 1.4,
+      scrollTrigger: once(block, 'top 85%'),
+    },
+  )
+}
+
+const fadeUpOnce = (el: Element) =>
+  gsap.fromTo(el, PRESETS['fade-up']!.from, {
+    ...PRESETS['fade-up']!.to,
+    duration: DURATION.block,
+    ease: EASE.enter,
+    clearProps: 'transform',
+    scrollTrigger: once(el),
   })
-  blocks.forEach((block, i) => {
-    const words = block.querySelectorAll('.motion-word')
+
+function statement(scene: HTMLElement) {
+  const [first, ...rest] = all(scene, '[data-statement]')
+  const body = scene.querySelector('[data-statement-body]')
+  // The first sentence is already up when the frame arrives: no empty frame on entry.
+  if (first) riseOnce(first)
+  const tl = gsap.timeline({
+    scrollTrigger: { trigger: scene, start: pinAt, end: '+=100%', pin: true, scrub: SCRUB.tight, anticipatePin: 1 },
+  })
+  rest.forEach((block, i) => {
     tl.fromTo(
-      words,
-      { yPercent: 110 },
+      block.querySelectorAll('.motion-word'),
+      { yPercent: PARKED },
       { yPercent: 0, ease: 'power2.out', stagger: 0.06, duration: 0.4 },
-      i === 0 ? 0 : '+=0.15',
+      i === 0 ? 0.05 : '+=0.15',
     )
   })
   if (body) tl.fromTo(body, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3 }, '+=0.1')
@@ -231,19 +273,55 @@ function gallery(section: HTMLElement) {
   return () => section.removeEventListener('focusin', onFocus)
 }
 
+/**
+ * A scene pins only if its content fits the stage (the viewport under the
+ * header), measured with the scene in its pinned layout (CSS opening frame).
+ * The opening also needs its title clear of its top bar (the title is centred
+ * over the frame, so a short frame would put one on the other).
+ */
+function fitsStage(scene: HTMLElement) {
+  const stage = Math.max(scene.clientHeight, window.innerHeight - stageTop())
+  if (scene.scrollHeight > stage + 2) return false
+  const bar = scene.querySelector('[data-iris-bar]')
+  const title = scene.querySelector('[data-iris-line="a"]')
+  if (bar && title) return title.getBoundingClientRect().top >= bar.getBoundingClientRect().bottom - 2
+  return true
+}
+
+/** The same act in normal flow: things arrive as they scroll in; nothing pins or clips. */
+function flow(scene: HTMLElement) {
+  const kind = scene.dataset.scene
+  if (kind === 'statement') {
+    all(scene, '[data-statement]').forEach(riseOnce)
+    const body = scene.querySelector('[data-statement-body]')
+    if (body) fadeUpOnce(body)
+  } else if (kind === 'steps') {
+    all(scene, '[data-steps] > *').forEach(fadeUpOnce)
+  }
+  // iris: the full shot with the title and copy over it, as written.
+}
+
 /** All pinned scenes, in document order. Returns listener cleanups. */
-function scenes(root: HTMLElement, wide: boolean) {
+function scenes(root: HTMLElement, wide: boolean, stage: boolean) {
   const cleanups: (() => void)[] = []
   for (const el of all(root, '[data-scene], [data-gallery]')) {
     let cleanup: (() => void) | undefined
     if (el.hasAttribute('data-gallery')) {
       if (wide) cleanup = gallery(el)
+    } else if (el.dataset.scene === 'credits') {
+      credits(el) // a roll: built to run past its frame, at any height
     } else {
+      // Measure in the pinned layout; fall back to flow if the content would be clipped.
+      delete el.dataset.flow
+      if (stage && !fitsStage(el)) el.dataset.flow = ''
+      if (!stage || el.hasAttribute('data-flow')) {
+        flow(el)
+        continue
+      }
       const kind = el.dataset.scene
       if (kind === 'iris') cleanup = iris(el)
       else if (kind === 'statement') statement(el)
       else if (kind === 'steps') steps(el)
-      else if (kind === 'credits') credits(el)
     }
     if (cleanup) cleanups.push(cleanup)
   }
@@ -365,7 +443,7 @@ function textReveals(root: HTMLElement) {
     if (!words.length) continue
     gsap.fromTo(
       words,
-      { yPercent: 110, autoAlpha: 0, filter: blur(OFFSET.blur) },
+      { yPercent: PARKED, autoAlpha: 0, filter: blur(OFFSET.blur) },
       {
         yPercent: 0,
         autoAlpha: 1,
@@ -482,13 +560,14 @@ export function initMotion(root: HTMLElement) {
     {
       motion: '(prefers-reduced-motion: no-preference)',
       wide: '(min-width: 1024px) and (pointer: fine)',
+      stage: STAGE_QUERY,
     },
     (ctx) => {
-      const { motion, wide } = ctx.conditions as { motion: boolean; wide: boolean }
+      const { motion, wide, stage } = ctx.conditions as { motion: boolean; wide: boolean; stage: boolean }
       scrollProgress(root)
       if (motion) {
         // Pins first, in page order: their spacers shift every trigger below them.
-        const cleanups = scenes(root, wide)
+        const cleanups = scenes(root, wide, stage)
         sweeps(root)
         lights(root)
         readText(root)

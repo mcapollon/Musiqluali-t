@@ -30,7 +30,7 @@ export function ProgramsPage() {
       {programs.map((p, i) => (
         <section key={p.slug} id={p.slug} className="section-pad-x section-pad-y scroll-mt-36">
           <ChapterMark number={String(i + 1).padStart(2, '0')} title={p[locale].title} as="div" />
-          <div className="mt-12 grid items-center gap-12 md:mt-16 md:grid-cols-2 md:gap-20">
+          <div className="mt-12 grid grid-cols-1 items-center gap-12 md:mt-16 md:grid-cols-2 md:gap-20">
             <div data-image-reveal className={cn('grade-portrait relative aspect-[4/5]', i % 2 && 'md:order-2')}>
               {/* PLACEHOLDER image (Unsplash) until real program photos are supplied. */}
               <Image src={p.cover} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" data-parallax className="object-cover" />

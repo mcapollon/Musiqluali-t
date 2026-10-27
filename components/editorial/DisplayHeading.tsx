@@ -70,7 +70,7 @@ export function DisplayHeading({ text, emphasis, size = 'l', className, as: As =
             )
           }
           return (
-            <span key={i} className="inline-block overflow-hidden pb-[0.14em] mb-[-0.14em] align-bottom">
+            <span key={i} className="inline-block overflow-hidden pt-[0.06em] mt-[-0.06em] pb-[0.3em] mb-[-0.3em] align-bottom">
               {reveal === 'load' ? (
                 <span className="word-rise" style={{ '--i': n++ } as React.CSSProperties}>
                   {word}

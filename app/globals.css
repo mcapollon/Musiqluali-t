@@ -65,11 +65,10 @@
   --color-input: var(--color-rule-strong);
   --color-ring: var(--color-gold-bright);
 
-  /* Two voices: Satoshi speaks (text, labels, UI); Melodrama, a condensed
-     high-contrast serif, performs (display and poster type only). `mono` stays
-     an alias of the text face. Revert to one family by pointing display at sans. */
+  /* One family (Satoshi). `display`, `poster` and `mono` are kept as aliases so existing
+     classes (font-display, font-poster, font-mono) resolve to it, not to extra fonts. */
   --font-sans: 'Satoshi', 'Satoshi Fallback', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Melodrama', 'Melodrama Fallback', 'Times New Roman', serif;
+  --font-display: var(--font-sans);
   --font-poster: var(--font-display);
   --font-mono: var(--font-sans);
 
@@ -101,14 +100,6 @@
   descent-override: 21.95%;
   line-gap-override: 9.14%;
   size-adjust: 109.35%;
-}
-
-/* Melodrama stand-in: a narrowed serif, so headlines wrap close to the real face before it arrives. */
-@font-face {
-  font-family: 'Melodrama Fallback';
-  src: local('Times New Roman');
-  size-adjust: 84%;
-  ascent-override: 100%;
 }
 
 @layer base {
@@ -143,25 +134,27 @@
 
 @layer utilities {
   /*
-   * Type scale, two voices. Display/poster sizes are set in Melodrama, a
-   * condensed high-contrast serif, so they run larger and tighter than a sans
-   * would; text and labels stay in Satoshi. Sentence case throughout.
-   * `em` inside = the gold statement word (colour only; Melodrama has no italic).
+   * Quiet luxury type scale, one family (Satoshi, as on NCBF). Headlines large, medium weight,
+   * sentence case, slightly tightened; text stays open. Hierarchy comes from
+   * size and space, not from mixing faces, weights or italics.
+   * Display sizes take the smaller of a width share and a height share: the
+   * height share only binds on short screens (landscape phones, short laptops).
+   * `em` inside = the gold statement word (colour only).
    */
-  .text-display-hero { font-family: var(--font-display); font-weight: 500; font-size: clamp(3.75rem, 12.5vw, 15rem); line-height: 0.88; letter-spacing: -0.015em; }
-  .text-display-xl   { font-family: var(--font-display); font-weight: 500; font-size: clamp(3rem, 6vw + 1rem, 9rem); line-height: 0.95; letter-spacing: -0.01em; }
-  .text-display-l    { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.4rem, 3vw + 1.25rem, 5.25rem); line-height: 1; letter-spacing: -0.005em; }
-  .text-display-m    { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.75rem, 1.4vw + 1.1rem, 3rem); line-height: 1.05; }
+  .text-display-hero { font-family: var(--font-display); font-weight: 500; font-size: clamp(3rem, min(9.5vw, 17svh), 10.5rem); line-height: 1.02; letter-spacing: -0.02em; }
+  .text-display-xl   { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.5rem, min(4.6vw + 1rem, 11svh), 7rem); line-height: 1.05; letter-spacing: -0.015em; }
+  .text-display-l    { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem, 2.4vw + 1rem, 4rem); line-height: 1.1; letter-spacing: -0.01em; }
+  .text-display-m    { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.5rem, 1.2vw + 1rem, 2.5rem); line-height: 1.15; letter-spacing: -0.005em; }
   :is(.text-display-hero, .text-display-xl, .text-display-l, .text-display-m) em { font-style: normal; color: var(--color-gold); }
   /* The ivory act: gold on white fails contrast, gold-deep clears 3:1 at display sizes. */
   .on-ivory :is(.text-display-hero, .text-display-xl, .text-display-l, .text-display-m) em { color: var(--color-gold-deep); }
 
   /* Poster: event names and dates at full scale. Sentence case keeps "Night n Key" as written. */
-  .text-poster-xl { font-family: var(--font-display); font-weight: 500; font-size: clamp(4rem, 15vw, 17rem); line-height: 0.85; letter-spacing: -0.02em; }
-  .text-poster-l  { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.75rem, 6.5vw, 7rem); line-height: 0.92; letter-spacing: -0.01em; }
-  .text-poster-m  { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.6rem, 1.6vw + 1rem, 2.75rem); line-height: 1.05; }
+  .text-poster-xl { font-family: var(--font-display); font-weight: 500; font-size: clamp(3.25rem, min(11vw, 24svh), 12rem); line-height: 0.98; letter-spacing: -0.03em; }
+  .text-poster-l  { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.25rem, 5vw, 5.5rem); line-height: 1.02; letter-spacing: -0.02em; }
+  .text-poster-m  { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.375rem, 1.4vw + 0.875rem, 2.25rem); line-height: 1.15; letter-spacing: -0.01em; }
 
-  /* Display numerals. Melodrama's zero is slashed by design (reads as Ø), so figures set in Satoshi Light. */
+  /* Display numerals: Satoshi Light, tight and lining, so big figures read quieter than the headlines around them. */
   .text-figures { font-family: var(--font-sans); font-weight: 300; letter-spacing: -0.045em; font-variant-numeric: lining-nums tabular-nums; }
 
   .text-lede       { font-size: clamp(1.0625rem, 0.4vw + 1rem, 1.25rem); line-height: 1.7; }
@@ -223,6 +216,7 @@
    * The motion system scrubs background-position from 100% (house dark, words
    * at 45%: still ≥3:1 for display sizes) to 0% (lit). Static = fully lit.
    */
+  /* background-clip: text only paints inside the box: callers add bottom padding so descenders get paint. */
   .light-sweep {
     background: linear-gradient(90deg, var(--color-gold-bright) 0%, var(--color-bone) 38%, var(--color-bone) 48%, rgb(245 243 238 / 0.45) 58%, rgb(245 243 238 / 0.45) 100%);
     background-size: 250% 100%;
@@ -244,7 +238,8 @@
  * ScrollTrigger + Lenis); this file only keeps what must run before hydration.
  * Word reveal for above-the-fold headlines (DisplayHeading reveal="load").
  */
-@keyframes word-rise { from { transform: translateY(110%); } to { transform: none; } }
+/* 150%: clears the word's mask (line box + 0.3em of room for descenders). */
+@keyframes word-rise { from { transform: translateY(150%); } to { transform: none; } }
 .word-rise {
   display: inline-block;
   animation: word-rise 1.1s var(--ease-gala) both;
@@ -289,27 +284,37 @@ html[data-intro='play'] .logo-intro-count { animation: intro-count 1.75s cubic-b
 /*
  * Opening frames of the pinned scenes, painted from CSS before hydration so
  * nothing flashes its final state first. Only under html[data-motion] (set
- * pre-paint when motion is allowed); otherwise every scene is plain flow.
- * The motion system (components/motion/motionSystem.ts) takes over from here.
+ * pre-paint when motion is allowed) and only on screens tall enough to hold
+ * a scene (the motion system pins under the same query, and marks a scene
+ * [data-flow] if its content still would not fit). Everywhere else every
+ * scene is plain flow. Keep the 600px in sync with STAGE_QUERY in motionSystem.ts.
  */
 .iris-cue { display: none; }
-html[data-motion] [data-scene='iris'] { height: calc(100svh - 5rem); }
-html[data-motion] [data-iris-media] { clip-path: circle(min(17svh, 30vw) at 50% 50%); }
-html[data-motion] [data-iris-zoom] { transform: scale(1.35); }
-html[data-motion] [data-iris-shade],
-html[data-motion] [data-iris-copy] { opacity: 0; }
-html[data-motion] .iris-title { position: absolute; inset: 0; display: grid; place-items: center; padding-block: 0; }
-html[data-motion] .iris-gap { height: calc(min(17svh, 30vw) * 2 - 0.5em); }
-html[data-motion] .iris-cue { display: flex; }
-/* Backstage: the four steps share one frame and take turns (opacity, so screen readers keep all four).
-   Static, the numerals and rail step aside: each step names its own number. */
 [data-step-nums], [data-steps-rail] { display: none; }
-html[data-motion] [data-step-nums] { display: grid; }
-html[data-motion] [data-steps-rail] { display: block; transform: scaleY(0.25); }
-html[data-motion] [data-steps] > *,
-html[data-motion] [data-step-nums] > * { grid-area: 1 / 1; }
-html[data-motion] [data-steps] > :not(:first-child),
-html[data-motion] [data-step-nums] > :not(:first-child) { opacity: 0; }
+@media (min-height: 600px) {
+  html[data-motion] [data-scene='iris']:not([data-flow]) {
+    height: calc(100svh - 5rem);
+    /* The follow spot. --iris-r is the circle's radius (scrubbed by the motion system, same values
+       as the original clip-path circle); --iris-f softens its edge, half inside, half outside it. */
+    --iris-r: min(17svh, 30vw);
+    --iris-f: clamp(18px, 3.5svh, 36px);
+  }
+  html[data-motion] [data-scene='iris']:not([data-flow]) [data-iris-media] {
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 calc(var(--iris-r) - var(--iris-f)), transparent calc(var(--iris-r) + var(--iris-f)));
+    mask-image: radial-gradient(circle at 50% 50%, #000 calc(var(--iris-r) - var(--iris-f)), transparent calc(var(--iris-r) + var(--iris-f)));
+  }
+  html[data-motion] [data-scene='iris']:not([data-flow]) [data-iris-zoom] { transform: scale(1.35); }
+  html[data-motion] [data-scene='iris']:not([data-flow]) :is([data-iris-shade], [data-iris-copy]) { opacity: 0; }
+  html[data-motion] [data-scene='iris']:not([data-flow]) .iris-title { position: absolute; inset: 0; display: grid; place-items: center; padding-block: 0; }
+  html[data-motion] [data-scene='iris']:not([data-flow]) .iris-gap { height: calc(min(17svh, 30vw) * 2 - 0.5em); }
+  html[data-motion] [data-scene='iris']:not([data-flow]) .iris-cue { display: flex; }
+  /* Backstage: the four steps share one frame and take turns (opacity, so screen readers keep all four).
+     In flow, the numerals and rail step aside: each step names its own number. */
+  html[data-motion] [data-scene='steps']:not([data-flow]) [data-step-nums] { display: grid; }
+  html[data-motion] [data-scene='steps']:not([data-flow]) [data-steps-rail] { display: block; transform: scaleY(0.25); }
+  html[data-motion] [data-scene='steps']:not([data-flow]) :is([data-steps], [data-step-nums]) > * { grid-area: 1 / 1; }
+  html[data-motion] [data-scene='steps']:not([data-flow]) :is([data-steps], [data-step-nums]) > :not(:first-child) { opacity: 0; }
+}
 /* Credits: the roll runs inside a held frame. */
 html[data-motion] [data-scene='credits'] { height: calc(100svh - 5rem); overflow: clip; }
 html[data-motion] [data-credits-list] { position: absolute; inset-inline: 0; top: 0; }

@@ -20,8 +20,11 @@ import { artists } from '@/lib/mock/artists'
  * the title. Scrolling opens the iris to full bleed while the title parts,
  * then the promise and the ways in arrive over the stage.
  * Scrubbed and pinned by the motion system (data-scene="iris"); the iris's
- * opening frame is CSS (html[data-motion]) so it paints before hydration.
- * Without motion: full footage, title, then copy, in reading order.
+ * opening frame is CSS (html[data-motion], tall screens only) so it paints
+ * before hydration. On short screens (small phones, landscape), when the
+ * content would not fit the frame (data-flow), and without motion: full
+ * footage, title, then copy, in reading order. The marquee sits below the
+ * frame, never inside it, so the pinned frame only holds what fits.
  */
 export function HomeOpening() {
   const t = useTranslations('home.hero')
@@ -78,7 +81,10 @@ export function HomeOpening() {
         {/* Legibility once the stage is open: darkest where the copy sits. */}
         <div data-iris-shade aria-hidden className="absolute inset-0 bg-linear-to-t from-black/90 via-black/35 to-black/30" />
 
-        <div className="section-pad-x relative z-10 flex flex-col items-start gap-3 pt-8 md:flex-row md:justify-between md:gap-4 md:pt-10">
+        <div
+          data-iris-bar
+          className="section-pad-x relative z-10 flex flex-col items-start gap-3 pt-8 md:flex-row md:justify-between md:gap-4 md:pt-10"
+        >
           <p className="text-mono-meta text-white/70">{t('tag')}</p>
           <div className="flex items-center gap-3">
             <AmbientHeroPlayer label={t('nowPlaying')} />
@@ -112,7 +118,7 @@ export function HomeOpening() {
           <span className="h-10 w-px bg-linear-to-b from-gold to-transparent" />
         </p>
 
-        <div data-iris-copy className="section-pad-x relative z-10 mt-auto flex flex-col gap-10 pb-16 md:pb-20">
+        <div data-iris-copy className="section-pad-x relative z-10 mt-auto flex flex-col gap-8 pb-14 md:gap-10 md:pb-16">
           <p className="text-lede max-w-2xl text-white/85 md:text-[1.375rem] md:leading-[1.6]">{t('lede')}</p>
           <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
             <Link href="/apply" className={buttonClass({ size: 'lg' })}>
@@ -122,11 +128,6 @@ export function HomeOpening() {
               {t('ctaNextShow')} <span aria-hidden>→</span>
             </a>
           </div>
-          <Marquee
-            ariaLabel={t('marqueeLabel')}
-            items={artists.map((a) => ({ label: a.name, meta: a.genre }))}
-            className="text-white"
-          />
         </div>
 
         {showVideo && (
@@ -143,6 +144,15 @@ export function HomeOpening() {
             </button>
           </div>
         )}
+      </div>
+
+      {/* The artists' names, as the house settles. */}
+      <div className="border-t border-rule">
+        <Marquee
+          ariaLabel={t('marqueeLabel')}
+          items={artists.map((a) => ({ label: a.name, meta: a.genre }))}
+          className="text-white"
+        />
       </div>
     </section>
   )
