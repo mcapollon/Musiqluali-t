@@ -291,6 +291,8 @@
     "newsletterPlaceholder": "Your email",
     "subscribe": "SUBSCRIBE",
     "legal": { "privacy": "Privacy", "terms": "Terms" },
+    "credit": "Made with <heart></heart> in Montréal",
+    "creditLove": "love",
     "nav": { "programs": "Programs", "artists": "Artists", "events": "Events", "about": "About", "contact": "Contact", "apply": "Apply" }
   },
   "notFound": {

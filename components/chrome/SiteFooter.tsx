@@ -68,6 +68,20 @@ export function SiteFooter() {
         </div>
         <div className="mt-16 flex flex-wrap items-center justify-between gap-4 text-mono-meta text-bone-mute">
           <span>© {year} MusiqualiT</span>
+          <a
+            href="https://www.mckinsleyapollon.com/"
+            target="_blank"
+            rel="noopener"
+            className="transition-colors hover:text-gold"
+          >
+            {t.rich('credit', {
+              heart: () => (
+                <span role="img" aria-label={t('creditLove')}>
+                  ❤️
+                </span>
+              ),
+            })}
+          </a>
           <div className="flex gap-6">
             <a href="#">{t('legal.privacy')}</a>
             <a href="#">{t('legal.terms')}</a>

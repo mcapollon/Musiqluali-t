@@ -291,6 +291,8 @@
     "newsletterPlaceholder": "Ton courriel",
     "subscribe": "S'INSCRIRE",
     "legal": { "privacy": "Confidentialité", "terms": "CGU" },
+    "credit": "Fait avec <heart></heart> à Montréal",
+    "creditLove": "amour",
     "nav": { "programs": "Programmes", "artists": "Artistes", "events": "Événements", "about": "À propos", "contact": "Contact", "apply": "Postuler" }
   },
   "notFound": {
